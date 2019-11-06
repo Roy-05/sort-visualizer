@@ -1,4 +1,5 @@
 import React from 'react';
+import './SortingVisualizer.css';
 
 class SortingVisualizer extends React.Component {
 
@@ -17,7 +18,7 @@ class SortingVisualizer extends React.Component {
     resetArray(){
         const array = [];
         for(let i = 0; i<100; i++){
-            array.push(this.getRandomInt(1,1000))
+            array.push(this.getRandomInt(1,500))
         }
 
         this.setState({array});
@@ -32,11 +33,12 @@ class SortingVisualizer extends React.Component {
         const {array} = this.state;
 
         return( 
-            <>
-            {array.map((value, idx) => (
-                <div className = "array-elem" key = {idx}>{value}</div>
-            ))}
-            </>
+            <div className="array-container">
+                {array.map((value, idx) => (
+                    <div className = "array-elem" key = {idx} style = {{height: `${value}px`}}>
+                    </div>
+                ))}
+            </div>
         );
     }
 
