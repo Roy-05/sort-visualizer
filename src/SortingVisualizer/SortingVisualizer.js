@@ -7,7 +7,7 @@ class SortingVisualizer extends React.Component {
         super(props);
 
         this.state = {
-            array: []
+            array: [],
         };
     }
 
@@ -28,10 +28,10 @@ class SortingVisualizer extends React.Component {
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+    
 
     render(){
-        const {array} = this.state;
-
+        const {array} = this.state;  
         return( 
             <div className="array-container">
                 {array.map((value, idx) => (
