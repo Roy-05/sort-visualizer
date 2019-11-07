@@ -41,8 +41,8 @@ class SortingVisualizer extends React.Component {
                         array_bar[j+1].style.height = `${arr1_height}px`;
                     }
                 }
-
-            }, i*100);  
+                array_bar[arr.length-i-1].style.backgroundColor = 'green';
+            }, i*400);  
         }
 
         console.log(arr);
