@@ -25,12 +25,28 @@ class SortingVisualizer extends React.Component {
     }
 
     bubbleSort(){
-        const jsSortedArray = this.state.array.slice().sort((a,b) => a-b),
-            bSortedArray = bubbleSortAlg(this.state.array);
+        const arr = this.state.array;     
+        const array_bar = document.getElementsByClassName('array-elem');
 
-        console.log(this.arraysAreEqual(jsSortedArray, bSortedArray));
-    }
-    
+        for(let i =0; i<arr.length-1; i++){
+            setTimeout(()=>{
+                for(let j=0; j<arr.length-i-1; j++){
+                    if(arr[j] > arr[j+1]){
+                        let temp = arr[j],
+                            arr1_height = arr[j],
+                            arr2_height = arr[j+1];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                        array_bar[j].style.height = `${arr2_height}px`;
+                        array_bar[j+1].style.height = `${arr1_height}px`;
+                    }
+                }
+
+            }, i*100);  
+        }
+
+        console.log(arr);
+    }    
 
     render(){
         const {array} = this.state;
