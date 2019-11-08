@@ -12,7 +12,16 @@ class SortingVisualizer extends React.Component {
     }
 
     componentDidMount(){
-        this.resetArray();             
+        this.setArray();    
+    }
+
+    setArray(){
+        const array = [];
+        for(let i = 0; i<100; i++){
+            array.push(this.getRandomInt(1,500))
+        }
+
+        this.setState({array});
     }
 
     resetArray(){
@@ -22,6 +31,12 @@ class SortingVisualizer extends React.Component {
         }
 
         this.setState({array});
+
+        const array_bar = document.getElementsByClassName('array-elem');
+        for(let i=0;i<array.length;i++){
+            array_bar[i].style.backgroundColor = "lightblue";
+        }
+             
     }
 
     bubbleSort(){
@@ -29,23 +44,45 @@ class SortingVisualizer extends React.Component {
         const array_bar = document.getElementsByClassName('array-elem');
 
         for(let i =0; i<arr.length-1; i++){
-            setTimeout(()=>{
-                for(let j=0; j<arr.length-i-1; j++){
-                    if(arr[j] > arr[j+1]){
-                        let temp = arr[j],
-                            arr1_height = arr[j],
-                            arr2_height = arr[j+1];
-                        arr[j] = arr[j+1];
-                        arr[j+1] = temp;
-                        array_bar[j].style.height = `${arr2_height}px`;
-                        array_bar[j+1].style.height = `${arr1_height}px`;
-                    }
+            setTimeout(()=>{ 
+                if(i===0){
+                    setTimeout(()=>{array_bar[arr.length-i-1].style.backgroundColor = 'green';},500)
                 }
-                array_bar[arr.length-i-1].style.backgroundColor = 'green';
-            }, i*400);  
-        }
-
-        console.log(arr);
+                else{
+                    array_bar[arr.length-i].style.backgroundColor = 'green';
+                }
+                for(let j=0; j<arr.length-i-1; j++){
+                    setTimeout(()=>{
+                        array_bar[j+1].style.backgroundColor = 'red';
+                        array_bar[j].style.backgroundColor = 'red';
+                        setTimeout(()=>{
+                            if(arr[j] > arr[j+1]){
+                            
+                                let temp = arr[j],
+                                    arr1_height = arr[j],
+                                    arr2_height = arr[j+1];
+                                arr[j] = arr[j+1];
+                                arr[j+1] = temp;
+                                array_bar[j].style.height = `${arr2_height}px`;
+                                array_bar[j+1].style.height = `${arr1_height}px`;
+                                array_bar[j+1].style.backgroundColor = 'green';
+                                array_bar[j].style.backgroundColor = 'lightblue';
+                            }
+                            else{
+                                array_bar[j+1].style.backgroundColor = 'lightblue';
+                                array_bar[j].style.backgroundColor = 'lightblue';
+                            }
+                            if(i===arr.length-2){
+                                array_bar[j+1].style.backgroundColor = 'green';
+                                setTimeout(()=>{
+                                    array_bar[j].style.backgroundColor = 'green';
+                                }, 5);
+                            }
+                        }, 5);
+                    }, j*5);
+                }
+            },i*500);  
+        }        
     }    
 
     render(){
