@@ -1,6 +1,6 @@
 import React from 'react';
 import './SortingVisualizer.css';
-import {bubbleSortAlg} from '../SortingAlgorithms/BubbleSort';
+//import {bubbleSortAlg} from '../SortingAlgorithms/BubbleSort';
 
 class SortingVisualizer extends React.Component {
     constructor(props){
@@ -85,13 +85,48 @@ class SortingVisualizer extends React.Component {
         }        
     }    
 
+    selectionSort(){
+        const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem");
+
+        for(let i=0; i<arr.length-1; i++){
+            setTimeout(()=>{
+                if(i===0){
+                    setTimeout(()=>{array_bar[i].style.backgroundColor = "green";}, 400);
+                }
+                else{
+                    array_bar[i].style.backgroundColor = "green";
+                }
+
+                let minimum = i;
+                for(let j = i+1; j<arr.length; j++){
+                    if(arr[j] < arr[minimum]){
+                            minimum = j;
+                    }         
+                }
+
+                let temp = arr[i],
+                    arr1_height = arr[minimum],
+                    arr2_height = arr[i];
+
+                arr[i] = arr[minimum];
+                arr[minimum] = temp;
+
+                array_bar[i].style.height = `${arr1_height}px`;
+                array_bar[minimum].style.height = `${arr2_height}px`;
+            }, i*400);
+        }
+    }
+
+
     render(){
         const {array} = this.state;
         return( 
             <>  
                 <nav className = "navbar">
                     <button className="gen-new-arr" onClick = {()=>{this.resetArray()}}>Generate New Array</button>
-                    <button className="bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
+                    <button className="sort bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
+                    <button className="sort selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
@@ -116,9 +151,10 @@ class SortingVisualizer extends React.Component {
                 arr.push(this.getRandomInt(-1000,1000));
             }
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
-                bSortedArray = bubbleSortAlg(arr);
+                //bSortedArray = bubbleSortAlg(arr);
+                sSortedArray = this.selectionSort(arr);
 
-            console.log(this.arraysAreEqual(jsSortedArr, bSortedArray));
+            console.log(this.arraysAreEqual(jsSortedArr, sSortedArray));
         }
     }
 
