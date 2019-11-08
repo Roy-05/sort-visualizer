@@ -46,7 +46,7 @@ class SortingVisualizer extends React.Component {
         for(let i =0; i<arr.length-1; i++){
             setTimeout(()=>{ 
                 if(i===0){
-                    setTimeout(()=>{array_bar[arr.length-i-1].style.backgroundColor = 'green';},500)
+                    setTimeout(()=>{array_bar[arr.length-i-1].style.backgroundColor = 'green';},400)
                 }
                 else{
                     array_bar[arr.length-i].style.backgroundColor = 'green';
@@ -76,12 +76,12 @@ class SortingVisualizer extends React.Component {
                                 array_bar[j+1].style.backgroundColor = 'green';
                                 setTimeout(()=>{
                                     array_bar[j].style.backgroundColor = 'green';
-                                }, 5);
+                                }, 4);
                             }
-                        }, 5);
-                    }, j*5);
+                        }, 4);
+                    }, j*4);
                 }
-            },i*500);  
+            },i*400);  
         }        
     }    
 
