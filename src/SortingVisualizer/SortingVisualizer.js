@@ -7,17 +7,31 @@ class SortingVisualizer extends React.Component {
         super(props);
 
         this.state = {
-            array: [],
+            array: []
         };
     }
 
     componentDidMount(){
+        //this.getArraySize();
         this.setArray();    
+    }
+
+    getArraySize(){
+        let deviceWidth = window.screen.width,
+            arraySize;
+        if(deviceWidth < 400){
+            arraySize = 50;
+        }
+        else{
+            arraySize = 100;
+        }
+
+        return arraySize;
     }
 
     setArray(){
         const array = [];
-        for(let i = 0; i<100; i++){
+        for(let i = 0; i<this.getArraySize(); i++){
             array.push(this.getRandomInt(1,500))
         }
 
@@ -26,7 +40,7 @@ class SortingVisualizer extends React.Component {
 
     resetArray(){
         const array = [];
-        for(let i = 0; i<100; i++){
+        for(let i = 0; i<this.getArraySize(); i++){
             array.push(this.getRandomInt(1,500))
         }
 
@@ -92,7 +106,6 @@ class SortingVisualizer extends React.Component {
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
                 let minimum = i;
-                //
                 for(let j = i+1; j<arr.length; j++){
                     setTimeout(()=>{
                         array_bar[j].style.backgroundColor = 'red';

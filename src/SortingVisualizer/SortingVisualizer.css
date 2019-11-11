@@ -17,3 +17,11 @@
 .navbar > button {
     margin: 5px
 }
+
+@media screen and (min-width: 375px){
+    .array-elem {
+        margin:1px;
+        width: 3px;
+        background-color: lightblue;
+    }
+}
