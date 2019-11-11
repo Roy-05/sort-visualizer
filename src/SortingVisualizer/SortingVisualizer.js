@@ -91,30 +91,48 @@ class SortingVisualizer extends React.Component {
 
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
-                if(i===0){
-                    setTimeout(()=>{array_bar[i].style.backgroundColor = "green";}, 400);
-                }
-                else{
-                    array_bar[i].style.backgroundColor = "green";
-                }
-
                 let minimum = i;
+                //
                 for(let j = i+1; j<arr.length; j++){
-                    if(arr[j] < arr[minimum]){
-                            minimum = j;
-                    }         
+                    setTimeout(()=>{
+                        array_bar[j].style.backgroundColor = 'red';
+                        array_bar[minimum].style.backgroundColor = 'blue';
+                        setTimeout(()=>{
+                            if(arr[j] < arr[minimum]){
+                            array_bar[minimum].style.backgroundColor = 'lightblue';
+                            minimum = j; 
+                            }  
+                            else{
+                                array_bar[j].style.backgroundColor = 'lightblue';
+                            }  
+                        }, 5);
+                    }, (j-1)*5);    
                 }
-
-                let temp = arr[i],
+                setTimeout(()=>{
+                    let temp = arr[i],
                     arr1_height = arr[minimum],
                     arr2_height = arr[i];
 
-                arr[i] = arr[minimum];
-                arr[minimum] = temp;
+                    arr[i] = arr[minimum];
+                    arr[minimum] = temp;
 
-                array_bar[i].style.height = `${arr1_height}px`;
-                array_bar[minimum].style.height = `${arr2_height}px`;
-            }, i*400);
+                    array_bar[i].style.height = `${arr1_height}px`;
+                    array_bar[minimum].style.height = `${arr2_height}px`;
+    
+                    array_bar[i].style.backgroundColor = "green";
+                    if(i !== minimum){
+                        array_bar[minimum].style.backgroundColor = 'lightblue';
+                    }
+                }, 500);
+                
+
+                if(i === arr.length-2){
+                    setTimeout(()=>{
+                        array_bar[i+1].style.backgroundColor = "green";
+                    },1000);
+                }
+
+            }, i*500);
         }
     }
 
