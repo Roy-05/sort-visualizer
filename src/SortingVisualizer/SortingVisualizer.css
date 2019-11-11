@@ -18,7 +18,7 @@
     margin: 5px
 }
 
-@media screen and (min-width: 375px){
+@media screen and (max-width: 400px){
     .array-elem {
         margin:1px;
         width: 3px;
