@@ -7,12 +7,21 @@ class SortingVisualizer extends React.Component {
         super(props);
 
         this.state = {
-            array: []
+            array: [],
+            sorted: false
         };
     }
 
     componentDidMount(){
+        console.log("accessed");
         this.setArray();    
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.sorted !== this.state.sorted){
+            console.log("handle refresh stuff here!!");
+            this.resetArray();
+        }
     }
 
     getArraySize(){
@@ -97,7 +106,7 @@ class SortingVisualizer extends React.Component {
             },i*400);  
         }        
 
-        setTimeout(()=>{this.resetArray()}, arr.length*400+1500);
+        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+800);
 
     }    
 
@@ -150,7 +159,8 @@ class SortingVisualizer extends React.Component {
             }, i*400);
         }
 
-        setTimeout(()=>{this.resetArray()}, arr.length*400+1500);
+        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+800);
+
     }
 
     render(){
