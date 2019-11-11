@@ -12,7 +12,6 @@ class SortingVisualizer extends React.Component {
     }
 
     componentDidMount(){
-        //this.getArraySize();
         this.setArray();    
     }
 
@@ -23,7 +22,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 100;
+            arraySize = 75;
         }
 
         return arraySize;
@@ -97,6 +96,9 @@ class SortingVisualizer extends React.Component {
                 }
             },i*400);  
         }        
+
+        setTimeout(()=>{this.resetArray()}, arr.length*400+1500);
+
     }    
 
     selectionSort(){
@@ -118,8 +120,8 @@ class SortingVisualizer extends React.Component {
                             else{
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }  
-                        }, 5);
-                    }, (j-1)*5);    
+                        }, 4);
+                    }, (j-1)*4);    
                 }
                 setTimeout(()=>{
                     let temp = arr[i],
@@ -136,22 +138,24 @@ class SortingVisualizer extends React.Component {
                     if(i !== minimum){
                         array_bar[minimum].style.backgroundColor = 'lightblue';
                     }
-                }, 500);
+                }, 400);
                 
 
                 if(i === arr.length-2){
                     setTimeout(()=>{
                         array_bar[i+1].style.backgroundColor = "green";
-                    },1000);
+                    },800);
                 }
 
-            }, i*500);
+            }, i*400);
         }
-    }
 
+        setTimeout(()=>{this.resetArray()}, arr.length*400+1500);
+    }
 
     render(){
         const {array} = this.state;
+        
         return( 
             <>  
                 <nav className = "navbar">
@@ -169,7 +173,7 @@ class SortingVisualizer extends React.Component {
             </>
         );
     }
-    
+  
     //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -203,8 +207,6 @@ class SortingVisualizer extends React.Component {
 
         return true;
     }
-
-
 }
 
 export default SortingVisualizer;
