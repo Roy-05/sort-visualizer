@@ -1,6 +1,5 @@
 import React from 'react';
 import './SortingVisualizer.css';
-//import {bubbleSortAlg} from '../SortingAlgorithms/BubbleSort';
 
 class SortingVisualizer extends React.Component {
     constructor(props){
@@ -8,18 +7,43 @@ class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
+            startedBubbleSort: false,
+            startedSelectionSort: false,
             sorted: false
         };
     }
 
     componentDidMount(){
-        console.log("accessed");
         this.setArray();    
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(prevState.sorted !== this.state.sorted){
-            console.log("handle refresh stuff here!!");
+        let nav_btn = document.getElementsByClassName("nav-btn");
+        console.log(this.state);
+
+        if(this.state.startedBubbleSort ){
+            [...nav_btn].forEach((btn)=>{
+                btn.disabled = true;
+            });
+        }
+
+        if(this.state.startedSelectionSort){
+            [...nav_btn].forEach((btn)=>{
+                btn.disabled = true;
+            });
+        }
+
+        if(this.state.sorted){
+            [...nav_btn].forEach((btn)=>{
+                btn.disabled = false;
+            });
+
+            this.setState({
+                startedBubbleSort: false,
+                startedSelectionSort: false,
+                sorted: false
+            });
+
             this.resetArray();
         }
     }
@@ -64,6 +88,8 @@ class SortingVisualizer extends React.Component {
     bubbleSort(){
         const arr = this.state.array;     
         const array_bar = document.getElementsByClassName('array-elem');
+
+        this.setState({startedBubbleSort: true});
 
         for(let i =0; i<arr.length-1; i++){
             setTimeout(()=>{ 
@@ -113,6 +139,8 @@ class SortingVisualizer extends React.Component {
     selectionSort(){
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem");
+        
+        this.setState({startedSelectionSort: true});
 
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
@@ -169,10 +197,10 @@ class SortingVisualizer extends React.Component {
         return( 
             <>  
                 <nav className = "navbar">
-                    <button className="gen-new-arr" onClick = {()=>{this.resetArray()}}>Generate New Array</button>
-                    <button className="sort bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
-                    <button className="sort selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
-                    <button className="test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
+                    <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.resetArray()}}>Generate New Array</button>
+                    <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
+                    <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
+                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
                     {array.map((value, idx) => (
