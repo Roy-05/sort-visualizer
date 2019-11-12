@@ -19,8 +19,7 @@ class SortingVisualizer extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
-        console.log(this.state);
-
+    
         if(this.state.startedBubbleSort ){
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = true;
@@ -82,14 +81,14 @@ class SortingVisualizer extends React.Component {
         for(let i=0;i<array.length;i++){
             setTimeout(()=>{
                 array_bar[i].style.backgroundColor = "lightblue";
-            }, i*10);
+            }, i*20);
         }
              
     }
 
     bubbleSort(){
-        const arr = this.state.array;     
-        const array_bar = document.getElementsByClassName('array-elem');
+        const arr = this.state.array,    
+            array_bar = document.getElementsByClassName('array-elem');
 
         this.setState({startedBubbleSort: true});
 
@@ -138,7 +137,9 @@ class SortingVisualizer extends React.Component {
             },i*400);  
         }        
 
-        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+2000);
+        setTimeout(()=>{
+            this.setState({sorted: true})
+        }, arr.length*400+1750);
 
     }    
 
@@ -149,10 +150,11 @@ class SortingVisualizer extends React.Component {
         this.setState({startedSelectionSort: true});
 
         for(let i=0; i<arr.length-1; i++){
+            let minimum = i; //Declare minimum here
             setTimeout(()=>{
-                let minimum = i;
                 for(let j = i+1; j<arr.length; j++){
                     setTimeout(()=>{
+                        //Getting a warning for these references:
                         array_bar[j].style.backgroundColor = 'red';
                         array_bar[minimum].style.backgroundColor = 'blue';
                         setTimeout(()=>{
@@ -193,8 +195,38 @@ class SortingVisualizer extends React.Component {
             }, i*400);
         }
 
-        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+2000);
+        setTimeout(()=>{
+            this.setState({sorted: true})
+        }, arr.length*400+1750);
 
+    }
+
+    insertionSort(){
+
+        const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem");
+        
+        for(let i = 0; i < arr.length ; i++){
+            setTimeout(()=>{
+                let temp = arr[i],
+                pos = i;
+
+                array_bar[i].style.backgroundColor = 'red';
+
+                while(pos>0 && temp<arr[pos-1]){
+                    arr[pos] = arr[pos-1];
+                    array_bar[pos].style.height = `${arr[pos]}px`;
+
+                    pos -= 1;
+
+                }
+                arr[pos] = temp;
+                array_bar[pos].style.height = `${arr[pos]}px`;
+
+                setTimeout(()=>{array_bar[i].style.backgroundColor = 'lightblue';}, 300);
+                
+            }, i*300);
+        }
     }
 
     render(){
@@ -206,6 +238,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.resetArray()}}>Generate New Array</button>
                     <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
+                    <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
                     <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
@@ -213,7 +246,7 @@ class SortingVisualizer extends React.Component {
                         array.map((value, idx) => (
                             <div className = "array-elem" key = {idx} style = {{height: `${value}px`}}></div>
                         ))
-                    }
+                    } 
                 </div>
             </>
         );
@@ -231,10 +264,12 @@ class SortingVisualizer extends React.Component {
                 arr.push(this.getRandomInt(-1000,1000));
             }
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
-                //bSortedArray = bubbleSortAlg(arr);
-                sSortedArray = this.selectionSort(arr);
+                //bSortedArray = bubbleSortAlg(arr),
+                //sSortedArray = this.selectionSort(arr),
+                iSortedArray = this.insertionSort(arr);
 
-            console.log(this.arraysAreEqual(jsSortedArr, sSortedArray));
+
+            console.log(this.arraysAreEqual(jsSortedArr, iSortedArray));
         }
     }
 
