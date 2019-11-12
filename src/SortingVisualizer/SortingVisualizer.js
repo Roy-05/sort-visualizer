@@ -81,7 +81,7 @@ class SortingVisualizer extends React.Component {
         for(let i=0;i<array.length;i++){
             setTimeout(()=>{
                 array_bar[i].style.backgroundColor = "lightblue";
-            }, i*20);
+            }, i*30);
         }
              
     }
@@ -209,26 +209,37 @@ class SortingVisualizer extends React.Component {
         for(let i = 0; i < arr.length ; i++){
             setTimeout(()=>{
                 let temp = arr[i],
-                pos = i;
+                pos = i,
+                isFirstEntry = true;
 
-                array_bar[i].style.backgroundColor = 'blue';
-
+                array_bar[i].style.backgroundColor = 'red';
                 for(;pos>0;pos--){
                     if(temp<arr[pos-1]){
                         arr[pos] = arr[pos-1];
                         array_bar[pos].style.height = `${arr[pos]}px`;
+                        /*if(isFirstEntry){
+                            array_bar[pos-1].style.backgroundColor = 'yellow';
+                            isFirstEntry = false;
+                        }
+                        else{ 
+                            array_bar[pos+1].style.backgroundColor = 'lightblue';
+                            array_bar[pos].style.backgroundColor = 'yellow';
+                        }*/
                     }
                     else{
+                        //array_bar[pos].style.backgroundColor = 'yellow';
+                        //isFirstEntry = true;
                         break;
                     }
                 }
                     
                 arr[pos] = temp;
                 array_bar[pos].style.height = `${arr[pos]}px`;
+                array_bar[pos].style.backgroundColor = 'green';
 
-                setTimeout(()=>{array_bar[i].style.backgroundColor = 'lightblue';}, 300);
+                setTimeout(()=>{array_bar[i].style.backgroundColor = 'lightblue';}, 500);
                 
-            }, i*300);
+            }, i*500);
         }
     }
 
