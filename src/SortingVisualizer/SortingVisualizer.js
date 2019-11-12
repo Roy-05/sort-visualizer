@@ -80,7 +80,9 @@ class SortingVisualizer extends React.Component {
 
         const array_bar = document.getElementsByClassName('array-elem');
         for(let i=0;i<array.length;i++){
-            array_bar[i].style.backgroundColor = "lightblue";
+            setTimeout(()=>{
+                array_bar[i].style.backgroundColor = "lightblue";
+            }, i*10);
         }
              
     }
@@ -203,10 +205,11 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
-                    {array.map((value, idx) => (
-                        <div className = "array-elem" key = {idx} style = {{height: `${value}px`}}>
-                        </div>
-                    ))}
+                    {
+                        array.map((value, idx) => (
+                            <div className = "array-elem" key = {idx} style = {{height: `${value}px`}}></div>
+                        ))
+                    }
                 </div>
             </>
         );
