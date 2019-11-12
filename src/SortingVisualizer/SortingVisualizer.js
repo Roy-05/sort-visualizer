@@ -211,15 +211,18 @@ class SortingVisualizer extends React.Component {
                 let temp = arr[i],
                 pos = i;
 
-                array_bar[i].style.backgroundColor = 'red';
+                array_bar[i].style.backgroundColor = 'blue';
 
-                while(pos>0 && temp<arr[pos-1]){
-                    arr[pos] = arr[pos-1];
-                    array_bar[pos].style.height = `${arr[pos]}px`;
-
-                    pos -= 1;
-
+                for(;pos>0;pos--){
+                    if(temp<arr[pos-1]){
+                        arr[pos] = arr[pos-1];
+                        array_bar[pos].style.height = `${arr[pos]}px`;
+                    }
+                    else{
+                        break;
+                    }
                 }
+                    
                 arr[pos] = temp;
                 array_bar[pos].style.height = `${arr[pos]}px`;
 
