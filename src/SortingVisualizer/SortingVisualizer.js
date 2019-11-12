@@ -122,19 +122,23 @@ class SortingVisualizer extends React.Component {
                                 array_bar[j+1].style.backgroundColor = 'lightblue';
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }
-                            if(i===arr.length-2){
-                                array_bar[j+1].style.backgroundColor = 'green';
-                                setTimeout(()=>{
-                                    array_bar[j].style.backgroundColor = 'green';
-                                }, 4);
-                            }
                         }, 4);
+
+                        if(i===arr.length-2){
+                            setTimeout(()=>{
+                                array_bar[j+1].style.backgroundColor = 'green';                                    
+                            }, 400);
+
+                            setTimeout(()=>{
+                                array_bar[j].style.backgroundColor = 'green';                                    
+                            }, 800);
+                        }
                     }, j*4);
                 }
             },i*400);  
         }        
 
-        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+800);
+        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+2000);
 
     }    
 
@@ -189,7 +193,7 @@ class SortingVisualizer extends React.Component {
             }, i*400);
         }
 
-        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+800);
+        setTimeout(()=>{this.setState({sorted: true})}, arr.length*400+2000);
 
     }
 
