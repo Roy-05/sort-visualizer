@@ -54,7 +54,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 75;
+            arraySize = 100;
         }
 
         return arraySize;
@@ -216,21 +216,29 @@ class SortingVisualizer extends React.Component {
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
                     timer = 0;
             
-                //This inserts the value of arr[pos] on index newPos, removing 0 elements
-                arr.splice(newPos,0,arr[pos]);
-                //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
-                arr.splice(pos+1,1);
-                
-                for(let j=pos; j>newPos; j--){
-                    setTimeout(()=>{
-                        array_bar[j].style.height = `${arr[j]}px`;
-                        array_bar[j-1].style.height = `${arr[newPos]}px`;
-                    }, timer*4);
+                if(newPos !== pos)
+                {
+                    //This inserts the value of arr[pos] on index newPos, removing 0 elements
+                    arr.splice(newPos,0,arr[pos]);
+                    //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
+                    arr.splice(pos+1,1);
+                    
+                    for(let j=pos; j>newPos; j--){
+                        setTimeout(()=>{
+                            array_bar[j].style.height = `${arr[j]}px`;
+                            array_bar[j-1].style.height = `${arr[newPos]}px`;
+                            array_bar[j-1].style.backgroundColor = 'lightblue';
+                        }, timer*4);
 
-                    timer++;
+                        timer++;
+                    }
+                    //array_bar[newPos].style.backgroundColor = 'lightblue';
+                }
+                else{
+                    array_bar[pos].style.backgroundColor = 'red';
                 }
                 console.log(arr);
-            }, i*300);
+            }, i*400);
         }
     }
 
