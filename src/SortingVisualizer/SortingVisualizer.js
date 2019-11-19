@@ -201,10 +201,10 @@ class SortingVisualizer extends React.Component {
 
     }
 
-    insertionSort(arr){
+    insertionSort(){
 
-       /* const arr = this.state.array,
-            array_bar = document.getElementsByClassName("array-elem");*/
+        const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem");
         
         for(let i=0; i<arr.length; i++){
 
@@ -216,11 +216,12 @@ class SortingVisualizer extends React.Component {
                 arr.splice(newPos,0,arr[pos]);
                 //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
                 arr.splice(pos+1,1);
+                console.log(arr);
+                for(let i=newPos;i<=pos;i++){
+                    array_bar[i].style.height = `${arr[i]}px`;                }
             }
+
         }
-
-        return arr;
-
     }
 
     insertionSortHelper(arr, pos){
