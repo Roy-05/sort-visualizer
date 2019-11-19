@@ -212,25 +212,25 @@ class SortingVisualizer extends React.Component {
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
                     timer = 0;
             
-                if(newPos !== pos){
-                    //This inserts the value of arr[pos] on index newPos, removing 0 elements
-                    arr.splice(newPos,0,arr[pos]);
-                    //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
-                    arr.splice(pos+1,1);
-                    
-                    for(let j=pos; j>=newPos; j--){
-                        //array_bar[j].style.backgroundColor = 'red';
-                        //array_bar[j-1].style.backgroundColor = 'red';
-                        setTimeout(()=>{
-                            array_bar[j].style.height = `${arr[j]}px`;
-                        }, timer*5);
-                        timer++;
-                    }
+                //This inserts the value of arr[pos] on index newPos, removing 0 elements
+                arr.splice(newPos,0,arr[pos]);
+                //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
+                arr.splice(pos+1,1);
+                
+                for(let j=pos; j>newPos; j--){
+                    setTimeout(()=>{
+                        array_bar[j].style.height = `${arr[j]}px`;
+                        array_bar[j-1].style.height = `${arr[newPos]}px`;
+                    }, timer*4);
+
+                    timer++;
                 }
+                console.log(arr);
             }, i*300);
         }
     }
 
+    //takes in an array and returns the index where the last element should inserted
     insertionSortHelper(arr, pos){
         let origPos = pos;
         while(pos>0 && arr[origPos]<arr[pos-1]){
