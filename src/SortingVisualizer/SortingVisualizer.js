@@ -201,31 +201,36 @@ class SortingVisualizer extends React.Component {
 
     }
 
-    insertionSort(){
+    insertionSort(arr){
 
-        const arr = this.state.array,
-            array_bar = document.getElementsByClassName("array-elem");
+       /* const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem");*/
         
-        for(let i = 0; i < arr.length ; i++){
-            setTimeout(()=>{
-                let temp = arr[i],
-                pos = i,
-                isFirstEntry = true;
+        for(let i=0; i<arr.length; i++){
 
-                array_bar[i].style.backgroundColor = 'red';
-                while(pos>0 && temp<arr[pos-1]){
-                    arr[pos] = arr[pos-1];
-                    array_bar[pos].style.height = `${arr[pos]}px`;
-                    pos -= 1;
-                }
-
-                arr[pos] = temp;
-                array_bar[pos].style.height = `${arr[pos]}px`;
-
-                setTimeout(()=>{array_bar[i].style.backgroundColor = 'lightblue';}, 500);
-                
-            }, i*500);
+            let pos = i,
+                newPos = this.insertionSortHelper(arr.slice(0,i+1), pos);
+            
+            if(newPos !== pos){
+                //This inserts the value of arr[pos] on index newPos, removing 0 elements
+                arr.splice(newPos,0,arr[pos]);
+                //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
+                arr.splice(pos+1,1);
+            }
         }
+
+        return arr;
+
+    }
+
+    insertionSortHelper(arr, pos){
+        let origPos = pos;
+        while(pos>0 && arr[origPos]<arr[pos-1]){
+            pos--;
+        }
+
+        return pos;
+
     }
 
     render(){
@@ -259,7 +264,7 @@ class SortingVisualizer extends React.Component {
     testAlgorithms(){
         for(let i= 0; i<100; i++){
             const arr = [];
-            for(let j=0; j< this.getRandomInt(1,1000); j++){
+            for(let j=0; j< this.getRandomInt(1,20); j++){
                 arr.push(this.getRandomInt(-1000,1000));
             }
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
