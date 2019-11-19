@@ -207,21 +207,22 @@ class SortingVisualizer extends React.Component {
             array_bar = document.getElementsByClassName("array-elem");
         
         for(let i=0; i<arr.length; i++){
-
-            let pos = i,
+            setTimeout(()=>{
+                let pos = i,
                 newPos = this.insertionSortHelper(arr.slice(0,i+1), pos);
             
-            if(newPos !== pos){
-                //This inserts the value of arr[pos] on index newPos, removing 0 elements
-                arr.splice(newPos,0,arr[pos]);
-                //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
-                arr.splice(pos+1,1);
-                
-                //THIS NEEDS TO BE CHANGED TO A MORE OPTIMAL SOLUTION
-                for(let i=newPos;i<=pos;i++){
-                    array_bar[i].style.height = `${arr[i]}px`;                }
-            }
-
+                if(newPos !== pos){
+                    //This inserts the value of arr[pos] on index newPos, removing 0 elements
+                    arr.splice(newPos,0,arr[pos]);
+                    //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
+                    arr.splice(pos+1,1);
+                    
+                    //THIS NEEDS TO BE CHANGED TO A MORE OPTIMAL SOLUTION
+                    for(let j=newPos;j<=pos;j++){
+                        array_bar[j].style.height = `${arr[j]}px`;                
+                    }
+                }
+            }, i*300);
         }
     }
 
