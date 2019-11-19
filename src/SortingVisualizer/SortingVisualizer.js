@@ -216,7 +216,8 @@ class SortingVisualizer extends React.Component {
                 arr.splice(newPos,0,arr[pos]);
                 //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
                 arr.splice(pos+1,1);
-                console.log(arr);
+                
+                //THIS NEEDS TO BE CHANGED TO A MORE OPTIMAL SOLUTION
                 for(let i=newPos;i<=pos;i++){
                     array_bar[i].style.height = `${arr[i]}px`;                }
             }
