@@ -208,6 +208,10 @@ class SortingVisualizer extends React.Component {
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
+                array_bar[i].style.backgroundColor = 'green'
+                if(i>0){
+                    array_bar[i-1].style.backgroundColor = 'lightblue'
+                }
                 let pos = i,
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
                     timer = 0;
