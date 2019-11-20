@@ -37,7 +37,7 @@ class SortingVisualizer extends React.Component {
                 isSorted: false
             });
 
-            this.resetArray();
+            this.setArray();
         }
     }
 
@@ -63,16 +63,46 @@ class SortingVisualizer extends React.Component {
         this.setState({array});
     }
 
-    resetArray(){
-        const array = [];
-        for(let i = 0; i<this.getArraySize(); i++){
-            array.push(this.getRandomInt(1,500))
-        }
+    sortCompleteAnimation(){
+        const array_bar = document.getElementsByClassName("array-elem"),
+            size = this.getArraySize(),
+            TIME = this.state.TIME; 
 
-        this.setState({array});
-             
+        setTimeout(()=>{
+            for(let i=size-1, counter =0; i>=0; i--, counter++){
+                setTimeout(()=>{
+                    array_bar[i].style.backgroundColor = "green";
+                }, counter*30);
+            }
+        }, (size+1)*TIME);
+
+        setTimeout(()=>{
+                [...array_bar].forEach(elem=>{
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "lightblue";
+                    }, 350);
+
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "green";
+                    }, 700);
+
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "lightblue";
+                    }, 1000);
+                })
+        }, size*(TIME+30) + 200); //200ms for delay
+
+        setTimeout(()=>{
+            this.setState({isSorted: true});
+        }, size*(TIME+30) + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
     }
+    
+    /**
+     * START OF SORTING ALGORITHM FUNCTIONS
+     */
 
+
+    //BUBBLE SORT ANIMATION FUNCTIONS(S)
     bubbleSort(){
         const arr = this.state.array,    
             array_bar = document.getElementsByClassName('array-elem');
@@ -128,8 +158,11 @@ class SortingVisualizer extends React.Component {
             this.setState({sorted: true})
         }, arr.length*400+1750);
 
-    }    
+    }
+    //END OF BUBBLE SORT ANIMATION FUNCTIONS(S)    
 
+
+    //SELECTION SORT ANIMATION FUNCTION(S)
     selectionSort(){
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem");
@@ -187,7 +220,10 @@ class SortingVisualizer extends React.Component {
         }, arr.length*400+1750);
 
     }
+    //END OF SELECTION SORT ANIMATION FUNCTIONS(S)
 
+
+    //INSERTION SORT ANIMATION FUNCTIONS(S)
     insertionSort(){
 
         //Disable nav buttons [AND TO HANDLE OTHER ACTIONS WHEN NEEDED]
@@ -279,41 +315,6 @@ class SortingVisualizer extends React.Component {
         this.sortCompleteAnimation();
     }
 
-    sortCompleteAnimation(){
-        const array_bar = document.getElementsByClassName("array-elem"),
-            size = this.getArraySize(),
-            TIME = this.state.TIME; 
-
-        setTimeout(()=>{
-            for(let i=size-1, counter =0; i>=0; i--, counter++){
-                setTimeout(()=>{
-                    array_bar[i].style.backgroundColor = "green";
-                }, counter*30);
-            }
-        }, (size+1)*TIME);
-
-        setTimeout(()=>{
-                [...array_bar].forEach(elem=>{
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = "lightblue";
-                    }, 350);
-
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = "green";
-                    }, 700);
-
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = "lightblue";
-                    }, 1000);
-                })
-        }, size*(TIME+30) + 200); //200ms for delay
-
-        setTimeout(()=>{
-            this.setState({isSorted: true});
-        }, size*(TIME+30) + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
-    }
-    
-
     //takes in an array and returns the index where the last element should inserted
     insertionSortHelper(arr, pos){
         let origPos = pos;
@@ -322,7 +323,15 @@ class SortingVisualizer extends React.Component {
         }
 
         return pos;
-    }
+    }   
+    //END OF INSERTION SORT ANIMATION FUNCTIONS(S)
+
+
+    /**
+     * END OF SORTING ALGORITHM FUNCTIONS
+     */
+
+
 
     render(){
         const {array} = this.state;
