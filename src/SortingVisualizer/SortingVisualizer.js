@@ -209,9 +209,8 @@ class SortingVisualizer extends React.Component {
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
                 let pos = i,
-                    newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
-                    timer = 0;
-            
+                    newPos = this.insertionSortHelper(arr.slice(0,i+1), pos);
+
                 if(newPos !== pos)
                 {
                     //This inserts the value of arr[pos] on index newPos, removing 0 elements
@@ -223,31 +222,46 @@ class SortingVisualizer extends React.Component {
                     */
                     arr.splice(pos+1,1);
                     
-                    for(let j=pos; j>newPos; j--){
+                    for(let j=pos, timer=0; j>newPos; j--, timer++){
                         setTimeout(()=>{
-                            array_bar[j].style.height = `${arr[j]}px`;
-                            array_bar[j-1].style.height = `${arr[newPos]}px`;
-                            array_bar[j-1].style.backgroundColor = 'red'
-                            setTimeout(()=>{
-                                array_bar[j-1].style.backgroundColor = 'lightblue';
-                            }, (400/(pos-newPos)));
-                        }, timer*(400/(pos-newPos)));    
-                        
+                            array_bar[j-1].style.backgroundColor = 'red';
+                            array_bar[j].style.backgroundColor = 'blue';
 
-                        timer++;
+                            setTimeout(()=>{
+                                array_bar[j].style.height = `${arr[j]}px`;
+                                array_bar[j-1].style.height = `${arr[newPos]}px`;
+                            }, (250/(pos-newPos)));
+
+                            setTimeout(()=>{
+
+                                array_bar[j].style.backgroundColor = 'lightblue' ;
+                                if(j===newPos+1){
+                                    array_bar[newPos].style.backgroundColor = 'lightblue';
+                                }
+                            }, (500/(pos-newPos)));
+
+                        
+                        }, timer*(500/(pos-newPos)));    
                     }
-                    array_bar[newPos].style.backgroundColor = 'lightblue';
                 }
                 else{
                     array_bar[pos].style.backgroundColor = 'red';
+                    setTimeout(()=>{
+                        array_bar[pos].style.backgroundColor = 'lightblue';
+                    }, 150);
+                    setTimeout(()=>{
+                        array_bar[pos].style.backgroundColor = 'red';
+                    }, 300);
+                    setTimeout(()=>{
+                        array_bar[pos].style.backgroundColor = 'lightblue';
+                    }, 500);
                 }
 
-                array_bar[i].style.backgroundColor = 'green';
+                /*array_bar[i].style.backgroundColor = 'green';
                 if(i>0){
                     array_bar[i-1].style.backgroundColor = 'lightblue';
-                }
-                console.log(arr);
-            }, i*400);
+                }*/
+            }, i*500);
         }
     }
 
