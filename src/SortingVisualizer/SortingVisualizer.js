@@ -146,14 +146,16 @@ class SortingVisualizer extends React.Component {
 
     //SELECTION SORT ANIMATION FUNCTION(S)
     selectionSort(){
+
+        this.setState({startedSort: true});
+
         const arr = this.state.array,
-            array_bar = document.getElementsByClassName("array-elem");
-        
-        this.setState({startedSelectionSort: true});
+            array_bar = document.getElementsByClassName("array-elem"),
+            TIME = this.state.TIME;
 
         for(let i=0; i<arr.length-1; i++){
-            let minimum = i; //Declare minimum here
             setTimeout(()=>{
+                let minimum =i;
                 for(let j = i+1; j<arr.length; j++){
                     setTimeout(()=>{
                         //Getting a warning for these references:
@@ -167,8 +169,8 @@ class SortingVisualizer extends React.Component {
                             else{
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }  
-                        }, 4);
-                    }, (j-1)*4);    
+                        }, TIME/(arr.length-i-1));
+                    }, (j-1)*TIME/(arr.length-i-1));    
                 }
                 setTimeout(()=>{
                     let temp = arr[i],
@@ -180,26 +182,13 @@ class SortingVisualizer extends React.Component {
 
                     array_bar[i].style.height = `${arr1_height}px`;
                     array_bar[minimum].style.height = `${arr2_height}px`;
-    
-                    array_bar[i].style.backgroundColor = "green";
-                    if(i !== minimum){
-                        array_bar[minimum].style.backgroundColor = 'lightblue';
-                    }
-                }, 400);
-                
 
-                if(i === arr.length-2){
-                    setTimeout(()=>{
-                        array_bar[i+1].style.backgroundColor = "green";
-                    },800);
-                }
+                }, TIME);
 
-            }, i*400);
+            }, i*TIME);
         }
 
-        setTimeout(()=>{
-            this.setState({sorted: true})
-        }, arr.length*400+1750);
+        this.sortCompleteAnimation();
 
     }
     //END OF SELECTION SORT ANIMATION FUNCTIONS(S)
