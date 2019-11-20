@@ -33,6 +33,7 @@ class SortingVisualizer extends React.Component {
         }
 
         if(this.state.sorted){
+            
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = false;
             });
@@ -76,13 +77,6 @@ class SortingVisualizer extends React.Component {
         }
 
         this.setState({array});
-
-        const array_bar = document.getElementsByClassName('array-elem');
-        for(let i=0;i<array.length;i++){
-            setTimeout(()=>{
-                array_bar[i].style.backgroundColor = "lightblue";
-            }, i*30);
-        }
              
     }
 
@@ -208,6 +202,7 @@ class SortingVisualizer extends React.Component {
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
+                
                 let pos = i,
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos);
 
@@ -233,8 +228,8 @@ class SortingVisualizer extends React.Component {
                             }, (250/(pos-newPos)));
 
                             setTimeout(()=>{
-
                                 array_bar[j].style.backgroundColor = 'lightblue' ;
+                                
                                 if(j===newPos+1){
                                     array_bar[newPos].style.backgroundColor = 'lightblue';
                                 }
@@ -245,22 +240,18 @@ class SortingVisualizer extends React.Component {
                     }
                 }
                 else{
-                    array_bar[pos].style.backgroundColor = 'red';
+                    array_bar[i].style.backgroundColor = 'red';
                     setTimeout(()=>{
-                        array_bar[pos].style.backgroundColor = 'lightblue';
+                        array_bar[i].style.backgroundColor = 'lightblue';
                     }, 150);
                     setTimeout(()=>{
-                        array_bar[pos].style.backgroundColor = 'red';
+                        array_bar[i].style.backgroundColor = 'red';
                     }, 300);
                     setTimeout(()=>{
-                        array_bar[pos].style.backgroundColor = 'lightblue';
-                    }, 500);
+                        array_bar[i].style.backgroundColor = 'lightblue';
+                    }, 450);
                 }
 
-                /*array_bar[i].style.backgroundColor = 'green';
-                if(i>0){
-                    array_bar[i-1].style.backgroundColor = 'lightblue';
-                }*/
             }, i*500);
         }
     }
