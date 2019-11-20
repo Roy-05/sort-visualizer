@@ -158,7 +158,6 @@ class SortingVisualizer extends React.Component {
                 let minimum =i;
                 for(let j = i+1; j<arr.length; j++){
                     setTimeout(()=>{
-                        //Getting a warning for these references:
                         array_bar[j].style.backgroundColor = 'red';
                         array_bar[minimum].style.backgroundColor = 'blue';
                         setTimeout(()=>{
@@ -169,8 +168,8 @@ class SortingVisualizer extends React.Component {
                             else{
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }  
-                        }, TIME/(arr.length-i-1));
-                    }, (j-1)*TIME/(arr.length-i-1));    
+                        }, 4);
+                    }, j*4);    
                 }
                 setTimeout(()=>{
                     let temp = arr[i],
@@ -182,6 +181,7 @@ class SortingVisualizer extends React.Component {
 
                     array_bar[i].style.height = `${arr1_height}px`;
                     array_bar[minimum].style.height = `${arr2_height}px`;
+                    array_bar[minimum].style.backgroundColor = 'lightblue';
 
                 }, TIME);
 
@@ -310,7 +310,7 @@ class SortingVisualizer extends React.Component {
         return( 
             <>  
                 <nav className = "navbar">
-                    <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.resetArray()}}>Generate New Array</button>
+                    <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.setArray()}}>Generate New Array</button>
                     <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
