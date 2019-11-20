@@ -251,9 +251,37 @@ class SortingVisualizer extends React.Component {
                         array_bar[i].style.backgroundColor = 'lightblue';
                     }, 450);
                 }
-
             }, i*500);
         }
+
+        setTimeout(()=>{
+            for(let i=arr.length-1, counter =0; i>=0; i--, counter++){
+                setTimeout(()=>{
+                    array_bar[i].style.backgroundColor = "green";
+                }, counter*30);
+            }
+        }, (arr.length+1)*500);
+
+        setTimeout(()=>{
+                [...array_bar].forEach(elem=>{
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "lightblue";
+                    }, 350);
+
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "green";
+                    }, 700);
+
+                    setTimeout(()=>{
+                        elem.style.backgroundColor = "lightblue";
+                    }, 1000);
+                })
+        }, arr.length*530 + 200);
+
+        setTimeout(()=>{
+            this.resetArray();
+        }, arr.length*530 + 1700);
+
     }
 
     //takes in an array and returns the index where the last element should inserted
