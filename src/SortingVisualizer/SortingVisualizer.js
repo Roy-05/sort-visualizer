@@ -281,14 +281,21 @@ class SortingVisualizer extends React.Component {
             }, i*TIME);
         }
 
+        this.sortCompleteAnimation();
+    }
+
+    sortCompleteAnimation(){
+        const array_bar = document.getElementsByClassName("array-elem"),
+            size = this.getArraySize(),
+            TIME = this.state.TIME; 
 
         setTimeout(()=>{
-            for(let i=arr.length-1, counter =0; i>=0; i--, counter++){
+            for(let i=size-1, counter =0; i>=0; i--, counter++){
                 setTimeout(()=>{
                     array_bar[i].style.backgroundColor = "green";
                 }, counter*30);
             }
-        }, (arr.length+1)*500);
+        }, (size+1)*TIME);
 
         setTimeout(()=>{
                 [...array_bar].forEach(elem=>{
@@ -304,12 +311,11 @@ class SortingVisualizer extends React.Component {
                         elem.style.backgroundColor = "lightblue";
                     }, 1000);
                 })
-        }, arr.length*530 + 200);
+        }, size*(TIME+30) + 200); //200ms for delay
 
         setTimeout(()=>{
             this.resetArray();
-        }, arr.length*530 + 1700);
-
+        }, size*(TIME+30) + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
     }
     
 
@@ -321,7 +327,6 @@ class SortingVisualizer extends React.Component {
         }
 
         return pos;
-
     }
 
     render(){
