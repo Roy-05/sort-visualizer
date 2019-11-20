@@ -69,10 +69,10 @@ class SortingVisualizer extends React.Component {
             TIME = this.state.TIME; 
 
         setTimeout(()=>{
-            for(let i=size-1, counter =0; i>=0; i--, counter++){
+            for(let i=0; i<size; i++){
                 setTimeout(()=>{
                     array_bar[i].style.backgroundColor = "green";
-                }, counter*30);
+                }, i*30);
             }
         }, (size+1)*TIME);
 
@@ -104,59 +104,41 @@ class SortingVisualizer extends React.Component {
 
     //BUBBLE SORT ANIMATION FUNCTIONS(S)
     bubbleSort(){
+        this.setState({startedSort: true});
+
         const arr = this.state.array,    
-            array_bar = document.getElementsByClassName('array-elem');
+            array_bar = document.getElementsByClassName('array-elem'),
+            TIME = this.state.TIME;
 
-        this.setState({startedBubbleSort: true});
-
-        for(let i =0; i<arr.length-1; i++){
+        for(let i =0; i<arr.length; i++){
             setTimeout(()=>{ 
-                if(i===0){
-                    setTimeout(()=>{array_bar[arr.length-i-1].style.backgroundColor = 'green';},400)
-                }
-                else{
-                    array_bar[arr.length-i].style.backgroundColor = 'green';
-                }
                 for(let j=0; j<arr.length-i-1; j++){
                     setTimeout(()=>{
-                        array_bar[j+1].style.backgroundColor = 'red';
+                        array_bar[j+1].style.backgroundColor = 'blue';
                         array_bar[j].style.backgroundColor = 'red';
                         setTimeout(()=>{
                             if(arr[j] > arr[j+1]){
                             
-                                let temp = arr[j],
-                                    arr1_height = arr[j],
-                                    arr2_height = arr[j+1];
+                                let temp = arr[j];
                                 arr[j] = arr[j+1];
                                 arr[j+1] = temp;
-                                array_bar[j].style.height = `${arr2_height}px`;
-                                array_bar[j+1].style.height = `${arr1_height}px`;
-                                array_bar[j+1].style.backgroundColor = 'green';
+                                array_bar[j].style.height = `${arr[j]}px`;
+                                array_bar[j+1].style.height = `${arr[j+1]}px`;
+
+                                array_bar[j+1].style.backgroundColor = 'lightblue';
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }
                             else{
                                 array_bar[j+1].style.backgroundColor = 'lightblue';
                                 array_bar[j].style.backgroundColor = 'lightblue';
                             }
-                        }, 4);
-
-                        if(i===arr.length-2){
-                            setTimeout(()=>{
-                                array_bar[j+1].style.backgroundColor = 'green';                                    
-                            }, 400);
-
-                            setTimeout(()=>{
-                                array_bar[j].style.backgroundColor = 'green';                                    
-                            }, 800);
-                        }
-                    }, j*4);
+                        }, TIME/(arr.length-i-1));
+                    }, j*TIME/(arr.length-i-1));
                 }
-            },i*400);  
+            },i*TIME);  
         }        
 
-        setTimeout(()=>{
-            this.setState({sorted: true})
-        }, arr.length*400+1750);
+        this.sortCompleteAnimation();
 
     }
     //END OF BUBBLE SORT ANIMATION FUNCTIONS(S)    
