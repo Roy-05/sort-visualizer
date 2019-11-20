@@ -208,10 +208,6 @@ class SortingVisualizer extends React.Component {
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
-                array_bar[i].style.backgroundColor = 'green';
-                if(i>0){
-                    array_bar[i-1].style.backgroundColor = 'lightblue';
-                }
                 let pos = i,
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
                     timer = 0;
@@ -234,8 +230,8 @@ class SortingVisualizer extends React.Component {
                             array_bar[j-1].style.backgroundColor = 'red'
                             setTimeout(()=>{
                                 array_bar[j-1].style.backgroundColor = 'lightblue';
-                            }, 8);
-                        }, timer*8);    
+                            }, (400/(pos-newPos)));
+                        }, timer*(400/(pos-newPos)));    
                         
 
                         timer++;
@@ -245,8 +241,13 @@ class SortingVisualizer extends React.Component {
                 else{
                     array_bar[pos].style.backgroundColor = 'red';
                 }
+
+                array_bar[i].style.backgroundColor = 'green';
+                if(i>0){
+                    array_bar[i-1].style.backgroundColor = 'lightblue';
+                }
                 console.log(arr);
-            }, i*600);
+            }, i*400);
         }
     }
 
