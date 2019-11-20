@@ -7,9 +7,8 @@ class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
-            startedBubbleSort: false,
-            startedSelectionSort: false,
-            sorted: false,
+            startedSort: false,
+            isSorted: false,
             TIME: 500
         };
     }
@@ -21,28 +20,21 @@ class SortingVisualizer extends React.Component {
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
     
-        if(this.state.startedBubbleSort ){
+        if(this.state.startedSort ){
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = true;
             });
         }
 
-        if(this.state.startedSelectionSort){
-            [...nav_btn].forEach((btn)=>{
-                btn.disabled = true;
-            });
-        }
-
-        if(this.state.sorted){
+        if(this.state.isSorted){
             
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = false;
             });
 
             this.setState({
-                startedBubbleSort: false,
-                startedSelectionSort: false,
-                sorted: false
+                startedSort: false,
+                isSorted: false
             });
 
             this.resetArray();
@@ -198,6 +190,9 @@ class SortingVisualizer extends React.Component {
 
     insertionSort(){
 
+        //Disable nav buttons [AND TO HANDLE OTHER ACTIONS WHEN NEEDED]
+        this.setState({startedSort: true});
+
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME;
@@ -314,7 +309,7 @@ class SortingVisualizer extends React.Component {
         }, size*(TIME+30) + 200); //200ms for delay
 
         setTimeout(()=>{
-            this.resetArray();
+            this.setState({isSorted: true});
         }, size*(TIME+30) + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
     }
     
