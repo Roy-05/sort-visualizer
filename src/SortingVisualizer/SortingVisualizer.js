@@ -54,7 +54,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 100;
+            arraySize = 75;
         }
 
         return arraySize;
@@ -208,9 +208,9 @@ class SortingVisualizer extends React.Component {
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
-                array_bar[i].style.backgroundColor = 'green'
+                array_bar[i].style.backgroundColor = 'green';
                 if(i>0){
-                    array_bar[i-1].style.backgroundColor = 'lightblue'
+                    array_bar[i-1].style.backgroundColor = 'lightblue';
                 }
                 let pos = i,
                     newPos = this.insertionSortHelper(arr.slice(0,i+1), pos),
@@ -220,25 +220,33 @@ class SortingVisualizer extends React.Component {
                 {
                     //This inserts the value of arr[pos] on index newPos, removing 0 elements
                     arr.splice(newPos,0,arr[pos]);
-                    //This removes 1 element from the array starting at pos+1 [+1 because a new element is added]
+
+                    /*
+                    This removes 1 element from the array starting at pos+1 
+                    [+1 because a new element is added in the previous line]
+                    */
                     arr.splice(pos+1,1);
                     
                     for(let j=pos; j>newPos; j--){
                         setTimeout(()=>{
                             array_bar[j].style.height = `${arr[j]}px`;
                             array_bar[j-1].style.height = `${arr[newPos]}px`;
-                            array_bar[j-1].style.backgroundColor = 'lightblue';
-                        }, timer*4);
+                            array_bar[j-1].style.backgroundColor = 'red'
+                            setTimeout(()=>{
+                                array_bar[j-1].style.backgroundColor = 'lightblue';
+                            }, 8);
+                        }, timer*8);    
+                        
 
                         timer++;
                     }
-                    //array_bar[newPos].style.backgroundColor = 'lightblue';
+                    array_bar[newPos].style.backgroundColor = 'lightblue';
                 }
                 else{
                     array_bar[pos].style.backgroundColor = 'red';
                 }
                 console.log(arr);
-            }, i*400);
+            }, i*600);
         }
     }
 
