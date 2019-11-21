@@ -49,7 +49,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 50;
+            arraySize = 75;
         }
 
         return arraySize;
@@ -301,81 +301,73 @@ class SortingVisualizer extends React.Component {
 
 
     // QUICKSORT ANIMATION FUNCTIONS(S)
-    quickSortAlg(){
+    quickSort(){
 
-        const arr = this.state.array,
+        const arrCopy = [...this.state.array],  //Create a copy of the original array for manipulations
             start = 0,
-            end = arr.length - 1;
+            end = arrCopy.length - 1,
+            animations = [];
 
-        this.quickSort(arr, start, end);
+        this.quickSortRecursive(arrCopy, start, end, animations);
 
-        //console.log(this.state.animations);
-        this.animateQSort();
+        this.animateQSort( animations);
 
     }
 
-    quickSort(arr, start, end){
+    quickSortRecursive(arr, start, end, animations){
         if(start >= end){
             return;
         }
 
-        let pivotIndex = this.partition(arr, start, end);
-        this.quickSort(arr, start, pivotIndex-1);
-        this.quickSort(arr, pivotIndex+1, end);
+        let pivotIndex = this.partition(arr, start, end, animations);
+        this.quickSortRecursive(arr, start, pivotIndex-1, animations);
+        this.quickSortRecursive(arr, pivotIndex+1, end, animations);
     }
 
-    partition(arr, start, end){
-
-        const array_bar = document.getElementsByClassName("array-elem");
+    partition(arr, start, end, animations){
 
         let pivotValue = arr[end],
-            i = start,
-            timer = end-start,
-            local_animations = [],
-            animations = this.state.animations;
+            i = start;
 
-        local_animations.push(`pivot index is: ${i}`)
-        for(let j=start, counter=0; j<end, counter<=timer; j++, counter++){
+        for(let j=start; j<end; j++){
             if(arr[j] < pivotValue){
-                local_animations.push(`swap arr[${j}] and arr[${i}]`);
-                let temp = arr[j];
-                arr[j] = arr[i];
-                arr[i] = temp;
-
-                array_bar[j].style.height = `${arr[j]}px`;
-                array_bar[i].style.height = `${arr[i]}px`;
-
+                animations.push([j,i]);
+                
+                this.swap(arr, j, i);
                 i++
             }     
         }
-
-        local_animations.push("left inner loop", `swap arr[${i}] and arr[${end}]`, "marker");
-
-        let temp = arr[end];
-        arr[end] = arr[i];
-        arr[i] = temp;
-
-        local_animations.forEach(elem=>{
-            animations.push(elem);
-        });
-        this.setState({animations});
-
-        array_bar[end].style.height = `${arr[end]}px`;
-        array_bar[i].style.height = `${arr[i]}px`;
-
+        
+        animations.push([i,end]);
+        this.swap(arr, i, end);
+        
         return i; 
     }
 
-    animateQSort(){
-        const animations = this.state.animations;
-        let markerIndexes = [];
-        for(let i = 0; i < animations.length; i++){
-            if (animations[i] === "marker"){
-                markerIndexes.push(i);
+    animateQSort(animations){
+
+        const array_bar = document.getElementsByClassName("array-elem"),
+            arr = this.state.array;
+        
+        /*for(let i = 0; i < animations.length; i++){
+            if (animations[i].match(/\d+ \d+/)){
+                let elems = animations[i].split(' ').map(x => parseInt(x, 10));
+                swapIndexes.push(elems);
             }
+        }*/
+
+        for(let j=0; j<animations.length; j++){
+            setTimeout(()=>{
+                let idx1 = animations[j][0],
+                idx2 = animations[j][1];
+        
+                this.swap(arr, idx1, idx2);
+            
+                array_bar[idx1].style.height = `${arr[idx1]}px`;
+                array_bar[idx2].style.height = `${arr[idx2]}px`;
+            }, j*20);
         }
 
-        console.log(animations);
     }
     //END OF QUICKSORT ANIMATION FUNCTIONS(S)
 
@@ -395,7 +387,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
-                    <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSortAlg()}}>Quick Sort</button>
+                    <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
                     <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
