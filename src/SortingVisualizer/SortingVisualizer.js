@@ -126,10 +126,6 @@ class SortingVisualizer extends React.Component {
                         setTimeout(()=>{
                             if(arr[j] > arr[j+1]){
 
-                                // let temp = arr[j];
-                                // arr[j] = arr[j+1];
-                                // arr[j+1] = temp;
-
                                 this.swap(arr, j, j+1);
 
                                 array_bar[j].style.height = `${arr[j]}px`;
@@ -182,15 +178,11 @@ class SortingVisualizer extends React.Component {
                     }, j*4);    
                 }
                 setTimeout(()=>{
-                    let temp = arr[i],
-                    arr1_height = arr[minimum],
-                    arr2_height = arr[i];
 
-                    arr[i] = arr[minimum];
-                    arr[minimum] = temp;
+                    this.swap(arr, i, minimum)
 
-                    array_bar[i].style.height = `${arr1_height}px`;
-                    array_bar[minimum].style.height = `${arr2_height}px`;
+                    array_bar[i].style.height = `${arr[i]}px`;
+                    array_bar[minimum].style.height = `${arr[minimum]}px`;
                     array_bar[minimum].style.backgroundColor = 'lightblue';
 
                 }, TIME);
@@ -342,6 +334,7 @@ class SortingVisualizer extends React.Component {
             local_animations = [],
             animations = this.state.animations;
 
+        local_animations.push(`pivot index is: ${i}`)
         for(let j=start, counter=0; j<end, counter<=timer; j++, counter++){
             if(arr[j] < pivotValue){
                 local_animations.push(`swap arr[${j}] and arr[${i}]`);
@@ -356,7 +349,7 @@ class SortingVisualizer extends React.Component {
             }     
         }
 
-        local_animations.push(`swap arr[${i}] and arr[${end}]`,"marker");
+        local_animations.push("left inner loop", `swap arr[${i}] and arr[${end}]`, "marker");
 
         let temp = arr[end];
         arr[end] = arr[i];
@@ -382,7 +375,7 @@ class SortingVisualizer extends React.Component {
             }
         }
 
-        console.log(markerIndexes);
+        console.log(animations);
     }
     //END OF QUICKSORT ANIMATION FUNCTIONS(S)
 
