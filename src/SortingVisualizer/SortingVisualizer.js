@@ -98,8 +98,8 @@ class SortingVisualizer extends React.Component {
     }
     
     /**
-     * START OF SORTING ALGORITHM FUNCTIONS
-     */
+    * START OF SORTING ALGORITHM FUNCTIONS
+    */
 
 
     //BUBBLE SORT ANIMATION FUNCTIONS(S)
@@ -118,10 +118,11 @@ class SortingVisualizer extends React.Component {
                         array_bar[j].style.backgroundColor = 'red';
                         setTimeout(()=>{
                             if(arr[j] > arr[j+1]){
-                            
+
                                 let temp = arr[j];
                                 arr[j] = arr[j+1];
                                 arr[j+1] = temp;
+
                                 array_bar[j].style.height = `${arr[j]}px`;
                                 array_bar[j+1].style.height = `${arr[j+1]}px`;
 
@@ -298,12 +299,56 @@ class SortingVisualizer extends React.Component {
     //END OF INSERTION SORT ANIMATION FUNCTIONS(S)
 
 
+    // QUICKSORT ANIMATION FUNCTIONS(S)
+    quickSortAlg(){
+
+        const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem"),
+            start = 0,
+            end = arr.length - 1;
+
+        this.quickSort(arr, start, end);
+
+        for(let i=0; i<=end; i++){
+            array_bar[i].style.height = `${arr[i]}px`;
+        }
+    }
+
+    quickSort(arr, start, end){
+        if(start >= end){
+            return;
+        }
+
+        let pivotIndex = this.partition(arr, start, end);
+        this.quickSort(arr, start, pivotIndex-1);
+        this.quickSort(arr, pivotIndex+1, end);
+    }
+
+    partition(arr, start, end){
+        let pivotValue = arr[end],
+            i = start - 1;
+        for(let j=start; j<end; j++){
+            if(arr[j] < pivotValue){
+                i++;
+                let temp = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp;
+            }
+        }
+        let temp = arr[end];
+        arr[end] = arr[i+1];
+        arr[i+1] = temp;
+
+        return i+1;
+    }
+    //END OF QUICKSORT ANIMATION FUNCTIONS(S)
+
+
     /**
-     * END OF SORTING ALGORITHM FUNCTIONS
-     */
-
-
-
+    * END OF SORTING ALGORITHM FUNCTIONS
+    */
+    
+    
     render(){
         const {array} = this.state;
         
@@ -314,6 +359,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
+                    <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSortAlg()}}>Quick Sort</button>
                     <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
@@ -341,10 +387,11 @@ class SortingVisualizer extends React.Component {
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
                 //bSortedArray = bubbleSortAlg(arr),
                 //sSortedArray = this.selectionSort(arr),
-                iSortedArray = this.insertionSort(arr);
+                //iSortedArray = this.insertionSort(arr),
+                qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1);
 
 
-            console.log(this.arraysAreEqual(jsSortedArr, iSortedArray));
+            console.log(this.arraysAreEqual(jsSortedArr, qSortedArray));
         }
     }
 
