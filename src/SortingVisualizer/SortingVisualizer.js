@@ -411,7 +411,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
-                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
+                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}} disabled>Test!</button>
                 </nav>
                 <div className="array-container">
                     {
