@@ -7,6 +7,7 @@ class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
+            animations: [],
             startedSort: false,
             isSorted: false,
             TIME: 500
@@ -48,7 +49,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 75;
+            arraySize = 50;
         }
 
         return arraySize;
@@ -96,6 +97,12 @@ class SortingVisualizer extends React.Component {
             this.setState({isSorted: true});
         }, size*(TIME+30) + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
     }
+
+    swap(arr, i, j){
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
     
     /**
     * START OF SORTING ALGORITHM FUNCTIONS
@@ -119,9 +126,11 @@ class SortingVisualizer extends React.Component {
                         setTimeout(()=>{
                             if(arr[j] > arr[j+1]){
 
-                                let temp = arr[j];
-                                arr[j] = arr[j+1];
-                                arr[j+1] = temp;
+                                // let temp = arr[j];
+                                // arr[j] = arr[j+1];
+                                // arr[j+1] = temp;
+
+                                this.swap(arr, j, j+1);
 
                                 array_bar[j].style.height = `${arr[j]}px`;
                                 array_bar[j+1].style.height = `${arr[j+1]}px`;
@@ -303,15 +312,14 @@ class SortingVisualizer extends React.Component {
     quickSortAlg(){
 
         const arr = this.state.array,
-            array_bar = document.getElementsByClassName("array-elem"),
             start = 0,
             end = arr.length - 1;
 
         this.quickSort(arr, start, end);
 
-        for(let i=0; i<=end; i++){
-            array_bar[i].style.height = `${arr[i]}px`;
-        }
+        //console.log(this.state.animations);
+        this.animateQSort();
+
     }
 
     quickSort(arr, start, end){
@@ -325,21 +333,56 @@ class SortingVisualizer extends React.Component {
     }
 
     partition(arr, start, end){
+
+        const array_bar = document.getElementsByClassName("array-elem");
+
         let pivotValue = arr[end],
-            i = start - 1;
-        for(let j=start; j<end; j++){
+            i = start,
+            timer = end-start,
+            local_animations = [],
+            animations = this.state.animations;
+
+        for(let j=start, counter=0; j<end, counter<=timer; j++, counter++){
             if(arr[j] < pivotValue){
-                i++;
+                local_animations.push(`swap arr[${j}] and arr[${i}]`);
                 let temp = arr[j];
                 arr[j] = arr[i];
                 arr[i] = temp;
+
+                array_bar[j].style.height = `${arr[j]}px`;
+                array_bar[i].style.height = `${arr[i]}px`;
+
+                i++
+            }     
+        }
+
+        local_animations.push(`swap arr[${i}] and arr[${end}]`,"marker");
+
+        let temp = arr[end];
+        arr[end] = arr[i];
+        arr[i] = temp;
+
+        local_animations.forEach(elem=>{
+            animations.push(elem);
+        });
+        this.setState({animations});
+
+        array_bar[end].style.height = `${arr[end]}px`;
+        array_bar[i].style.height = `${arr[i]}px`;
+
+        return i; 
+    }
+
+    animateQSort(){
+        const animations = this.state.animations;
+        let markerIndexes = [];
+        for(let i = 0; i < animations.length; i++){
+            if (animations[i] === "marker"){
+                markerIndexes.push(i);
             }
         }
-        let temp = arr[end];
-        arr[end] = arr[i+1];
-        arr[i+1] = temp;
 
-        return i+1;
+        console.log(markerIndexes);
     }
     //END OF QUICKSORT ANIMATION FUNCTIONS(S)
 
