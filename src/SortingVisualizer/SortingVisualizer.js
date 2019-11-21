@@ -7,7 +7,6 @@ class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
-            animations: [],
             startedSort: false,
             isSorted: false,
             TIME: 500
@@ -109,7 +108,7 @@ class SortingVisualizer extends React.Component {
     */
 
 
-    //BUBBLE SORT ANIMATION FUNCTIONS(S)
+    //BUBBLE SORT ANIMATION FUNCTION(S)
     bubbleSort(){
         this.setState({startedSort: true});
 
@@ -147,7 +146,7 @@ class SortingVisualizer extends React.Component {
         this.sortCompleteAnimation(arr.length);
 
     }
-    //END OF BUBBLE SORT ANIMATION FUNCTIONS(S)    
+    //END OF BUBBLE SORT ANIMATION FUNCTION(S)    
 
 
     //SELECTION SORT ANIMATION FUNCTION(S)
@@ -193,10 +192,10 @@ class SortingVisualizer extends React.Component {
         this.sortCompleteAnimation(arr.length);
 
     }
-    //END OF SELECTION SORT ANIMATION FUNCTIONS(S)
+    //END OF SELECTION SORT ANIMATION FUNCTION(S)
 
 
-    //INSERTION SORT ANIMATION FUNCTIONS(S)
+    //INSERTION SORT ANIMATION FUNCTION(S)
     insertionSort(){
 
         //Disable nav buttons [AND TO HANDLE OTHER ACTIONS WHEN NEEDED]
@@ -297,10 +296,10 @@ class SortingVisualizer extends React.Component {
 
         return pos;
     }   
-    //END OF INSERTION SORT ANIMATION FUNCTIONS(S)
+    //END OF INSERTION SORT ANIMATION FUNCTION(S)
 
 
-    // QUICKSORT ANIMATION FUNCTIONS(S)
+    // QUICKSORT ANIMATION FUNCTION(S)
     quickSort(){
 
         const arrCopy = [...this.state.array],  //Create a copy of the original array for manipulations
@@ -355,8 +354,6 @@ class SortingVisualizer extends React.Component {
         const array_bar = document.getElementsByClassName("array-elem"),
             arr = this.state.array,
             TIME = this.state.TIME;
-        
-        console.log(animations);
 
         for(let i=0; i <animations["counter"].length - 1; i++){
             console.log("break");
@@ -366,11 +363,11 @@ class SortingVisualizer extends React.Component {
                         let idx1 = animations["pos"][j][0],
                             idx2 = animations["pos"][j][1],
                             pivot = animations["pivot"][i][1];
-
-                        array_bar[pivot].style.backgroundColor = "green";
                         
                         array_bar[idx1].style.backgroundColor = "red";
                         array_bar[idx2].style.backgroundColor = "blue";
+
+                        array_bar[pivot].style.backgroundColor = "green";
 
                         this.swap(arr, idx1, idx2);
 
@@ -392,8 +389,70 @@ class SortingVisualizer extends React.Component {
     this.sortCompleteAnimation(animations["counter"].length - 1);
 
     }
-    //END OF QUICKSORT ANIMATION FUNCTIONS(S)
+    //END OF QUICKSORT ANIMATION FUNCTION(S)
 
+
+    //MERGESORT ANIMATION FUNCTION(S)
+    mergeSort(){
+        const arr = [...this.state.array],
+            start = 0,
+            end = arr.length-1,
+            array_bar = document.getElementsByClassName("array-elem");
+
+        this.mergeSortRecursive(arr,start, end);
+    
+        for(let i=0; i<=end;i++){
+            array_bar[i].style.height = `${arr[i]}px`;
+        }
+    }
+
+    mergeSortRecursive(arr, start, end){
+        if(start>=end){
+            return;
+        }
+
+        let mid = Math.floor((start+end)/2);
+
+        this.mergeSortRecursive(arr, start, mid);
+        this.mergeSortRecursive(arr, mid+1, end);
+        this.merge(arr, start, mid, end);
+    }
+
+    merge(arr, start, mid, end) {
+        let arr1Index = start,
+            arr2Index = mid +1,
+            tempArr = [],
+            tempArrIndex = 0;
+
+        for(let i = start; i<=end; i++){
+            if(arr1Index > mid){
+                tempArr[tempArrIndex] = arr[arr2Index];
+                tempArrIndex++;
+                arr2Index++;
+            }
+            else if(arr2Index > end){
+                tempArr[tempArrIndex] = arr[arr1Index];
+                tempArrIndex++;
+                arr1Index++;
+            }
+            else if(arr[arr1Index] < arr[arr2Index]){
+                tempArr[tempArrIndex] = arr[arr1Index];
+                tempArrIndex++;
+                arr1Index++;
+            }
+            else{
+                tempArr[tempArrIndex] = arr[arr2Index];
+                tempArrIndex++;
+                arr2Index++;
+            }
+        }
+
+        for(let i = 0; i<tempArrIndex;i++){
+            arr[start] = tempArr[i];
+            start++;
+        }
+    }
+    //END OF MERGESORT ANIMATION FUNCTION(S)
 
     /**
     * END OF SORTING ALGORITHM FUNCTIONS
@@ -411,7 +470,8 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
-                    {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
+                    <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
+                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
                     {
@@ -439,10 +499,11 @@ class SortingVisualizer extends React.Component {
                 //bSortedArray = bubbleSortAlg(arr),
                 //sSortedArray = this.selectionSort(arr),
                 //iSortedArray = this.insertionSort(arr),
-                qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1);
+                //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
+                mSortedArray = this.mergeSort(arr);
 
 
-            console.log(this.arraysAreEqual(jsSortedArr, qSortedArray));
+            console.log(this.arraysAreEqual(jsSortedArr, mSortedArray));
         }
     }
 
