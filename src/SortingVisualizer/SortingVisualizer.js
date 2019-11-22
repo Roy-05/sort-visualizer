@@ -358,7 +358,6 @@ class SortingVisualizer extends React.Component {
             TIME = this.state.TIME;
 
         for(let i=0; i <animations["counter"].length - 1; i++){
-            console.log("break");
             setTimeout(()=>{
                 for(let j=animations["counter"][i], t=0; j<animations["counter"][i+1]; j++, t++){
                     setTimeout(()=>{
@@ -404,7 +403,10 @@ class SortingVisualizer extends React.Component {
             end = arr.length-1,
             animations = {
                 "startPos": [],
-                "values": []
+                "values": [],
+                "endPos": [],
+                "midPos": [],
+                "comparisons": []
             };
 
         this.mergeSortRecursive(arr,start, end, animations);
@@ -428,25 +430,30 @@ class SortingVisualizer extends React.Component {
         let arr1Index = start,
             arr2Index = mid +1,
             tempArr = [],
-            tempArrIndex = 0;
+            tempArrIndex = 0,
+            comparisonsArr = [];
 
         for(let i = start; i<=end; i++){
             if(arr1Index > mid){
+                comparisonsArr.push([arr1Index, mid]);
                 tempArr[tempArrIndex] = arr[arr2Index];
                 tempArrIndex++;
                 arr2Index++;
             }
             else if(arr2Index > end){
+                comparisonsArr.push([arr2Index, end]);
                 tempArr[tempArrIndex] = arr[arr1Index];
                 tempArrIndex++;
                 arr1Index++;
             }
             else if(arr[arr1Index] < arr[arr2Index]){
+                comparisonsArr.push([arr1Index, arr2Index]);
                 tempArr[tempArrIndex] = arr[arr1Index];
                 tempArrIndex++;
                 arr1Index++;
             }
             else{
+                comparisonsArr.push([arr2Index, arr1Index]);
                 tempArr[tempArrIndex] = arr[arr2Index];
                 tempArrIndex++;
                 arr2Index++;
@@ -455,6 +462,9 @@ class SortingVisualizer extends React.Component {
 
         animations["startPos"].push(start);
         animations["values"].push(tempArr);
+        animations["midPos"].push(mid);
+        animations["endPos"].push(end);
+        animations["comparisons"].push(comparisonsArr);
         for(let i = 0; i<tempArrIndex;i++){
             arr[start] = tempArr[i];
             start++;
@@ -465,16 +475,40 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME;
-            
 
-        for(let i= 0; i<animations["startPos"].length; i++){
+            for(let i= 0; i<animations["startPos"].length; i++){
             setTimeout(()=>{
-                let startIndex = animations["startPos"][i],
+                let start = animations["startPos"][i],
                     arrLength = animations["values"][i].length;
-                for(let j= startIndex, t=0; j<(startIndex+arrLength); j++, t++){
+                for(let j= start, t=0; j<(start+arrLength); j++, t++){
                     setTimeout(()=>{
-                        arr[j] = animations["values"][i][t];
-                        array_bar[j].style.height = `${arr[j]}px`;
+                        let mid = animations["midPos"][i],
+                            end = animations["endPos"][i];
+                            // compare1 = animations["comparisons"][i][t][0],
+                            // compare2 = animations["comparisons"][i][t][1];
+                        
+                        array_bar[start].style.backgroundColor = "red";
+                        array_bar[mid].style.backgroundColor = "green";
+                        array_bar[end].style.backgroundColor = "blue";
+
+                        // array_bar[compare1].style.backgroundColor = "red";
+                        // array_bar[compare2].style.backgroundColor = "red";
+
+
+                        setTimeout(()=>{
+                            arr[j] = animations["values"][i][t]; 
+                            array_bar[j].style.height = `${arr[j]}px`;
+                        }, t*(TIME/(2*arrLength)));
+
+                        setTimeout(()=>{    
+                            array_bar[start].style.backgroundColor = "lightblue";
+                            array_bar[mid].style.backgroundColor = "lightblue";
+                            array_bar[end].style.backgroundColor = "lightblue";
+
+                            // array_bar[compare1].style.backgroundColor = "lightblue";
+                            // array_bar[compare1].style.backgroundColor = "lightblue";
+
+                        }, TIME);
                     },t*(TIME/arrLength));                   
                 }
             }, i*TIME);      
@@ -484,6 +518,7 @@ class SortingVisualizer extends React.Component {
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
 
+    
     /**
     * END OF SORTING ALGORITHM FUNCTIONS
     */
