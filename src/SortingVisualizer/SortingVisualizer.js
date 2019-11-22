@@ -302,6 +302,8 @@ class SortingVisualizer extends React.Component {
     // QUICKSORT ANIMATION FUNCTION(S)
     quickSort(){
 
+        this.setState({startedSort: true});
+
         const arrCopy = [...this.state.array],  //Create a copy of the original array for manipulations
             start = 0,
             end = arrCopy.length - 1,
@@ -394,6 +396,9 @@ class SortingVisualizer extends React.Component {
 
     //MERGESORT ANIMATION FUNCTION(S)
     mergeSort(){
+
+        this.setState({startedSort: true});
+
         const arr = [...this.state.array],
             start = 0,
             end = arr.length-1,
@@ -496,7 +501,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
                     <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
-                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
+                 {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
                 <div className="array-container">
                     {
