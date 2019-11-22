@@ -48,7 +48,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 10;
+            arraySize = 75;
         }
 
         return arraySize;
@@ -397,19 +397,12 @@ class SortingVisualizer extends React.Component {
         const arr = [...this.state.array],
             start = 0,
             end = arr.length-1,
-            array_bar = document.getElementsByClassName("array-elem"),
             animations = {
                 "startPos": [],
                 "values": []
             };
 
         this.mergeSortRecursive(arr,start, end, animations);
-
-        console.log(animations);
-    
-        // for(let i=0; i<=end;i++){
-        //     array_bar[i].style.height = `${arr[i]}px`;
-        // }
 
         this.animateMSort(animations);
     }
@@ -465,20 +458,24 @@ class SortingVisualizer extends React.Component {
 
     animateMSort(animations){
         const arr = this.state.array,
-            array_bar = document.getElementsByClassName("array-elem");
+            array_bar = document.getElementsByClassName("array-elem"),
+            TIME = this.state.TIME;
             
 
         for(let i= 0; i<animations["startPos"].length; i++){
-            for(let j=animations["startPos"][i]; 
-                j<animations["startPos"][i]+animations["values"][i].length; 
-                j++){
-
-                    arr[j] = animations["values"][i][j];
-                    array_bar[j].style.height = `${arr[j]}px`;
-            }
+            setTimeout(()=>{
+                let startIndex = animations["startPos"][i],
+                    arrLength = animations["values"][i].length;
+                for(let j= startIndex, t=0; j<(startIndex+arrLength); j++, t++){
+                    setTimeout(()=>{
+                        arr[j] = animations["values"][i][t];
+                        array_bar[j].style.height = `${arr[j]}px`;
+                    },t*(TIME/arrLength));                   
+                }
+            }, i*TIME);      
         }
 
-        console.log(arr);
+        this.sortCompleteAnimation(animations["startPos"].length - 1);
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
 
