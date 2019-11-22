@@ -43,15 +43,14 @@ class SortingVisualizer extends React.Component {
 
     getArraySize(){
         let deviceWidth = window.screen.width,
-            arraySize;
-        if(deviceWidth < 400){
-            arraySize = 50;
+            arraySize = Math.floor((deviceWidth - 80)/12); //12 = 7px(width) + [2px + 2px](margin) + 1px(border)
+        
+        if(arraySize>=100){
+            return 100;
         }
         else{
-            arraySize = 75;
+            return arraySize;
         }
-
-        return arraySize;
     }
 
     setArray(){
