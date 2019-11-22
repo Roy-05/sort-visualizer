@@ -48,7 +48,7 @@ class SortingVisualizer extends React.Component {
             arraySize = 50;
         }
         else{
-            arraySize = 75;
+            arraySize = 10;
         }
 
         return arraySize;
@@ -397,28 +397,36 @@ class SortingVisualizer extends React.Component {
         const arr = [...this.state.array],
             start = 0,
             end = arr.length-1,
-            array_bar = document.getElementsByClassName("array-elem");
+            array_bar = document.getElementsByClassName("array-elem"),
+            animations = {
+                "startPos": [],
+                "values": []
+            };
 
-        this.mergeSortRecursive(arr,start, end);
+        this.mergeSortRecursive(arr,start, end, animations);
+
+        console.log(animations);
     
-        for(let i=0; i<=end;i++){
-            array_bar[i].style.height = `${arr[i]}px`;
-        }
+        // for(let i=0; i<=end;i++){
+        //     array_bar[i].style.height = `${arr[i]}px`;
+        // }
+
+        this.animateMSort(animations);
     }
 
-    mergeSortRecursive(arr, start, end){
+    mergeSortRecursive(arr, start, end, animations){
         if(start>=end){
             return;
         }
 
         let mid = Math.floor((start+end)/2);
 
-        this.mergeSortRecursive(arr, start, mid);
-        this.mergeSortRecursive(arr, mid+1, end);
-        this.merge(arr, start, mid, end);
+        this.mergeSortRecursive(arr, start, mid, animations);
+        this.mergeSortRecursive(arr, mid+1, end, animations);
+        this.merge(arr, start, mid, end, animations);
     }
 
-    merge(arr, start, mid, end) {
+    merge(arr, start, mid, end, animations) {
         let arr1Index = start,
             arr2Index = mid +1,
             tempArr = [],
@@ -447,10 +455,30 @@ class SortingVisualizer extends React.Component {
             }
         }
 
+        animations["startPos"].push(start);
+        animations["values"].push(tempArr);
         for(let i = 0; i<tempArrIndex;i++){
             arr[start] = tempArr[i];
             start++;
         }
+    }
+
+    animateMSort(animations){
+        const arr = this.state.array,
+            array_bar = document.getElementsByClassName("array-elem");
+            
+
+        for(let i= 0; i<animations["startPos"].length; i++){
+            for(let j=animations["startPos"][i]; 
+                j<animations["startPos"][i]+animations["values"][i].length; 
+                j++){
+
+                    arr[j] = animations["values"][i][j];
+                    array_bar[j].style.height = `${arr[j]}px`;
+            }
+        }
+
+        console.log(arr);
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
 
