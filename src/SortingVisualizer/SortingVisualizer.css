@@ -10,9 +10,18 @@
 .array-container {
     margin: 0 auto;
     width:100%;
-    position: absolute;
+    height:50vh;
+    position: relative;
     top: 50vh;
     transform: translateY(-50%);
+}
+
+.array-bars{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    margin: 0 auto;
+
 }
 
 .navbar > button {
