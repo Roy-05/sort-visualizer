@@ -8,6 +8,7 @@ class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             width: window.innerWidth,
+            heightMultiplier: 4,
             startedSort: false,
             isSorted: false,
             TIME: 500
@@ -19,7 +20,8 @@ class SortingVisualizer extends React.Component {
      */
     componentDidMount(){
         this.updateDimensions();
-        window.addEventListener('resize', this.updateDimensions.bind(this));  
+        this.setHeightMultiplier();
+        window.addEventListener('resize', this.updateDimensions.bind(this));    
     }
 
     /**
@@ -53,9 +55,13 @@ class SortingVisualizer extends React.Component {
         }
     }
 
-    //call this function on window resize to change window width
+    //call this function on window resize
     updateDimensions(){
-        this.setState({width: window.innerWidth});
+        this.setState({
+            width: window.innerWidth,
+            //height: document.getElementsByClassName("array-container")[0].clientHeight
+        });
+
         this.setArray();
     }
 
@@ -70,6 +76,14 @@ class SortingVisualizer extends React.Component {
         }
 
         return arraySize;
+    }
+
+    setHeightMultiplier(){
+        let containerHeight = document.getElementsByClassName("array-container")[0].clientHeight;
+
+        this.setState({
+            heightMultiplier: Math.round((containerHeight-10)/108)
+        });
     }
 
     setArray(){
@@ -132,7 +146,8 @@ class SortingVisualizer extends React.Component {
 
         const arr = this.state.array,    
             array_bar = document.getElementsByClassName('array-elem'),
-            TIME = this.state.TIME;
+            TIME = this.state.TIME,
+            hMult = this.state.heightMultiplier;
 
         for(let i =0; i<arr.length; i++){
             setTimeout(()=>{ 
@@ -145,8 +160,8 @@ class SortingVisualizer extends React.Component {
 
                                 this.swap(arr, j, j+1);
 
-                                array_bar[j].style.height = `${arr[j]}px`;
-                                array_bar[j+1].style.height = `${arr[j+1]}px`;
+                                array_bar[j].style.height = `${arr[j]*hMult}px`;
+                                array_bar[j+1].style.height = `${arr[j+1]*hMult}px`;
 
                                 array_bar[j+1].style.backgroundColor = 'lightblue';
                                 array_bar[j].style.backgroundColor = 'lightblue';
@@ -174,7 +189,8 @@ class SortingVisualizer extends React.Component {
 
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
-            TIME = this.state.TIME;
+            TIME = this.state.TIME,
+            hMult = this.state.heightMultiplier;
 
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
@@ -198,8 +214,8 @@ class SortingVisualizer extends React.Component {
 
                     this.swap(arr, i, minimum)
 
-                    array_bar[i].style.height = `${arr[i]}px`;
-                    array_bar[minimum].style.height = `${arr[minimum]}px`;
+                    array_bar[i].style.height = `${arr[i]*hMult}px`;
+                    array_bar[minimum].style.height = `${arr[minimum]*hMult}px`;
                     array_bar[minimum].style.backgroundColor = 'lightblue';
 
                 }, TIME);
@@ -221,7 +237,8 @@ class SortingVisualizer extends React.Component {
 
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
-            TIME = this.state.TIME;
+            TIME = this.state.TIME,
+            hMult = this.state.heightMultiplier;
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
@@ -263,8 +280,8 @@ class SortingVisualizer extends React.Component {
 
                             //SWAP Values
                             setTimeout(()=>{
-                                array_bar[j].style.height = `${arr[j]}px`;
-                                array_bar[j-1].style.height = `${arr[newPos]}px`;
+                                array_bar[j].style.height = `${arr[j]*hMult}px`;
+                                array_bar[j-1].style.height = `${arr[newPos]*hMult}px`;
                             }, TIME/(2*(pos-newPos)));
 
                             /*
@@ -373,7 +390,8 @@ class SortingVisualizer extends React.Component {
 
         const array_bar = document.getElementsByClassName("array-elem"),
             arr = this.state.array,
-            TIME = this.state.TIME;
+            TIME = this.state.TIME,
+            hMult = this.state.heightMultiplier;
 
         for(let i=0; i <animations["counter"].length - 1; i++){
             setTimeout(()=>{
@@ -391,8 +409,8 @@ class SortingVisualizer extends React.Component {
                         this.swap(arr, idx1, idx2);
 
                         setTimeout(()=>{
-                            array_bar[idx1].style.height = `${arr[idx1]}px`;
-                            array_bar[idx2].style.height = `${arr[idx2]}px`;
+                            array_bar[idx1].style.height = `${arr[idx1]*hMult}px`;
+                            array_bar[idx2].style.height = `${arr[idx2]*hMult}px`;
                         }, TIME/(2*(animations["counter"][i+1]-animations["counter"][i])));
 
                         setTimeout(()=>{
@@ -414,7 +432,7 @@ class SortingVisualizer extends React.Component {
     //MERGESORT ANIMATION FUNCTION(S)
     mergeSort(){
 
-        this.setState({startedSort: true});
+        this.setState({startedSort: true})
 
         const arr = [...this.state.array],
             start = 0,
@@ -492,7 +510,10 @@ class SortingVisualizer extends React.Component {
     animateMSort(animations){
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
-            TIME = this.state.TIME;
+            TIME = this.state.TIME,
+            hMult = this.state.heightMultiplier;
+
+            console.log(hMult);
 
             for(let i= 0; i<animations["startPos"].length; i++){
             setTimeout(()=>{
@@ -515,7 +536,7 @@ class SortingVisualizer extends React.Component {
 
                         setTimeout(()=>{
                             arr[j] = animations["values"][i][t]; 
-                            array_bar[j].style.height = `${arr[j]}px`;
+                            array_bar[j].style.height = `${arr[j]*hMult}px`;
                         }, t*(TIME/(2*arrLength)));
 
                         setTimeout(()=>{    
@@ -541,6 +562,8 @@ class SortingVisualizer extends React.Component {
     beadSort(){
         const arr = this.state.array,
             animations = [];
+        
+        this.setState({startedSort: true});
 
         let beadMatrix = this.numberToBead(arr);
             
@@ -568,21 +591,23 @@ class SortingVisualizer extends React.Component {
         const array_bar = document.getElementsByClassName("array-elem"),
             arr = this.state.array,
             length = animations.length,
-            counter = animations[0].length;
+            counter = animations[0].length,
+            hMult = this.state.heightMultiplier,
+            TIME = this.state.TIME;
 
-        // for(let i =0; i<arr.length; i++){
-        //     array_bar[i].style.height = `${arr[i]}px`;
-        // }
+        console.log(counter);
 
         for(let i = 0; i<length; i++){
             setTimeout(()=>{
                 for(let j =0; j<counter; j++){
                     setTimeout(()=>{
-                        array_bar[j].style.height = `${animations[i][j]}px`;
-                    }, j*15);
+                        array_bar[j].style.height = `${animations[i][j]*hMult}px`;
+                    }, j*TIME*3/(10*counter));
                 }
-            }, i*150);
+            }, i*TIME*3/10);
         }
+
+       this.sortCompleteAnimation(length*3/10)
     }
 
     numberToBead(arr){
@@ -635,7 +660,8 @@ class SortingVisualizer extends React.Component {
     
     
     render(){
-        const {array} = this.state;
+        const {array} = this.state,
+            heightMult = this.state.heightMultiplier;
         
         return( 
             <>  
@@ -650,11 +676,13 @@ class SortingVisualizer extends React.Component {
                     {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
                 <div className="array-container">
+                    <div className="array-bars">
                     {
                         array.map((value, idx) => (
-                            <div className = "array-elem" key = {idx} style = {{height: `${value}px`}}></div>
+                            <div className = "array-elem" key = {idx} style = {{height: `${value*heightMult}px`}}></div>
                         ))
                     } 
+                    </div>
                 </div>
             </>
         );
