@@ -75,7 +75,7 @@ class SortingVisualizer extends React.Component {
     setArray(){
         const array = [];
         for(let i = 0; i<this.getArraySize(); i++){
-            array.push(this.getRandomInt(1,500))
+            array.push(this.getRandomInt(1,100))
         }
 
         this.setState({array});
@@ -529,7 +529,7 @@ class SortingVisualizer extends React.Component {
                         }, TIME);
                     },t*(TIME/arrLength));                   
                 }
-            }, i*TIME);      
+            }, i*(TIME+5));      
         }
 
         this.sortCompleteAnimation(animations["startPos"].length - 1);
@@ -538,6 +538,53 @@ class SortingVisualizer extends React.Component {
 
 
     //BEADSORT ANIMATION FUNCTION(S)
+    beadSort(){
+        const arr = this.state.array,
+            animations = [];
+
+        let beadMatrix = this.numberToBead(arr);
+            
+        for(let i = 0; i<beadMatrix.length;i++){
+            let counter = 0;
+            for(let j=0; j<beadMatrix.length; j++){
+                if(beadMatrix[i][j]===false){
+                    beadMatrix[i][j] = true;
+                    counter++;
+                }
+            }
+
+            for(let k=0; k<counter; k++){
+                beadMatrix[i][k] = false;
+            }
+
+            animations.push(this.beadToNumber(beadMatrix));
+        }
+        
+        this.animateBeadSort(animations);
+
+    }
+
+    animateBeadSort(animations){
+        const array_bar = document.getElementsByClassName("array-elem"),
+            arr = this.state.array,
+            length = animations.length,
+            counter = animations[0].length;
+
+        // for(let i =0; i<arr.length; i++){
+        //     array_bar[i].style.height = `${arr[i]}px`;
+        // }
+
+        for(let i = 0; i<length; i++){
+            setTimeout(()=>{
+                for(let j =0; j<counter; j++){
+                    setTimeout(()=>{
+                        array_bar[j].style.height = `${animations[i][j]}px`;
+                    }, j*15);
+                }
+            }, i*150);
+        }
+    }
+
     numberToBead(arr){
         let largest = Math.max(...arr),
             numInBeads = [],
@@ -563,42 +610,22 @@ class SortingVisualizer extends React.Component {
         return beadMatrix;
     }
 
-    beadToNumber(arr){
-        let size = arr[0].length,
-            sortedArray = [];
+    beadToNumber(beadMatrix){
+        let size = beadMatrix[0].length,
+            numbers = [];
         for(let i=0; i<size; i++){
             let counter = 0;
-            for(let j=0; j<arr.length;j++){
-                if(arr[j][i]===true){
+            for(let j=0; j<beadMatrix.length;j++){
+                if(beadMatrix[j][i]===true){
                     counter++;
                 }
             }
-        sortedArray.push(counter);
+            numbers.push(counter);
         }
     
-        return sortedArray;
+        return numbers;
     }
 
-    beadSort(arr){
-        let beadMatrix = this.numberToBead(arr);
-            
-        for(let i = 0; i<beadMatrix.length;i++){
-            let counter = 0;
-            for(let j=0; j<beadMatrix.length; j++){
-                if(beadMatrix[i][j]===false){
-                    beadMatrix[i][j] = true;
-                    counter++;
-                }
-            }
-
-            for(let k=0; k<counter; k++){
-                beadMatrix[i][k] = false;
-            }
-        }
-
-       return this.beadToNumber(beadMatrix);
-        
-    }
     //END OF BEADSORT ANIMATION FUNCTION(S)
 
     
