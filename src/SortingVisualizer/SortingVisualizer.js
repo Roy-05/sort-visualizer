@@ -539,7 +539,65 @@ class SortingVisualizer extends React.Component {
 
     //BEADSORT ANIMATION FUNCTION(S)
     numberToBead(arr){
+        let largest = Math.max(...arr),
+            numInBeads = [],
+            beadMatrix = [];
+        
+        for(let i=0; i< arr.length; i++){
 
+            let beads = new Array(largest);     //Array.fill() needs an array of a defined length to work
+            beads.fill(true, 0,arr[i]);
+            beads.fill(false, arr[i],largest);
+
+            numInBeads.push(beads);
+        }
+
+        for(let i=0; i<largest;i++){
+            let beads = [];
+            for(let j=0; j<numInBeads.length; j++){
+                beads.push(numInBeads[j][i]);
+            }
+            beadMatrix.push(beads);
+        }
+
+        return beadMatrix;
+    }
+
+    beadToNumber(arr){
+        let size = arr[0].length,
+            sortedArray = [];
+        for(let i=0; i<size; i++){
+            let counter = 0;
+            for(let j=0; j<arr.length;j++){
+                if(arr[j][i]===true){
+                    counter++;
+                }
+            }
+        sortedArray.push(counter);
+        }
+    
+        return sortedArray;
+    }
+
+    beadSort(arr){
+        let beadMatrix = this.numberToBead(arr);
+            
+        for(let i = 0; i<beadMatrix.length;i++){
+            let counter = 0;
+            for(let j=0; j<beadMatrix.length; j++){
+                if(beadMatrix[i][j]===false){
+                    beadMatrix[i][j] = true;
+                    counter++;
+                }
+            }
+
+            for(let k=0; k<counter; k++){
+                beadMatrix[i][k] = false;
+            }
+        }
+
+       return this.beadToNumber(beadMatrix);
+        
     }
     //END OF BEADSORT ANIMATION FUNCTION(S)
 
@@ -561,7 +619,8 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
                     <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
-                 {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
+                    <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>Bead Sort</button>
+                    {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
                 <div className="array-container">
                     {
@@ -583,17 +642,19 @@ class SortingVisualizer extends React.Component {
         for(let i= 0; i<100; i++){
             const arr = [];
             for(let j=0; j< this.getRandomInt(1,20); j++){
-                arr.push(this.getRandomInt(-1000,1000));
+                arr.push(this.getRandomInt(0,1000));
             }
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
                 //bSortedArray = bubbleSortAlg(arr),
                 //sSortedArray = this.selectionSort(arr),
                 //iSortedArray = this.insertionSort(arr),
                 //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
-                mSortedArray = this.mergeSort(arr);
+                // mSortedArray = this.mergeSort(arr),
+                bdSortedArray =  this.beadSort(arr);
 
 
-            console.log(this.arraysAreEqual(jsSortedArr, mSortedArray));
+
+            console.log(this.arraysAreEqual(jsSortedArr, bdSortedArray));
         }
     }
 
