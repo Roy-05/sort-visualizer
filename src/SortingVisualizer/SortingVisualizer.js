@@ -7,14 +7,26 @@ class SortingVisualizer extends React.Component {
 
         this.state = {
             array: [],
+            width: window.innerWidth,
             startedSort: false,
             isSorted: false,
             TIME: 500
         };
+    }   
+
+    /**
+     * Add event listener
+     */
+    componentDidMount(){
+        this.updateDimensions();
+        window.addEventListener('resize', this.updateDimensions.bind(this));  
     }
 
-    componentDidMount(){
-        this.setArray();    
+    /**
+     * Remove event listener
+     */
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions.bind(this));
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -41,16 +53,23 @@ class SortingVisualizer extends React.Component {
         }
     }
 
+    //call this function on window resize to change window width
+    updateDimensions(){
+        this.setState({width: window.innerWidth});
+        this.setArray();
+    }
+
     getArraySize(){
-        let deviceWidth = window.screen.width,
-            arraySize = Math.floor((deviceWidth - 80)/12); //12 = 7px(width) + [2px + 2px](margin) + 1px(border)
-        
-        if(arraySize>=100){
-            return 100;
+        let width = this.state.width;
+
+        //12 = 7px(width) + [2px + 2px](margin) + 1px(border)
+        let arraySize = Math.floor((width - 100)/12);
+
+        if(arraySize>=75){
+            return 75;
         }
-        else{
-            return arraySize;
-        }
+
+        return arraySize;
     }
 
     setArray(){
@@ -516,6 +535,13 @@ class SortingVisualizer extends React.Component {
         this.sortCompleteAnimation(animations["startPos"].length - 1);
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
+
+
+    //BEADSORT ANIMATION FUNCTION(S)
+    numberToBead(arr){
+
+    }
+    //END OF BEADSORT ANIMATION FUNCTION(S)
 
     
     /**
