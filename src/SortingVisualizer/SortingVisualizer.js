@@ -726,9 +726,14 @@ class SortingVisualizer extends React.Component {
     
         this.sortCompleteAnimation(animations.length/10);
     }
-
     //END OF HEAPSORT ANIMATION FUNCTION(S)
+
+
+    //RADIX SORT ANIMATION FUNCTION(S)
     
+    //END OF RADIXSORT ANIMATION FUNCTION(S)
+
+
     /**
     * END OF SORTING ALGORITHM FUNCTIONS
     */
@@ -748,7 +753,8 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
                     <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
                     <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>Bead Sort</button>
-                    <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.heapSort()}}>Heap Sort</button>
+                    <button className="nav-btn" id = "heap-sort" onClick = {()=>{this.heapSort()}}>Heap Sort</button>
+                    <button className="nav-btn" id = "radix-sort" onClick = {()=>{this.radixSort()}}>Radix Sort</button>
                     <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
