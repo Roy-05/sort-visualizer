@@ -595,8 +595,6 @@ class SortingVisualizer extends React.Component {
             hMult = this.state.heightMultiplier,
             TIME = this.state.TIME;
 
-        console.log(counter);
-
         for(let i = 0; i<length; i++){
             setTimeout(()=>{
                 for(let j =0; j<counter; j++){
@@ -654,6 +652,46 @@ class SortingVisualizer extends React.Component {
     //END OF BEADSORT ANIMATION FUNCTION(S)
 
     
+    //HEAPSORT ANIMATION FUNCTION(S)
+    heapSort(arr){
+        let n = arr.length;
+
+        for(let i = Math.floor(n/2)-1; i>=0;i--){
+            this.heapify(arr, n, i);
+        }
+
+        for(let j = n-1; j>=0; j--){
+            this.swap(arr, j, 0);
+            this.heapify(arr, j, 0);
+        }
+
+        console.log(arr)
+    }
+
+    heapify(arr, n, i){
+        let largest = i,
+            left = 2*i+1,
+            right = 2*i+2;
+        
+        if(left<n && arr[left]>arr[largest]){
+            largest = left;
+        }
+
+        if(right<n && arr[right]>arr[largest]){
+            largest = right;
+        }
+
+        if(largest !== i){
+            console.log(arr);
+            this.swap(arr, i, largest);
+            console.log(arr);
+            this.heapify(arr, n, largest);
+        }
+
+    }
+
+    //END OF HEAPSORT ANIMATION FUNCTION(S)
+    
     /**
     * END OF SORTING ALGORITHM FUNCTIONS
     */
@@ -673,7 +711,8 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
                     <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
                     <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>Bead Sort</button>
-                    {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
+                    <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.heapSort([1,5,2,4,3])}}>Heap Sort</button>
+                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
                 </nav>
                 <div className="array-container">
                     <div className="array-bars">
@@ -704,12 +743,13 @@ class SortingVisualizer extends React.Component {
                 //sSortedArray = this.selectionSort(arr),
                 //iSortedArray = this.insertionSort(arr),
                 //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
-                // mSortedArray = this.mergeSort(arr),
-                bdSortedArray =  this.beadSort(arr);
+                //mSortedArray = this.mergeSort(arr),
+                //bdSortedArray =  this.beadSort(arr),
+                hSortedArray = this.heapSort(arr);
 
 
 
-            console.log(this.arraysAreEqual(jsSortedArr, bdSortedArray));
+            console.log(this.arraysAreEqual(jsSortedArr, hSortedArray));
         }
     }
 
