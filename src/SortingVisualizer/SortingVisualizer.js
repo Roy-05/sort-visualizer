@@ -730,7 +730,63 @@ class SortingVisualizer extends React.Component {
 
 
     //RADIX SORT ANIMATION FUNCTION(S)
-    
+    radixSort(){
+
+        let arr = [...this.state.array],
+            maxNum = Math.max(...arr),
+            divisor = 1,
+            animations = [];//{
+            //     "arrays": [],
+            //     "numOfEach": []
+            // };
+            // let t = [];
+        while (Math.trunc(maxNum)>0){
+            let buckets = [...Array(10)].map(() => []);
+            arr.forEach(num=>{
+                buckets[Math.floor((num/divisor))%10].push(num);
+            });
+            
+            // buckets.forEach(elem=>{
+            //     t.push(elem.length);
+            // });
+            // console.log(buckets);
+            // console.log(t);
+            // Reconstruct the array by concatinating all sub arrays
+            animations.push([].concat(...buckets));
+            arr = [].concat(...buckets);
+
+            maxNum/=10;
+            divisor *= 10;
+            
+        }
+
+        this.animateRadixSort(animations);
+    }
+
+    animateRadixSort(animations){
+        const array_bar = document.getElementsByClassName("array-elem"),
+            hMult = this.state.heightMultiplier,
+            TIME = this.state.TIME;
+
+        let arr = this.state.array,
+            max = Math.max(...arr),
+            counter = Math.ceil(Math.log10(max+1));
+
+        for(let i=0; i<counter; i++){
+            setTimeout(()=>{
+                for(let j=0;j<arr.length;j++){
+                    setTimeout(()=>{
+                        arr[j] = animations[i][j];
+                        array_bar[j].style.height  = `${arr[j]*hMult}px`;
+                    }, j*(TIME*14/arr.length));
+                }
+            },i*TIME*14);
+        }
+
+        this.sortCompleteAnimation(counter*14);
+    }
+        
+        
     //END OF RADIXSORT ANIMATION FUNCTION(S)
 
 
@@ -778,7 +834,7 @@ class SortingVisualizer extends React.Component {
     testAlgorithms(){
         for(let i= 0; i<100; i++){
             const arr = [];
-            for(let j=0; j< this.getRandomInt(1,20); j++){
+            for(let j=0; j< this.getRandomInt(1,100); j++){
                 arr.push(this.getRandomInt(0,1000));
             }
             let jsSortedArr = arr.slice().sort((a,b)=>a-b),
@@ -788,11 +844,12 @@ class SortingVisualizer extends React.Component {
                 //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
                 //mSortedArray = this.mergeSort(arr),
                 //bdSortedArray =  this.beadSort(arr),
-                hSortedArray = this.heapSort(arr);
+                //hSortedArray = this.heapSort(arr),
+                rSortedArray = this.radixSort(arr);
 
 
 
-            console.log(this.arraysAreEqual(jsSortedArr, hSortedArray));
+            console.log(this.arraysAreEqual(jsSortedArr, rSortedArray));
         }
     }
 
