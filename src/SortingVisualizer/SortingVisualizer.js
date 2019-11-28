@@ -82,7 +82,8 @@ class SortingVisualizer extends React.Component {
     updateBrowserHeight(){
         if(this.state.height !== window.innerHeight/2){
             this.setState({
-                height: window.innerHeight/2
+                height: window.innerHeight/2,
+                arrayHeights: this.setHeights()
             })
         }
     }
