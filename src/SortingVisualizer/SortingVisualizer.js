@@ -8,7 +8,7 @@ class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             width: window.innerWidth,
-            height: window.innerHeight/2,
+            height: window.innerHeight*0.7,
             heightMultiplier: 4,
             arrayHeights: [],
             startedSort: false,
@@ -80,9 +80,9 @@ class SortingVisualizer extends React.Component {
     }
 
     updateBrowserHeight(){
-        if(this.state.height !== window.innerHeight/2){
+        if(this.state.height !== window.innerHeight*0.7){
             this.setState({
-                height: window.innerHeight/2,
+                height: window.innerHeight*0.7,
                 arrayHeights: this.setHeights()
             })
         }
