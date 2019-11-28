@@ -35,7 +35,13 @@ class SortingVisualizer extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
-        
+
+        if(prevState.array !== this.state.array){
+            this.setState({
+                arrayHeights: this.setHeights()
+            })
+        }
+
         if(this.state.startedSort ){
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = true;
@@ -59,12 +65,25 @@ class SortingVisualizer extends React.Component {
 
     //call this function on window resize
     updateDimensions(){
-        if(Math.abs(this.state.width-window.innerWidth)>=12){
+        this.updateBrowserWidth();
+        this.updateBrowserHeight();
+    }
+
+    updateBrowserWidth(){
+        if(Math.abs(this.state.width-window.innerWidth)>12){
             this.setState({
                 width: window.innerWidth
             });
 
             this.setArray();
+        }
+    }
+
+    updateBrowserHeight(){
+        if(this.state.height !== window.innerHeight/2){
+            this.setState({
+                height: window.innerHeight/2
+            })
         }
     }
 
@@ -74,11 +93,7 @@ class SortingVisualizer extends React.Component {
         //12 = 7px(width) + [2px + 2px](margin) + 1px(border)
         let arraySize = Math.floor((width - 100)/12);
 
-        if(arraySize>=75){
-            return 75;
-        }
-
-        return arraySize;
+        return (arraySize<80) ? arraySize : 80;
     }
 
     setHeightMultiplier(){
@@ -90,26 +105,32 @@ class SortingVisualizer extends React.Component {
     }
 
     setArray(){
-        const array = [],
-            arrayHeights = [],
-            height = this.state.height;
-
+        const array = [];
 
         for(let i = 0; i<this.getArraySize(); i++){
             array.push(this.getRandomInt(1,100))
         }
 
-        const MAX = Math.max(...array);
-
-        for(let i = 0; i<this.getArraySize(); i++){
-            arrayHeights.push(Math.floor(array[i]*((height-10)/MAX)));
-        }        
-
         this.setState({
-            array: array,
-            arrayHeights: arrayHeights
+            array: array
         });
     }
+
+    setHeights(){
+        const height = this.state.height,
+            array = this.state.array,
+            MAX = Math.max(...array),
+            arrayHeights = [];
+
+        for(let i = 0; i<array.length; i++){
+            arrayHeights.push(Math.floor(array[i]*((height-10)/MAX)));
+        }   
+        
+        return arrayHeights;
+        
+    }
+
+
 
     sortCompleteAnimation(iterations){
         const array_bar = document.getElementsByClassName("array-elem"),
@@ -816,7 +837,6 @@ class SortingVisualizer extends React.Component {
     render(){
         const {arrayHeights} = this.state;
         console.log(arrayHeights);
-
         return( 
             <>  
                 <nav className = "navbar">
