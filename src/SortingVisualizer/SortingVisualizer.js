@@ -21,6 +21,7 @@ class SortingVisualizer extends React.Component {
      * Add event listener
      */
     componentDidMount(){
+        this.setArray();
         this.updateDimensions();
         window.addEventListener('resize', this.updateDimensions.bind(this));    
     }
@@ -34,7 +35,7 @@ class SortingVisualizer extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
-    
+        
         if(this.state.startedSort ){
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = true;
@@ -58,12 +59,13 @@ class SortingVisualizer extends React.Component {
 
     //call this function on window resize
     updateDimensions(){
-        this.setState({
-            width: window.innerWidth,
-            height: window.innerHeight/2
-        });
+        if(Math.abs(this.state.width-window.innerWidth)>=12){
+            this.setState({
+                width: window.innerWidth
+            });
 
-        this.setArray();
+            this.setArray();
+        }
     }
 
     getArraySize(){
@@ -812,8 +814,8 @@ class SortingVisualizer extends React.Component {
     
     
     render(){
-        const {array} = this.state,
-            {arrayHeights} = this.state;
+        const {arrayHeights} = this.state;
+        console.log(arrayHeights);
 
         return( 
             <>  
