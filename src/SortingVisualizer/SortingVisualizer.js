@@ -787,6 +787,8 @@ class SortingVisualizer extends React.Component {
     //RADIX SORT ANIMATION FUNCTION(S)
     radixSort(){
 
+        this.setState({startedSort: true});
+        
         let arr = [...this.state.array],
             maxNum = Math.max(...arr),
             divisor = 1,
