@@ -261,7 +261,7 @@ class SortingVisualizer extends React.Component {
                             else{
                                 array_bar[j].style.backgroundColor = colors["base"];
                             }  
-                        }, TIME/(2*(arr.length-i-1)));
+                        }, TIME/(1.2*(arr.length-i-1)));
                     }, counter*TIME/(arr.length-i-1));    
                 }
 
