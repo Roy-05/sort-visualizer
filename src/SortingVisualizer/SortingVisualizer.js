@@ -233,10 +233,9 @@ class SortingVisualizer extends React.Component {
             hMult = this.state.heightMultiplier,
             colors = this.getColors();
 
-
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
-                let minimum =i;
+                let minimum = i;
                 for(let j = i+1, counter=0; j<arr.length; j++, counter++){
                     setTimeout(()=>{
                         array_bar[j].style.backgroundColor = colors["primary"];
@@ -778,9 +777,10 @@ class SortingVisualizer extends React.Component {
             // };
             // let t = [];
         while (Math.trunc(maxNum)>0){
-            let buckets = [...Array(10)].map(() => []);
+            let buckets = [...Array(10)].map(() => []),
+                tempDiv = divisor;
             arr.forEach(num=>{
-                buckets[Math.floor((num/divisor))%10].push(num);
+                buckets[Math.floor((num/tempDiv))%10].push(num);
             });
             
             // buckets.forEach(elem=>{
