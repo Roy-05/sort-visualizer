@@ -601,8 +601,14 @@ class SortingVisualizer extends React.Component {
                 }
             }, i*(TIME+5));      
         }
-
-        this.sortCompleteAnimation(animations["startPos"].length - 1);
+        
+        //Give a TIME ms delay to execute completion animation 
+        //so that array_bars turning base color does not overlap 
+        // with array_bars turning completion color
+        setTimeout(()=>{
+            this.sortCompleteAnimation(animations["startPos"].length);
+        }, TIME);
+       
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
 
@@ -847,7 +853,6 @@ class SortingVisualizer extends React.Component {
         const {array} = this.state,
             hMult = this.state.heightMultiplier;
 
-        console.log(this.getArraySize());
         return( 
             <>  
                 <nav className = "navbar">
