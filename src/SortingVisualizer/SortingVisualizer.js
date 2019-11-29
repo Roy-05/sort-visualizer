@@ -599,15 +599,15 @@ class SortingVisualizer extends React.Component {
                         }, TIME);
                     },t*(TIME/arrLength));                   
                 }
-            }, i*(TIME+1));      
+            }, i*TIME);      
         }
         
-        //Give a TIME ms delay to execute completion animation 
+        //Give a 300 ms delay to execute completion animation 
         //so that array_bars turning base color does not overlap 
         // with array_bars turning completion color
         setTimeout(()=>{
             this.sortCompleteAnimation(animations["startPos"].length);
-        }, TIME);
+        }, 300);
        
     }
     //END OF MERGESORT ANIMATION FUNCTION(S)
