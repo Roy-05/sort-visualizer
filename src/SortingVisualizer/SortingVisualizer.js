@@ -518,28 +518,23 @@ class SortingVisualizer extends React.Component {
     merge(arr, start, mid, end, animations) {
         let arr1Index = start,
             arr2Index = mid +1,
-            tempArr = [],
-            tempArrIndex = 0;
+            tempArr = [];
 
         for(let i = start; i<=end; i++){
             if(arr1Index > mid){
-                tempArr[tempArrIndex] = arr[arr2Index];
-                tempArrIndex++;
+                tempArr.push(arr[arr2Index]);
                 arr2Index++;
             }
             else if(arr2Index > end){
-                tempArr[tempArrIndex] = arr[arr1Index];
-                tempArrIndex++;
+                tempArr.push(arr[arr1Index]);
                 arr1Index++;
             }
             else if(arr[arr1Index] < arr[arr2Index]){
-                tempArr[tempArrIndex] = arr[arr1Index];
-                tempArrIndex++;
+                tempArr.push(arr[arr1Index]);
                 arr1Index++;
             }
             else{
-                tempArr[tempArrIndex] = arr[arr2Index];
-                tempArrIndex++;
+                tempArr.push(arr[arr2Index]);
                 arr2Index++;
             }
         }
@@ -549,7 +544,7 @@ class SortingVisualizer extends React.Component {
         animations["midPos"].push(mid);
         animations["endPos"].push(end);
         
-        for(let i = 0; i<tempArrIndex;i++){
+        for(let i = 0; i<tempArr.length;i++){
             arr[start] = tempArr[i];
             start++;
         }
