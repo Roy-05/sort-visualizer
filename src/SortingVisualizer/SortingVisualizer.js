@@ -838,15 +838,20 @@ class SortingVisualizer extends React.Component {
         return( 
             <>  
                 <nav className = "navbar">
-                    <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.setArray()}}>Generate New Array</button>
-                    <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>Bubble Sort</button>
-                    <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>Selection Sort</button>
-                    <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>Insertion Sort</button>
-                    <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>Quick Sort</button>
-                    <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>Merge Sort</button>
-                    <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>Bead Sort</button>
-                    <button className="nav-btn" id = "heap-sort" onClick = {()=>{this.heapSort()}}>Heap Sort</button>
-                    <button className="nav-btn" id = "radix-sort" onClick = {()=>{this.radixSort()}}>Radix Sort</button>
+                    <button className="nav-btn" id = "gen-new-arr" onClick = {()=>{this.setArray()}}>GENERATE NEW ARRAY</button>
+                    <div className="dropdown">
+                        <button className="nav-btn pick-a-sort">PICK A SORT:</button>
+                        <div className = "dropdown-content">
+                            <button className="nav-btn" id = "bubble-sort" onClick = {()=>{this.bubbleSort()}}>BUBBLE SORT</button>
+                            <button className="nav-btn" id = "selection-sort" onClick = {()=>{this.selectionSort()}}>SELECTION SORT</button>
+                            <button className="nav-btn" id = "insertion-sort" onClick = {()=>{this.insertionSort()}}>INSERTION SORT</button>
+                            <button className="nav-btn" id = "quick-sort" onClick = {()=>{this.quickSort()}}>QUICK SORT</button>
+                            <button className="nav-btn" id = "merge-sort" onClick = {()=>{this.mergeSort()}}>MERGE SORT</button>
+                            <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>BEAD SORT</button>
+                            <button className="nav-btn" id = "heap-sort" onClick = {()=>{this.heapSort()}}>HEAP SORT</button>
+                            <button className="nav-btn" id = "radix-sort" onClick = {()=>{this.radixSort()}}>RADIX SORT</button>
+                        </div>
+                    </div>
                     {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
                 <div className="array-container">
