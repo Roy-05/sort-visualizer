@@ -90,10 +90,19 @@ class SortingVisualizer extends React.Component {
     getArraySize(){
         let width = this.state.width;
 
-        //12 = 7px(width) + [2px + 2px](margin) + 1px(border)
-        let arraySize = Math.floor((width - 100)/12);
+        //12 = 12px(width) + [2px + 2px](margin) + 1px(border)
+        let arraySize = Math.floor((width - 100)/17);
 
-        return (arraySize<80) ? arraySize : 80;
+        return (arraySize<75) ? arraySize : 75;
+    }
+
+    getColors(){
+        return {
+            "base": "#6DB5E5",
+            "primary": "#B94DC4",
+            "secondary": "#C47D4D",
+            "completion": "#58C44D"
+        }
     }
 
     setArray(){
@@ -131,12 +140,13 @@ class SortingVisualizer extends React.Component {
     sortCompleteAnimation(iterations){
         const array_bar = document.getElementsByClassName("array-elem"),
             size = this.getArraySize(),
-            TIME = this.state.TIME; 
+            TIME = this.state.TIME,
+            colors = this.getColors();
 
         setTimeout(()=>{
             for(let i=0; i<size; i++){
                 setTimeout(()=>{
-                    array_bar[i].style.backgroundColor = "green";
+                    array_bar[i].style.backgroundColor = colors["completion"];
                 }, i*30);
             }
         }, (iterations+1)*TIME);
@@ -144,15 +154,15 @@ class SortingVisualizer extends React.Component {
         setTimeout(()=>{
                 [...array_bar].forEach(elem=>{
                     setTimeout(()=>{
-                        elem.style.backgroundColor = "lightblue";
+                        elem.style.backgroundColor = colors["base"];
                     }, 350);
 
                     setTimeout(()=>{
-                        elem.style.backgroundColor = "green";
+                        elem.style.backgroundColor = colors["completion"];
                     }, 700);
 
                     setTimeout(()=>{
-                        elem.style.backgroundColor = "lightblue";
+                        elem.style.backgroundColor = colors["base"];
                     }, 1000);
                 })
         }, iterations*TIME + size*30 + 200); //200ms for delay
@@ -175,14 +185,16 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,    
             array_bar = document.getElementsByClassName('array-elem'),
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
+
 
         for(let i =0; i<arr.length; i++){
             setTimeout(()=>{ 
                 for(let j=0; j<arr.length-i-1; j++){
                     setTimeout(()=>{
-                        array_bar[j+1].style.backgroundColor = 'blue';
-                        array_bar[j].style.backgroundColor = 'red';
+                        array_bar[j+1].style.backgroundColor = colors["secondary"];
+                        array_bar[j].style.backgroundColor = colors["primary"];
                         setTimeout(()=>{
                             if(arr[j] > arr[j+1]){
 
@@ -191,12 +203,12 @@ class SortingVisualizer extends React.Component {
                                 array_bar[j].style.height = `${arr[j]*hMult}px`;
                                 array_bar[j+1].style.height = `${arr[j+1]*hMult}px`;
 
-                                array_bar[j+1].style.backgroundColor = 'lightblue';
-                                array_bar[j].style.backgroundColor = 'lightblue';
+                                array_bar[j+1].style.backgroundColor = colors["base"];
+                                array_bar[j].style.backgroundColor = colors["base"];
                             }
                             else{
-                                array_bar[j+1].style.backgroundColor = 'lightblue';
-                                array_bar[j].style.backgroundColor = 'lightblue';
+                                array_bar[j+1].style.backgroundColor = colors["base"];
+                                array_bar[j].style.backgroundColor = colors["base"];
                             }
                         }, TIME/(arr.length-i-1));
                     }, j*TIME/(arr.length-i-1));
@@ -218,22 +230,24 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
+
 
         for(let i=0; i<arr.length-1; i++){
             setTimeout(()=>{
                 let minimum =i;
                 for(let j = i+1, counter=0; j<arr.length; j++, counter++){
                     setTimeout(()=>{
-                        array_bar[j].style.backgroundColor = 'red';
-                        array_bar[minimum].style.backgroundColor = 'blue';
+                        array_bar[j].style.backgroundColor = colors["primary"];
+                        array_bar[minimum].style.backgroundColor = colors["secondary"];
                         setTimeout(()=>{
                             if(arr[j] < arr[minimum]){
-                            array_bar[minimum].style.backgroundColor = 'lightblue';
+                            array_bar[minimum].style.backgroundColor = colors["base"];
                             minimum = j; 
                             }  
                             else{
-                                array_bar[j].style.backgroundColor = 'lightblue';
+                                array_bar[j].style.backgroundColor = colors["base"];
                             }  
                         }, TIME/(2*(arr.length-i-1)));
                     }, counter*TIME/(arr.length-i-1));    
@@ -245,7 +259,7 @@ class SortingVisualizer extends React.Component {
             
                     array_bar[i].style.height = `${arr[i]*hMult}px`;
                     array_bar[minimum].style.height = `${arr[minimum]*hMult}px`;
-                    array_bar[minimum].style.backgroundColor = 'lightblue';
+                    array_bar[minimum].style.backgroundColor = colors["base"];
 
                 }, TIME);
 
@@ -269,7 +283,8 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
         
         for(let i=0; i<arr.length; i++){
             setTimeout(()=>{
@@ -306,9 +321,9 @@ class SortingVisualizer extends React.Component {
                         setTimeout(()=>{
 
                             //Initialize current and preceding elem to BLUE and RED
-                            array_bar[j-1].style.backgroundColor = 'red';
-                            array_bar[j].style.backgroundColor = 'blue';
-                            array_bar[pos].style.backgroundColor = 'green';
+                            array_bar[j-1].style.backgroundColor = colors["primary"];
+                            array_bar[j].style.backgroundColor = colors["secondary"];
+                            array_bar[pos].style.backgroundColor = colors["completion"];
 
                             //SWAP Values
                             setTimeout(()=>{
@@ -321,15 +336,15 @@ class SortingVisualizer extends React.Component {
                             so it can be reinitialized next iteration
                             */
                             setTimeout(()=>{
-                                array_bar[j].style.backgroundColor = 'lightblue' ;
+                                array_bar[j].style.backgroundColor = colors["base"] ;
                             
                                 if(j===newPos+1){
-                                    array_bar[newPos].style.backgroundColor = 'lightblue';
+                                    array_bar[newPos].style.backgroundColor = colors["base"];
                                 }
                             }, (TIME/(pos-newPos)));
 
                             setTimeout(()=>{
-                                array_bar[pos].style.backgroundColor = 'lightblue' ;
+                                array_bar[pos].style.backgroundColor = colors["base"] ;
                             }, TIME);
 
                         }, counter*(TIME/(pos-newPos)));    
@@ -342,15 +357,15 @@ class SortingVisualizer extends React.Component {
                 */
                 else{
                     
-                    array_bar[i].style.backgroundColor = 'green';
+                    array_bar[i].style.backgroundColor = colors["completion"];
                     setTimeout(()=>{
-                        array_bar[i].style.backgroundColor = 'lightblue';
+                        array_bar[i].style.backgroundColor = colors["base"];
                     }, 150);
                     setTimeout(()=>{
-                        array_bar[i].style.backgroundColor = 'green';
+                        array_bar[i].style.backgroundColor = colors["completion"];
                     }, 300);
                     setTimeout(()=>{
-                        array_bar[i].style.backgroundColor = 'lightblue';
+                        array_bar[i].style.backgroundColor = colors["base"];
                     }, 450);
                 }
             }, i*TIME);
@@ -428,7 +443,8 @@ class SortingVisualizer extends React.Component {
         const array_bar = document.getElementsByClassName("array-elem"),
             arr = this.state.array,
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
 
         for(let i=0; i <animations["counter"].length - 1; i++){
             setTimeout(()=>{
@@ -438,10 +454,10 @@ class SortingVisualizer extends React.Component {
                             idx2 = animations["pos"][j][1],
                             pivot = animations["pivot"][i][1];
                         
-                        array_bar[idx1].style.backgroundColor = "red";
-                        array_bar[idx2].style.backgroundColor = "blue";
+                        array_bar[idx1].style.backgroundColor = colors["primary"];
+                        array_bar[idx2].style.backgroundColor = colors["secondary"];
 
-                        array_bar[pivot].style.backgroundColor = "green";
+                        array_bar[pivot].style.backgroundColor = colors["completion"];
 
                         this.swap(arr, idx1, idx2);
                     
@@ -451,8 +467,8 @@ class SortingVisualizer extends React.Component {
                         }, TIME/(2*(animations["counter"][i+1]-animations["counter"][i])));
 
                         setTimeout(()=>{
-                            array_bar[idx1].style.backgroundColor = `lightblue`;
-                            array_bar[idx2].style.backgroundColor = `lightblue`;
+                            array_bar[idx1].style.backgroundColor = colors["base"];
+                            array_bar[idx2].style.backgroundColor = colors["base"];
                         }, TIME/(animations["counter"][i+1]-animations["counter"][i]));
                         
                     }, t*TIME/(animations["counter"][i+1]-animations["counter"][i]));
@@ -538,7 +554,8 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
             
         for(let i= 0; i<animations["startPos"].length; i++){
             setTimeout(()=>{
@@ -549,9 +566,9 @@ class SortingVisualizer extends React.Component {
                         let mid = animations["midPos"][i],
                             end = animations["endPos"][i];
 
-                        array_bar[start].style.backgroundColor = "red";
-                        array_bar[mid].style.backgroundColor = "green";
-                        array_bar[end].style.backgroundColor = "blue";
+                        array_bar[start].style.backgroundColor = colors["primary"];
+                        array_bar[mid].style.backgroundColor = colors["completion"];
+                        array_bar[end].style.backgroundColor = colors["secondary"];
 
                         setTimeout(()=>{  
                             arr[j] = animations["values"][i][t]; 
@@ -563,9 +580,9 @@ class SortingVisualizer extends React.Component {
                         }, t*(TIME/(3*arrLength)));
 
                         setTimeout(()=>{    
-                            array_bar[start].style.backgroundColor = "lightblue";
-                            array_bar[mid].style.backgroundColor = "lightblue";
-                            array_bar[end].style.backgroundColor = "lightblue";
+                            array_bar[start].style.backgroundColor = colors["base"];
+                            array_bar[mid].style.backgroundColor = colors["base"];
+                            array_bar[end].style.backgroundColor = colors["base"];
 
                         }, TIME);
                     },t*(TIME/arrLength));                   
@@ -720,15 +737,16 @@ class SortingVisualizer extends React.Component {
         const arr = this.state.array,
             array_bar = document.getElementsByClassName("array-elem"),
             TIME = this.state.TIME,
-            hMult = this.state.heightMultiplier;
+            hMult = this.state.heightMultiplier,
+            colors = this.getColors();
         
         for(let i=0; i< animations.length; i++){
             setTimeout(()=>{
                 let elem1 = animations[i][0],
                 elem2 = animations[i][1];
 
-                array_bar[elem1].style.backgroundColor = `red`;
-                array_bar[elem2].style.backgroundColor = `blue`;
+                array_bar[elem1].style.backgroundColor = colors["primary"];
+                array_bar[elem2].style.backgroundColor = colors["secondary"];
 
                 setTimeout(()=>{
                     this.swap(arr, elem1, elem2);
@@ -737,8 +755,8 @@ class SortingVisualizer extends React.Component {
                 }, TIME/20);
                 
                 setTimeout(()=>{
-                    array_bar[elem1].style.backgroundColor = `lightblue`;
-                    array_bar[elem2].style.backgroundColor = `lightblue`;
+                    array_bar[elem1].style.backgroundColor = colors["base"];
+                    array_bar[elem2].style.backgroundColor = colors["base"];
                 }, TIME/10 - 10);
             }, i*TIME/10);
         }
@@ -815,6 +833,8 @@ class SortingVisualizer extends React.Component {
     render(){
         const {array} = this.state,
             hMult = this.state.heightMultiplier;
+
+        console.log(this.getArraySize());
         return( 
             <>  
                 <nav className = "navbar">
