@@ -114,7 +114,18 @@ class SortingVisualizer extends React.Component {
 
         return (height-10)/MAX;    
     }
+    
+    swap(arr, i, j){
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
 
+    //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
 
     sortCompleteAnimation(iterations){
@@ -151,12 +162,7 @@ class SortingVisualizer extends React.Component {
         }, iterations*TIME + size*30 + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
     }
 
-    swap(arr, i, j){
-        let temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    
+ 
     /**
     * START OF SORTING ALGORITHM FUNCTIONS
     */
@@ -821,7 +827,7 @@ class SortingVisualizer extends React.Component {
                     <button className="nav-btn" id = "bead-sort" onClick = {()=>{this.beadSort()}}>Bead Sort</button>
                     <button className="nav-btn" id = "heap-sort" onClick = {()=>{this.heapSort()}}>Heap Sort</button>
                     <button className="nav-btn" id = "radix-sort" onClick = {()=>{this.radixSort()}}>Radix Sort</button>
-                    <button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>
+                    {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
                 <div className="array-container">
                     <div className="array-bars">
@@ -835,12 +841,8 @@ class SortingVisualizer extends React.Component {
             </>
         );
     }
-  
-    //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
+    
+    /*
     testAlgorithms(){
         for(let i= 0; i<100; i++){
             const arr = [];
@@ -877,6 +879,7 @@ class SortingVisualizer extends React.Component {
 
         return true;
     }
+    */
 }
 
 export default SortingVisualizer;
