@@ -42,6 +42,7 @@ class SortingVisualizer extends React.Component {
         }
 
         if(this.state.startedSort ){
+            this.hideDropdown();
             [...nav_btn].forEach((btn)=>{
                 btn.disabled = true;
             });
@@ -57,7 +58,7 @@ class SortingVisualizer extends React.Component {
                 startedSort: false,
                 isSorted: false
             });
-
+            this.showDropdown();
             this.setArray();
         }
     }
@@ -122,6 +123,18 @@ class SortingVisualizer extends React.Component {
             MAX = Math.max(...this.state.array);
 
         return (height-10)/MAX;    
+    }
+
+    hideDropdown(){
+        const dropdown = document.getElementsByClassName("dropdown")[0];
+        
+        dropdown.className = "dropdown clicked";
+    }
+
+    showDropdown(){
+        const dropdown = document.getElementsByClassName("dropdown")[0];
+        
+        dropdown.className = "dropdown";
     }
     
     swap(arr, i, j){

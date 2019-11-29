@@ -75,6 +75,10 @@
     display: block;
 }
 
+.dropdown.clicked:hover .dropdown-content {
+    display: none;
+}
+
 @media screen and (max-width: 400px){
     .nav-btn {
         font-size: 4vw;
