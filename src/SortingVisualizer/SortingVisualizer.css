@@ -59,7 +59,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -70,6 +70,12 @@
     width: 100%;
     margin: 0 auto;
 }
+
+.dropdown-content .nav-btn:hover{
+    background-color: rgba(254, 244, 238, 0.95);
+    border: solid black 1px;
+}
+
 
 .dropdown:hover .dropdown-content {
     display: block;

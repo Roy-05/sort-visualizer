@@ -599,7 +599,7 @@ class SortingVisualizer extends React.Component {
                         }, TIME);
                     },t*(TIME/arrLength));                   
                 }
-            }, i*(TIME+5));      
+            }, i*(TIME+1));      
         }
         
         //Give a TIME ms delay to execute completion animation 
