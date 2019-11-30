@@ -12,7 +12,7 @@ class SortingVisualizer extends React.Component {
             heightMultiplier: 1,
             startedSort: false,
             isSorted: false,
-            TIME: 500
+            TIME: 300
         };
     }   
 
@@ -91,10 +91,10 @@ class SortingVisualizer extends React.Component {
     getArraySize(){
         let width = this.state.width;
 
-        //12 = 12px(width) + [2px + 2px](margin) + 1px(border)
-        let arraySize = Math.floor((width - 100)/17);
+        //12 = 12px(width) + [2px + 2px](margin) + 2px(border)
+        let arraySize = Math.floor((width - 100)/18);
 
-        return (arraySize<75) ? arraySize : 75;
+        return (arraySize<50) ? arraySize : 50;
     }
 
     getColors(){
