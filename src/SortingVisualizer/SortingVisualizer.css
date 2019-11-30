@@ -32,6 +32,12 @@
     align-items: center;
 }
 
+button:disabled, .nav-btn[disabled] {
+    opacity: 0.75; 
+    color: gray;
+    cursor: not-allowed;
+}
+
 .nav-btn {
     font-size: 21px;
     font-family: 'sans-serif, serif';
@@ -44,7 +50,7 @@
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
-.nav-btn:hover {
+.nav-btn:hover:enabled {
     background: rgba(255, 255, 255, 0.8);
     border: none;
     transition: all 0.3s ease-out;
