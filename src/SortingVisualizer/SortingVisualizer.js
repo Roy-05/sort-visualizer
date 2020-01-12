@@ -23,7 +23,6 @@ class SortingVisualizer extends React.Component {
         this.setArray();
         this.updateDimensions();
         this.setCanvasSize();
-        this.drawArrayBars();
 
         window.addEventListener('resize', this.updateDimensions.bind(this));    
     }
@@ -41,7 +40,8 @@ class SortingVisualizer extends React.Component {
         if(prevState.array !== this.state.array){
             this.setState({
                 heightMultiplier: this.setHeightMultiplier()
-            })
+            });
+            this.drawArrayBars();
         }
 
         if(this.state.startedSort ){
@@ -71,7 +71,6 @@ class SortingVisualizer extends React.Component {
         this.updateBrowserWidth();
         this.updateBrowserHeight();
         this.setCanvasSize();
-        this.drawArrayBars();
     }
 
     updateBrowserWidth(){
@@ -154,10 +153,11 @@ class SortingVisualizer extends React.Component {
         ctx.clearRect(0,0,width,height);
 
         ctx.fillStyle = 'red';
-        
-        console.log(hMult);
-
-        
+        let x = startingPoint;
+        for(let i =0; i<arr.length; i++){
+            ctx.fillRect(x, height-arr[i]*hMult, 18, arr[i]*hMult);
+            x += 18;
+        }
     }
 
     hideDropdown(){
