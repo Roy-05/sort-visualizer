@@ -4,6 +4,7 @@
 ### TODO:
 
 - [ ] Refactor Code using Canvas element
+- [ ] CSS Improvements
 
 
 <!--
