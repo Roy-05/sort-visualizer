@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Visualize various Sort Algorithms"/>
-    <script src = "./js/sortingVisualizer.js" async></script>
+    <script src="./js/Sorts/sortAlgs.js" defer></script>
+    <script src = "./js/sortingVisualizer.js" defer></script>
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="./icons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
@@ -23,7 +24,7 @@
       <div class="dropdown">
           <button class="nav-btn pick-a-sort">PICK A SORT:</button>
           <div class = "dropdown-content">
-              <button class="nav-btn" id = "bubble-sort">BUBBLE SORT</button>
+              <button class="nav-btn" id = "bubble-sort" onclick="animation()">BUBBLE SORT</button>
               <button class="nav-btn" id = "selection-sort">SELECTION SORT</button>
               <button class="nav-btn" id = "insertion-sort">INSERTION SORT</button>
               <button class="nav-btn" id = "quick-sort">QUICK SORT</button>

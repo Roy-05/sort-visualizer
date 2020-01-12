@@ -1,12 +1,14 @@
 
 const canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d'),
     canvasContainer = document.getElementById('canvas-container')
     width = canvasContainer.offsetWidth,
     height = canvasContainer.offsetHeight;
 
 let array = getArray(),
     cWidth,
-    cHeight;
+    cHeight,
+    drawVis;
 
 init();
 
@@ -117,8 +119,7 @@ function getArray() {
 
 function drawArrayBars(){
 
-    const ctx = canvas.getContext('2d'),
-        size = array.length;
+    const size = array.length;
 
     //18 = 12(width of bar) + 6(margin on right)
     //We add a 6 because the last elem leaves behind a 6px margin that we don't want
@@ -127,13 +128,40 @@ function drawArrayBars(){
     ctx.clearRect(0, 0, cWidth, cHeight);
     ctx.fillStyle = 'red';
 
-    console.log(startingPoint); 
     let x = startingPoint;
     for(let i =0; i<size; i++){
         ctx.fillRect(x, cHeight-array[i], 12, array[i]);
         x += 18;
     }
-    console.log(x);
+
+}
+
+
+function animation(){
+    animations = bubbleSort(array);
+    ctx.clearRect(0, 0, cWidth, cHeight);
+    let counter = 0,
+        l = animations[0].length,
+        sP = (cWidth-l*18+6)/2; 
+
+    const draw = () => {
+        if(counter === animations[0].length - 1){
+            return;
+        }
+
+        let x = sP;
+        drawVis = requestAnimationFrame(draw);
+
+        ctx.clearRect(0, 0, cWidth, cHeight);
+        ctx.fillStyle = 'red';
+        for(let i = 0; i<l; i++){
+            ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
+            x += 18;
+        }
+        counter++;
+    }
+
+    draw();
 }
 
 //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
