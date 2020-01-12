@@ -1,38 +1,21 @@
-import React from 'react';
-import './SortingVisualizer.css';
 
-class SortingVisualizer extends React.Component {
-    constructor(props){
-        super(props);
+const width = window.innerWidth,
+    height = window.innerHeight,
+    array = getArray(),
+    canvas = document.getElementById('canvas');
 
-        this.state = {
-            array: [],
-            width: window.innerWidth,
-            height: window.innerHeight*0.7,
-            heightMultiplier: 1,
-            startedSort: false,
-            isSorted: false,
-            TIME: 300
-        };
-    }   
+window.addEventListener('DOMContentLoaded', ()=>{
+    init();
+})
 
-    /**
-     * Add event listener
-     */
-    componentDidMount(){
-        this.setArray();
-        this.updateDimensions();
-        this.setCanvasSize();
 
-        window.addEventListener('resize', this.updateDimensions.bind(this));    
-    }
+function init() {
+    setCanvasSize();
+}
 
-    /**
-     * Remove event listener
-     */
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions.bind(this));
-    }
+/** 
+
+    window.addEventListener('resize', this.updateDimensions.bind(this));    
 
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
@@ -94,50 +77,37 @@ class SortingVisualizer extends React.Component {
             })
         }
     }
+*/
 
-    getArraySize(){
-        let width = this.state.width;
+function getArraySize(){
+    //18 = 12px(width) + 6px(margin)
+    let arraySize = Math.floor((width - 50)/18);
 
-        //18 = 12px(width) + [2px + 2px](margin) + 2px(border)
-        let arraySize = Math.floor((width - 100)/18);
+    return (arraySize<60) ? arraySize : 60;
+}
 
-        return (arraySize<50) ? arraySize : 50;
+function getArray() {
+    const arr = [];
+
+    for(let i = 0; i<getArraySize(); i++){
+        arr.push(this.getRandomInt(1,100))
     }
 
-    getColors(){
-        return {
-            "base": "#6DB5E5",
-            "primary": "#B94DC4",
-            "secondary": "#C47D4D",
-            "completion": "#58C44D"
-        }
-    }
+    const MAX = Math.max(...arr),
+        hMult = Number(((height-10)/MAX).toFixed(2))
 
-    setArray(){
-        const array = [];
+    return arr.map(x => Math.floor(x*hMult));
+}
 
-        for(let i = 0; i<this.getArraySize(); i++){
-            array.push(this.getRandomInt(1,100))
-        }
+//Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-        this.setState({
-            array: array
-        });
-    }
+/** 
 
-    setHeightMultiplier(){
-        const height = this.state.height,
-            MAX = Math.max(...this.state.array);
 
-        return Number(((height-10)/MAX).toFixed(2));    
-    }
-
-    setCanvasSize(){
-        const canvas = document.getElementById('canvas');
-
-        canvas.height = this.state.height;
-        canvas.width = this.state.width;
-    }
+    
 
     drawArrayBars(){
         const canvas = document.getElementById('canvas'),
@@ -182,59 +152,8 @@ class SortingVisualizer extends React.Component {
     }
     
 
-    //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-
-    sortCompleteAnimation(iterations){
-        const array_bar = document.getElementsByClassName("array-elem"),
-            size = this.getArraySize(),
-            TIME = this.state.TIME,
-            colors = this.getColors();
-
-        setTimeout(()=>{
-            for(let i=0; i<size; i++){
-                setTimeout(()=>{
-                    array_bar[i].style.backgroundColor = colors["completion"];
-                }, i*30);
-            }
-        }, (iterations+1)*TIME);
-
-        setTimeout(()=>{
-                [...array_bar].forEach(elem=>{
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = colors["base"];
-                    }, 350);
-
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = colors["completion"];
-                    }, 700);
-
-                    setTimeout(()=>{
-                        elem.style.backgroundColor = colors["base"];
-                    }, 1000);
-                })
-        }, iterations*TIME + size*30 + 200); //200ms for delay
-
-        setTimeout(()=>{
-            this.setState({isSorted: true});
-        }, iterations*TIME + size*30 + 1200 + 500); //1200ms for previous setTimeout to complete + 500ms delay     
-    }
-
-    render(){
-        return( 
-            <>  
-                
-                <div className="canvas-container">
-                    <canvas id="canvas"></canvas>
-                </div>
-            </>
-        );
-    }
     
-    /*
+
     testAlgorithms(){
         for(let i= 0; i<100; i++){
             const arr = [];
@@ -272,6 +191,3 @@ class SortingVisualizer extends React.Component {
         return true;
     }
     */
-}
-
-export default SortingVisualizer;
