@@ -22,6 +22,7 @@ class SortingVisualizer extends React.Component {
     componentDidMount(){
         this.setArray();
         this.updateDimensions();
+        this.setCanvasSize();
         window.addEventListener('resize', this.updateDimensions.bind(this));    
     }
 
@@ -67,6 +68,7 @@ class SortingVisualizer extends React.Component {
     updateDimensions(){
         this.updateBrowserWidth();
         this.updateBrowserHeight();
+        this.setCanvasSize();
     }
 
     updateBrowserWidth(){
@@ -123,6 +125,15 @@ class SortingVisualizer extends React.Component {
             MAX = Math.max(...this.state.array);
 
         return (height-10)/MAX;    
+    }
+
+    setCanvasSize(){
+        const canvas = document.getElementById('canvas'),
+            width = this.state.width,
+            height = this.state.height;
+
+        canvas.height = height;
+        canvas.width = width;
     }
 
     hideDropdown(){
@@ -852,9 +863,6 @@ class SortingVisualizer extends React.Component {
     
     
     render(){
-        const {array} = this.state,
-            hMult = this.state.heightMultiplier;
-
         return( 
             <>  
                 <nav className = "navbar">
@@ -872,16 +880,9 @@ class SortingVisualizer extends React.Component {
                             <button className="nav-btn" id = "radix-sort" onClick = {()=>{this.radixSort()}}>RADIX SORT</button>
                         </div>
                     </div>
-                    {/*<button className="nav-btn" id = "test-algs" onClick = {()=>{this.testAlgorithms()}}>Test!</button>*/}
                 </nav>
-                <div className="array-container">
-                    <div className="array-bars">
-                    {
-                        array.map((value, idx) => (
-                            <div className = "array-elem" key = {idx} style = {{height: `${value*hMult}px`}}></div>
-                        ))
-                    } 
-                    </div>
+                <div className="canvas-container">
+                    <canvas id="canvas"></canvas>
                 </div>
             </>
         );
