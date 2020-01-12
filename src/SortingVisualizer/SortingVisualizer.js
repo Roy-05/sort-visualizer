@@ -41,7 +41,10 @@ class SortingVisualizer extends React.Component {
             this.setState({
                 heightMultiplier: this.setHeightMultiplier()
             });
-            this.drawArrayBars();
+        }
+
+        if(prevState.heightMultiplier !== this.state.heightMultiplier){
+            this.drawArrayBars()
         }
 
         if(this.state.startedSort ){
@@ -126,16 +129,14 @@ class SortingVisualizer extends React.Component {
         const height = this.state.height,
             MAX = Math.max(...this.state.array);
 
-        return (height-10)/MAX;    
+        return Number(((height-10)/MAX).toFixed(2));    
     }
 
     setCanvasSize(){
-        const canvas = document.getElementById('canvas'),
-            width = this.state.width,
-            height = this.state.height;
+        const canvas = document.getElementById('canvas');
 
-        canvas.height = height;
-        canvas.width = width;
+        canvas.height = this.state.height;
+        canvas.width = this.state.width;
     }
 
     drawArrayBars(){
@@ -152,10 +153,12 @@ class SortingVisualizer extends React.Component {
 
         ctx.clearRect(0,0,width,height);
 
+        console.log(hMult, Math.max(...arr), height)
+
         ctx.fillStyle = 'red';
         let x = startingPoint;
         for(let i =0; i<arr.length; i++){
-            ctx.fillRect(x, height-arr[i]*hMult, 18, arr[i]*hMult);
+            ctx.fillRect(x, height-arr[i]*hMult, 12, arr[i]*hMult);
             x += 18;
         }
     }
