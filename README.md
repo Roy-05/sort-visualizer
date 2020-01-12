@@ -1,7 +1,7 @@
 
-##Sort Visualizer v1.1:
+## Sort Visualizer v1.1:
 
-###TODO:
+### TODO:
 
 - [ ] Refactor Code using Canvas element
 
