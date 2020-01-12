@@ -6,13 +6,17 @@ body {
     height: 100vh;
   }
   
-#canvas {
+#canvas-container {
     margin: 0 auto;
     width:80vw;
     height:80vh;
     position: relative;
     top: 5vh;
     transform: translateY(-5%);
+   
+}
+
+#canvas {
     background: black;
 }
 

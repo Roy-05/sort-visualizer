@@ -1,21 +1,37 @@
 
-const width = window.innerWidth,
-    height = window.innerHeight,
-    array = getArray(),
-    canvas = document.getElementById('canvas');
+const canvas = document.getElementById('canvas'),
+    canvasContainer = document.getElementById('canvas-container')
+    width = canvasContainer.offsetWidth,
+    height = canvasContainer.offsetHeight;
 
-window.addEventListener('DOMContentLoaded', ()=>{
-    init();
-})
+let array = getArray(),
+    cWidth,
+    cHeight;
 
+init();
+
+window.addEventListener('resize', ()=>{
+    width = canvasContainer.offsetWidth;
+    height = canvasContainer.offsetHeight;
+    setCanvasSize();
+});
 
 function init() {
     setCanvasSize();
+    drawArrayBars();
+}
+    
+function setCanvasSize() {
+    canvas.width = width;
+    canvas.height = height;
+
+    cWidth = canvas.width;
+    cHeight = canvas.height;
 }
 
 /** 
 
-    window.addEventListener('resize', this.updateDimensions.bind(this));    
+    
 
     componentDidUpdate(prevProps, prevState){
         let nav_btn = document.getElementsByClassName("nav-btn");
@@ -81,7 +97,7 @@ function init() {
 
 function getArraySize(){
     //18 = 12px(width) + 6px(margin)
-    let arraySize = Math.floor((width - 50)/18);
+    let arraySize = Math.floor(width/18);
 
     return (arraySize<60) ? arraySize : 60;
 }
@@ -99,6 +115,27 @@ function getArray() {
     return arr.map(x => Math.floor(x*hMult));
 }
 
+function drawArrayBars(){
+
+    const ctx = canvas.getContext('2d'),
+        size = array.length;
+
+    //18 = 12(width of bar) + 6(margin on right)
+    //We add a 6 because the last elem leaves behind a 6px margin that we don't want
+    let startingPoint = (cWidth-size*18+6)/2; 
+
+    ctx.clearRect(0, 0, cWidth, cHeight);
+    ctx.fillStyle = 'red';
+
+    console.log(startingPoint); 
+    let x = startingPoint;
+    for(let i =0; i<size; i++){
+        ctx.fillRect(x, cHeight-array[i], 12, array[i]);
+        x += 18;
+    }
+    console.log(x);
+}
+
 //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -109,29 +146,7 @@ function getRandomInt(min, max) {
 
     
 
-    drawArrayBars(){
-        const canvas = document.getElementById('canvas'),
-            arr = this.state.array,
-            hMult = this.state.heightMultiplier,
-            width = this.state.width,
-            height = this.state.height,
-            size = this.getArraySize(),
-            ctx = canvas.getContext('2d');
-
-        //18 = width of each bar
-        let startingPoint = (width-size*18)/2; 
-
-        ctx.clearRect(0,0,width,height);
-
-        console.log(hMult, Math.max(...arr), height)
-
-        ctx.fillStyle = 'red';
-        let x = startingPoint;
-        for(let i =0; i<arr.length; i++){
-            ctx.fillRect(x, height-arr[i]*hMult, 12, arr[i]*hMult);
-            x += 18;
-        }
-    }
+    
 
     hideDropdown(){
         const dropdown = document.getElementsByClassName("dropdown")[0];
