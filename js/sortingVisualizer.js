@@ -9,6 +9,7 @@ let array = getArray(),
     cWidth,
     cHeight,
     drawVis,
+    animations,
     resize = false;
 
 init();
@@ -138,11 +139,20 @@ function drawArrayBars(){
 
 }
 
-function animation(){
-    animations = bubbleSort(array);
+function animation(choice){
+    switch(choice){
+        case "bubble": 
+            animations = bubbleSort(array);
+            break;
+        case "merge":
+            animations = animateMerge(array);
+            break;
+
+    }
+    
     ctx.clearRect(0, 0, cWidth, cHeight);
     let counter = 0,
-        l = animations[0].length,
+        l = array.length,
         sP = (cWidth-l*18+6)/2; 
 
     const draw = () => {
