@@ -136,7 +136,6 @@ function drawArrayBars(){
 
 }
 
-
 function animation(){
     animations = bubbleSort(array);
     ctx.clearRect(0, 0, cWidth, cHeight);
@@ -145,9 +144,10 @@ function animation(){
         sP = (cWidth-l*18+6)/2; 
 
     const draw = () => {
-        if(counter === animations[0].length - 1){
+        if(counter === animations.length){
             return;
         }
+        //console.log(animations);
 
         let x = sP;
         drawVis = requestAnimationFrame(draw);
@@ -158,7 +158,8 @@ function animation(){
             ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
             x += 18;
         }
-        counter++;
+        
+        counter++
     }
 
     draw();
