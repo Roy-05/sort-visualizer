@@ -18,7 +18,9 @@ window.addEventListener('resize', ()=>{
     resize = true;
     width = canvasContainer.offsetWidth;
     height = canvasContainer.offsetHeight;
+    array = getArray();
     setCanvasSize();
+    drawArrayBars();
 });
 
 function init() {
