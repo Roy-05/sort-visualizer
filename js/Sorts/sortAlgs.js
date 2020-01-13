@@ -6,8 +6,6 @@ function bubbleSort(arr) {
             if(arr[j] > arr[j+1]){
                 swap(arr, j, j+1);
                 //Returns a coppy of the arrray instead of a reference
-                //Pushing twice to apply time delay
-                animation_arr.push(arr.slice(0)); 
                 animation_arr.push(arr.slice(0)); 
             }
         }
@@ -26,6 +24,7 @@ function animateMerge(arr) {
     let animations = [];
     mergeSort(arr, 0, arr.length - 1, animations);
 
+    console.log(animations)
     return animations
 }
 
@@ -70,5 +69,6 @@ function merge(arr, start, mid, end, animations) {
         arr[start] = tempArr[i];
         start++;
     }
-    animations.push(tempArr.slice(0));
+
+    animations.push(arr.slice(0));
 }

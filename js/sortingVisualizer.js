@@ -150,7 +150,6 @@ function animation(choice){
 
     }
     
-    ctx.clearRect(0, 0, cWidth, cHeight);
     let counter = 0,
         l = array.length,
         sP = (cWidth-l*18+6)/2; 
@@ -167,16 +166,19 @@ function animation(choice){
         }
 
         let x = sP;
-        drawVis = requestAnimationFrame(draw);
-
-        ctx.clearRect(0, 0, cWidth, cHeight);
-        ctx.fillStyle = 'red';
-        for(let i = 0; i<l; i++){
-            ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
-            x += 18;
-        }
         
-        counter++
+        setTimeout(()=>{
+            requestAnimationFrame(draw)
+
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            ctx.fillStyle = 'red';
+            for(let i = 0; i<l; i++){
+                ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
+                x += 18;
+            }
+            
+            counter++
+        }, 10);
     }
 
     draw();
