@@ -8,11 +8,13 @@ const canvas = document.getElementById('canvas'),
 let array = getArray(),
     cWidth,
     cHeight,
-    drawVis;
+    drawVis,
+    resize = false;
 
 init();
 
 window.addEventListener('resize', ()=>{
+    resize = true;
     width = canvasContainer.offsetWidth;
     height = canvasContainer.offsetHeight;
     setCanvasSize();
@@ -147,7 +149,12 @@ function animation(){
         if(counter === animations.length){
             return;
         }
-        //console.log(animations);
+
+        //Stop animation on window resize
+        if(resize === true){
+            resize = false;
+            return;
+        }
 
         let x = sP;
         drawVis = requestAnimationFrame(draw);
