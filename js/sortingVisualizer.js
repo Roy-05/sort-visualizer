@@ -1,5 +1,6 @@
 
 const canvas = document.getElementById('canvas'),
+    gen_new_arr = document.getElementById('gen-new-arr'),
     ctx = canvas.getContext('2d'),
     canvasContainer = document.getElementById('canvas-container')
     width = canvasContainer.offsetWidth,
@@ -10,7 +11,8 @@ let array,
     cHeight,
     drawVis,
     animations,
-    resize = false;
+    resize = false,
+    generate = false;
 
 init();
 
@@ -20,6 +22,11 @@ window.addEventListener('resize', ()=>{
     height = canvasContainer.offsetHeight;
     init();
 });
+
+gen_new_arr.addEventListener('click', ()=>{
+    generate = true;
+    init();
+})
 
 function init() {
     array = getArray();
@@ -147,13 +154,15 @@ function animation(choice){
         case "bubble": 
             animations = bubbleSort(array);
             break;
+        case "selection":
+            animations = selectionSort(array);
+            break;
         case "insertion":
             animations = insertionSort(array);
             break;
         case "merge":
             animations = animateMerge(array);
             break;
-
     }
     
     let counter = 0,
@@ -172,6 +181,13 @@ function animation(choice){
             return;
         }
 
+        //Stop animation on generate new array click
+        if(generate === true){
+            generate = false;
+            init();
+            return;
+        }
+
         let x = sP;
         
         setTimeout(()=>{
@@ -187,7 +203,7 @@ function animation(choice){
             }
             
             counter++
-        }, 10);
+        }, 20);
     }
 
     draw();
