@@ -172,6 +172,9 @@ function animation(choice){
         case "heap":
             animations = heapSort(array);
             break;
+        case "radix":
+            animations = radixSort(array);
+            break;
     }
     
     let counter = 0,
@@ -212,7 +215,7 @@ function animation(choice){
             }
             
             counter++
-        }, 20);
+        }, 100);
     }
 
     draw();

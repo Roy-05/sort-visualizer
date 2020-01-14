@@ -270,6 +270,37 @@ function heapify(arr, n, i, animations){
 
 
 
+function radixSort(arr){
+    let maxNum = Math.max(...arr),
+        divisor = 1,
+        animations = [];
+       
+    while (Math.trunc(maxNum)>0){
+        let buckets = [...Array(10)].map(() => []),
+            tempDiv = divisor;
+        arr.forEach(num=>{
+            buckets[Math.floor((num/tempDiv))%10].push(num);
+        });
+
+        let temp = arr.slice(0);
+
+        // Reconstruct the array by concatinating all sub arrays
+        arr = [].concat(...buckets);
+        for(let i = 0; i<arr.length; i++){
+            animations.push(arr.slice(0,i+1).concat(...temp.slice(i+1)));
+        }
+        
+
+        maxNum/=10;
+        divisor *= 10;
+        
+    }
+
+    return animations;
+}
+
+
+
 function swap(arr, i, j){
     let temp = arr[i];
     arr[i] = arr[j];
