@@ -31,7 +31,6 @@ function insertionSort(arr){
         animations.push(arr.slice(0));
     }
 
-    console.log(animations)
     return animations;
 }
 
@@ -40,7 +39,6 @@ function animateMerge(arr) {
     let animations = [];
     mergeSort(arr, 0, arr.length - 1, animations);
 
-    console.log(animations)
     return animations
 }
 

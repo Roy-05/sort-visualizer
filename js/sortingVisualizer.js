@@ -131,10 +131,12 @@ function drawArrayBars(){
 
     ctx.clearRect(0, 0, cWidth, cHeight);
     ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'black';
 
     let x = startingPoint;
     for(let i =0; i<size; i++){
         ctx.fillRect(x, cHeight-array[i], 12, array[i]);
+        ctx.strokeRect(x, cHeight-array[i], 12, array[i]);
         x += 18;
     }
 
@@ -177,8 +179,10 @@ function animation(choice){
 
             ctx.clearRect(0, 0, cWidth, cHeight);
             ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'black';
             for(let i = 0; i<l; i++){
                 ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
+                ctx.strokeRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
                 x += 18;
             }
             
