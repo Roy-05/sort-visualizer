@@ -13,12 +13,6 @@ function bubbleSort(arr) {
     return animation_arr;
 }
 
-function swap(arr, i, j){
-    let temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
-
 
 function animateMerge(arr) {
     let animations = [];
@@ -71,4 +65,11 @@ function merge(arr, start, mid, end, animations) {
     }
 
     animations.push(arr.slice(0));
+}
+
+
+function swap(arr, i, j){
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
 }

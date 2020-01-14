@@ -5,7 +5,7 @@ const canvas = document.getElementById('canvas'),
     width = canvasContainer.offsetWidth,
     height = canvasContainer.offsetHeight;
 
-let array = getArray(),
+let array,
     cWidth,
     cHeight,
     drawVis,
@@ -18,12 +18,11 @@ window.addEventListener('resize', ()=>{
     resize = true;
     width = canvasContainer.offsetWidth;
     height = canvasContainer.offsetHeight;
-    array = getArray();
-    setCanvasSize();
-    drawArrayBars();
+    init();
 });
 
 function init() {
+    array = getArray();
     setCanvasSize();
     drawArrayBars();
 }
@@ -158,6 +157,7 @@ function animation(choice){
 
     const draw = () => {
         if(counter === animations.length){
+            setTimeout(init, 1000);
             return;
         }
 
@@ -166,7 +166,7 @@ function animation(choice){
             resize = false;
             return;
         }
-
+        
         let x = sP;
         
         setTimeout(()=>{
