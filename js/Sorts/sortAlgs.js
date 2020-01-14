@@ -108,6 +108,51 @@ function merge(arr, start, mid, end, animations) {
 }
 
 
+function animateQuickSort(arr){
+
+    let animations = [];
+
+    quickSort(arr, 0, arr.length - 1, animations);
+
+    return animations;
+
+}
+
+function quickSort(arr, start, end, animations){
+    if(start >= end){
+        return;
+    }
+
+    let pivotIndex = partition(arr, start, end, animations);
+    quickSort(arr, start, pivotIndex-1, animations);
+    quickSort(arr, pivotIndex+1, end, animations);
+}
+
+function partition(arr, start, end, animations){
+
+    let pivotValue = arr[end],
+        i = start;
+
+    for(let j=start; j<end; j++){
+        if(arr[j] < pivotValue){
+            
+            swap(arr, j, i);
+            animations.push(arr.slice(0));
+            i++
+        }     
+    }
+    
+    // animations["pos"].push([i,end]);
+    // animations["pivot"].push([i,end]);
+    // animations["counter"].push(animations["pos"].length);
+    swap(arr, i, end);
+    animations.push(arr.slice(0));
+    
+    return i; 
+}
+
+
+
 function swap(arr, i, j){
     let temp = arr[i];
     arr[i] = arr[j];

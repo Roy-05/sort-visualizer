@@ -160,6 +160,9 @@ function animation(choice){
         case "insertion":
             animations = insertionSort(array);
             break;
+        case "quick":
+                animations = animateQuickSort(array);
+                break;
         case "merge":
             animations = animateMerge(array);
             break;
