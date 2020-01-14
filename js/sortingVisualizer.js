@@ -1,32 +1,64 @@
 
 const canvas = document.getElementById('canvas'),
-    gen_new_arr = document.getElementById('gen-new-arr'),
     ctx = canvas.getContext('2d'),
-    canvasContainer = document.getElementById('canvas-container')
-    width = canvasContainer.offsetWidth,
-    height = canvasContainer.offsetHeight;
-
+    canvasContainer = document.getElementById('canvas-container');
+    
 let array,
     cWidth,
     cHeight,
     drawVis,
     animations,
+    width = canvasContainer.offsetWidth,
+    height = canvasContainer.offsetHeight,
+    navbtn = [...document.getElementsByClassName('nav-btn')],
     resize = false,
     generate = false;
 
-init();
+window.addEventListener('DOMContentLoaded', ()=>{
+    init()
+});
 
 window.addEventListener('resize', ()=>{
     resize = true;
     width = canvasContainer.offsetWidth;
     height = canvasContainer.offsetHeight;
+    navbtn = [...document.getElementsByClassName('nav-btn')];
     init();
 });
 
-gen_new_arr.addEventListener('click', ()=>{
-    generate = true;
-    init();
-})
+navbtn.forEach(button => {
+    button.addEventListener('click', ()=>{
+        if(button.id === 'gen-new-arr'){
+            generate = true;
+            init();
+        }
+        else if(button.id === 'bubble-sort'){
+            setSortAnimations('bubble');
+        }
+        else if(button.id === 'selection-sort'){
+            setSortAnimations('selection');
+        }
+        else if(button.id === 'insertion-sort'){
+            setSortAnimations('insertion');
+        }
+        else if(button.id === 'quick-sort'){
+            setSortAnimations('quick');
+        }
+        else if(button.id === 'merge-sort'){
+            setSortAnimations('merge');
+        }
+        else if(button.id === 'bead-sort'){
+            setSortAnimations('bead');
+        }
+        else if(button.id === 'heap-sort'){
+            setSortAnimations('heap');
+        }
+        else if(button.id === 'radix-sort'){
+            setSortAnimations('radix');
+        }
+    });
+});
+
 
 function init() {
     array = getArray();
@@ -41,72 +73,6 @@ function setCanvasSize() {
     cWidth = canvas.width;
     cHeight = canvas.height;
 }
-
-/** 
-
-    
-
-    componentDidUpdate(prevProps, prevState){
-        let nav_btn = document.getElementsByClassName("nav-btn");
-
-        if(prevState.array !== this.state.array){
-            this.setState({
-                heightMultiplier: this.setHeightMultiplier()
-            });
-        }
-
-        if(prevState.heightMultiplier !== this.state.heightMultiplier){
-            this.drawArrayBars()
-        }
-
-        if(this.state.startedSort ){
-            this.hideDropdown();
-            [...nav_btn].forEach((btn)=>{
-                btn.disabled = true;
-            });
-        }
-
-        if(this.state.isSorted){
-            
-            [...nav_btn].forEach((btn)=>{
-                btn.disabled = false;
-            });
-
-            this.setState({
-                startedSort: false,
-                isSorted: false
-            });
-            this.showDropdown();
-            this.setArray();
-        }
-    }
-
-    //call this function on window resize
-    updateDimensions(){
-        this.updateBrowserWidth();
-        this.updateBrowserHeight();
-        this.setCanvasSize();
-    }
-
-    updateBrowserWidth(){
-        if(Math.abs(this.state.width-window.innerWidth)>12){
-            this.setState({
-                width: window.innerWidth
-            });
-
-            this.setArray();
-        }
-    }
-
-    updateBrowserHeight(){
-        if(this.state.height !== window.innerHeight*0.7){
-            this.setState({
-                height: window.innerHeight*0.7,
-                heightMultiplier: this.setHeightMultiplier()
-            })
-        }
-    }
-*/
 
 function getArraySize(){
     //18 = 12px(width) + 6px(margin)
@@ -149,34 +115,38 @@ function drawArrayBars(){
 
 }
 
-function animation(choice){
-    switch(choice){
-        case "bubble": 
-            animations = bubbleSort(array);
-            break;
-        case "selection":
-            animations = selectionSort(array);
-            break;
-        case "insertion":
-            animations = insertionSort(array);
-            break;
-        case "quick":
-                animations = animateQuickSort(array);
-                break;
-        case "merge":
-            animations = animateMerge(array);
-            break;
-        case "bead":
-            animations = beadSort(array);
-            break;
-        case "heap":
-            animations = heapSort(array);
-            break;
-        case "radix":
-            animations = radixSort(array);
-            break;
+function setSortAnimations(choice){
+    let animations;
+
+    if(choice === "bubble") {
+        animations = bubbleSort(array);
     }
-    
+    else if(choice === "selection") {
+        animations = selectionSort(array);
+    }
+    else if(choice === "insertion") {
+        animations = insertionSort(array);
+    }
+    else if(choice === "quick") {
+        animations = animateQuickSort(array);
+    }
+    else if(choice === "merge") {
+        animations = animateMergeSort(array);
+    }
+    else if(choice === "bead") {
+        animations = beadSort(array);
+    }
+    else if(choice === "heap") {
+        animations = heapSort(array);
+    }
+    else if(choice === "radix") {
+        animations = radixSort(array);
+    }
+
+    visualize(animations);
+}
+
+function visualize(animations){
     let counter = 0,
         l = array.length,
         sP = (cWidth-l*18+6)/2; 
@@ -219,7 +189,9 @@ function animation(choice){
     }
 
     draw();
+
 }
+
 
 //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {

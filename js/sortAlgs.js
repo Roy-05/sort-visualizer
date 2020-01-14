@@ -104,7 +104,7 @@ function partition(arr, start, end, animations){
 
 
 
-function animateMerge(arr) {
+function animateMergeSort(arr) {
     let animations = [];
     mergeSort(arr, 0, arr.length - 1, animations);
 
