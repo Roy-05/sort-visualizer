@@ -169,6 +169,9 @@ function animation(choice){
         case "bead":
             animations = beadSort(array);
             break;
+        case "heap":
+            animations = heapSort(array);
+            break;
     }
     
     let counter = 0,

@@ -227,6 +227,49 @@ function beadToNumber(beadMatrix){
 
 
 
+
+function heapSort(arr){
+        
+    let animations = [],
+        n = arr.length;
+
+    //Create initial max heap
+    for(let i = Math.floor(n/2)-1; i>=0;i--){
+        this.heapify(arr, n, i, animations);
+    }
+
+    //swap root node with last element
+    for(let j = n-1; j>=0; j--){
+        this.swap(arr, j, 0);
+        animations.push(arr.slice(0));
+        this.heapify(arr, j, 0, animations);
+    }
+
+    return animations;
+}
+
+function heapify(arr, n, i, animations){
+    let largest = i,
+        left = 2*i+1,
+        right = 2*i+2;
+    
+    if(left<n && arr[left]>arr[largest]){
+        largest = left;
+    }
+
+    if(right<n && arr[right]>arr[largest]){
+        largest = right;
+    }
+
+    if(largest !== i){
+        this.swap(arr, i, largest);
+        animations.push(arr.slice(0));
+        this.heapify(arr, n, largest, animations);
+    }
+}
+
+
+
 function swap(arr, i, j){
     let temp = arr[i];
     arr[i] = arr[j];
