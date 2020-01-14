@@ -215,7 +215,7 @@ function animation(choice){
             }
             
             counter++
-        }, 100);
+        }, 20);
     }
 
     draw();
