@@ -13,6 +13,8 @@ function bubbleSort(arr) {
     return animations;
 }
 
+
+
 function selectionSort(arr){
 
     let animations = [];
@@ -31,6 +33,7 @@ function selectionSort(arr){
 
     return animations
 }
+
 
 
 function insertionSort(arr){
@@ -53,6 +56,52 @@ function insertionSort(arr){
 
     return animations;
 }
+
+
+
+function animateQuickSort(arr){
+
+    let animations = [];
+
+    quickSort(arr, 0, arr.length - 1, animations);
+
+    return animations;
+
+}
+
+function quickSort(arr, start, end, animations){
+    if(start >= end){
+        return;
+    }
+
+    let pivotIndex = partition(arr, start, end, animations);
+    quickSort(arr, start, pivotIndex-1, animations);
+    quickSort(arr, pivotIndex+1, end, animations);
+}
+
+function partition(arr, start, end, animations){
+
+    let pivotValue = arr[end],
+        i = start;
+
+    for(let j=start; j<end; j++){
+        if(arr[j] < pivotValue){
+            
+            swap(arr, j, i);
+            animations.push(arr.slice(0));
+            i++
+        }     
+    }
+    
+    // animations["pos"].push([i,end]);
+    // animations["pivot"].push([i,end]);
+    // animations["counter"].push(animations["pos"].length);
+    swap(arr, i, end);
+    animations.push(arr.slice(0));
+    
+    return i; 
+}
+
 
 
 function animateMerge(arr) {
@@ -108,47 +157,72 @@ function merge(arr, start, mid, end, animations) {
 }
 
 
-function animateQuickSort(arr){
 
+function beadSort(arr){
+    
     let animations = [];
+    
+    let beadMatrix = numberToBead(arr);
+        
+    for(let i = 0; i<beadMatrix.length;i++){
+        let counter = 0;
+        for(let j=0; j<beadMatrix.length; j++){
+            if(beadMatrix[i][j]===false){
+                beadMatrix[i][j] = true;
+                counter++;
+            }
+        }
 
-    quickSort(arr, 0, arr.length - 1, animations);
+        for(let k=0; k<counter; k++){
+            beadMatrix[i][k] = false;
+        }
 
+        animations.push(beadToNumber(beadMatrix));
+    }
+    
     return animations;
 
 }
 
-function quickSort(arr, start, end, animations){
-    if(start >= end){
-        return;
+function numberToBead(arr){
+    let largest = Math.max(...arr),
+        numInBeads = [],
+        beadMatrix = [];
+    
+    for(let i=0; i< arr.length; i++){
+
+        let beads = new Array(largest);     //Array.fill() needs an array of a defined length to work
+        beads.fill(true, 0,arr[i]);
+        beads.fill(false, arr[i],largest);
+
+        numInBeads.push(beads);
     }
 
-    let pivotIndex = partition(arr, start, end, animations);
-    quickSort(arr, start, pivotIndex-1, animations);
-    quickSort(arr, pivotIndex+1, end, animations);
+    for(let i=0; i<largest;i++){
+        let beads = [];
+        for(let j=0; j<numInBeads.length; j++){
+            beads.push(numInBeads[j][i]);
+        }
+        beadMatrix.push(beads);
+    }
+
+    return beadMatrix;
 }
 
-function partition(arr, start, end, animations){
-
-    let pivotValue = arr[end],
-        i = start;
-
-    for(let j=start; j<end; j++){
-        if(arr[j] < pivotValue){
-            
-            swap(arr, j, i);
-            animations.push(arr.slice(0));
-            i++
-        }     
+function beadToNumber(beadMatrix){
+    let size = beadMatrix[0].length,
+        numbers = [];
+    for(let i=0; i<size; i++){
+        let counter = 0;
+        for(let j=0; j<beadMatrix.length;j++){
+            if(beadMatrix[j][i]===true){
+                counter++;
+            }
+        }
+        numbers.push(counter);
     }
-    
-    // animations["pos"].push([i,end]);
-    // animations["pivot"].push([i,end]);
-    // animations["counter"].push(animations["pos"].length);
-    swap(arr, i, end);
-    animations.push(arr.slice(0));
-    
-    return i; 
+
+    return numbers;
 }
 
 

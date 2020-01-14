@@ -166,6 +166,9 @@ function animation(choice){
         case "merge":
             animations = animateMerge(array);
             break;
+        case "bead":
+            animations = beadSort(array);
+            break;
     }
     
     let counter = 0,
