@@ -13,6 +13,26 @@ function bubbleSort(arr) {
     return animations;
 }
 
+function selectionSort(arr){
+
+    let animations = [];
+    for(let i=0; i<arr.length-1; i++){
+        let minimum = i;
+        for(let j = i+1, counter=0; j<arr.length; j++, counter++){
+            if(arr[j] < arr[minimum]){
+                minimum = j; 
+
+            }
+        }
+
+        swap(arr, i, minimum);
+        animations.push(arr.slice(0));
+    }
+
+    return animations
+}
+
+
 function insertionSort(arr){
 
     let animations = [];
