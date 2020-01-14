@@ -1,16 +1,38 @@
 
 function bubbleSort(arr) {
-    let animation_arr = [];
+    let animations = [];
     for(let i =0; i<arr.length; i++){
         for(let j=0; j<arr.length-i-1; j++){
             if(arr[j] > arr[j+1]){
                 swap(arr, j, j+1);
                 //Returns a coppy of the arrray instead of a reference
-                animation_arr.push(arr.slice(0)); 
+                animations.push(arr.slice(0)); 
             }
         }
     }        
-    return animation_arr;
+    return animations;
+}
+
+function insertionSort(arr){
+
+    let animations = [];
+
+    for(let i=0; i<arr.length; i++){
+        let temp = arr[i],
+            pos = i
+
+        while(pos>0 && temp<arr[pos-1]){
+            arr[pos] = arr[pos-1];
+            animations.push(arr.slice(0));
+            pos--;
+        }
+        
+        arr[pos] = temp;
+        animations.push(arr.slice(0));
+    }
+
+    console.log(animations)
+    return animations;
 }
 
 

@@ -145,6 +145,9 @@ function animation(choice){
         case "bubble": 
             animations = bubbleSort(array);
             break;
+        case "insertion":
+            animations = insertionSort(array);
+            break;
         case "merge":
             animations = animateMerge(array);
             break;
@@ -166,7 +169,7 @@ function animation(choice){
             resize = false;
             return;
         }
-        
+
         let x = sP;
         
         setTimeout(()=>{
