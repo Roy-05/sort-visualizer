@@ -30,6 +30,7 @@ button:disabled, .nav-btn[disabled] {
     opacity: 0.75; 
     color: gray;
     cursor: not-allowed;
+    border: none;
 }
 
 .nav-btn {
@@ -53,15 +54,16 @@ button:disabled, .nav-btn[disabled] {
     display: inline-block;
 }
 
-.pick-a-sort {
+#pick-a-sort {
     box-sizing: border-box;
     width: 100%;
 }
 
+
 #dropdown-content {
     display: none;
     position: absolute;
-    background-color: rgba(219, 230, 246, 0.8);
+    background-color: rgba(219, 230, 246, 0.9);
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     box-sizing: border-box;
@@ -92,13 +94,8 @@ button:disabled, .nav-btn[disabled] {
 }
 
 @media (hover: hover) {
-    #dropdown-content .nav-btn:hover{
+    .nav-btn:hover:enabled{
         border: solid black 1px;
-    }
-
-    .nav-btn:hover:enabled {
-        border: none;
         transition: all 0.3s ease-out;
     }
-
 }

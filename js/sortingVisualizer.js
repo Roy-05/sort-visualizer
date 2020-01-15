@@ -62,6 +62,7 @@ navbtn.forEach(button =>{
        
 function init() {
     pickASort.disabled = false;
+
     array = getArray();
     setCanvasSize();
     drawArrayBars();
