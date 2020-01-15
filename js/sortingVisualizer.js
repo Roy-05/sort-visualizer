@@ -51,8 +51,8 @@ navbtn.forEach(button =>{
         }
     });
 });
-       
 
+       
 function init() {
     array = getArray();
     setCanvasSize();
@@ -96,12 +96,13 @@ function drawArrayBars(){
     let startingPoint = (cWidth-size*18+6)/2; 
 
     ctx.clearRect(0, 0, cWidth, cHeight);
-    ctx.fillStyle = 'red';
+    
     ctx.strokeStyle = 'black';
+    ctx.fillStyle = "#31446A"
 
     let x = startingPoint;
     for(let i =0; i<size; i++){
-        roundRect(ctx, x, cHeight-array[i], 12, array[i], 4);
+        roundRect(ctx, x, cHeight-array[i], 12, array[i], 4, true);
         x += 18;
     }
 
@@ -167,10 +168,8 @@ function visualize(animations){
             requestAnimationFrame(draw)
 
             ctx.clearRect(0, 0, cWidth, cHeight);
-            ctx.fillStyle = 'red';
-            ctx.strokeStyle = 'black';
             for(let i = 0; i<l; i++){
-                roundRect(ctx, x, cHeight-animations[counter][i], 12, animations[counter][i], 4);
+                roundRect(ctx, x, cHeight-animations[counter][i], 12, animations[counter][i], 4, true);
                 x += 18;
             }
             
@@ -206,8 +205,9 @@ function toggleDropdownContent() {
  * @param {Number} [radius.tr = 0] Top right
  * @param {Number} [radius.br = 0] Bottom right
  * @param {Number} [radius.bl = 0] Bottom left
- */ 
-function roundRect(ctx, x, y, width, height, radius) {
+ * @param {boolean} fill fillStyle or not
+ */
+function roundRect(ctx, x, y, width, height, radius, fill) {
 
     radius = {tl: radius, tr: radius, br: radius, bl: radius};
     ctx.beginPath();
@@ -222,7 +222,9 @@ function roundRect(ctx, x, y, width, height, radius) {
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
     ctx.closePath();
     ctx.stroke();
-    ctx.fill();
+    if(fill){
+        ctx.fill();
+    }
 }
 
 
