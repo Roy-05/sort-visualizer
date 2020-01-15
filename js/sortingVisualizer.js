@@ -96,9 +96,8 @@ function drawArrayBars(){
     let startingPoint = (cWidth-size*18+6)/2; 
 
     ctx.clearRect(0, 0, cWidth, cHeight);
-    
     ctx.strokeStyle = 'black';
-    ctx.fillStyle = "#31446A"
+    ctx.fillStyle = "#2A9074";
 
     let x = startingPoint;
     for(let i =0; i<size; i++){
@@ -142,7 +141,7 @@ function setSortAnimations(choice){
 function visualize(animations){
     let counter = 0,
         l = array.length,
-        sP = (cWidth-l*18+6)/2; 
+        startingPoint = (cWidth-l*18+6)/2; 
 
     const draw = () => {
         if(counter === animations.length){
@@ -162,7 +161,7 @@ function visualize(animations){
             return;
         }
 
-        let x = sP;
+        let x = startingPoint;
         
         setTimeout(()=>{
             requestAnimationFrame(draw)
