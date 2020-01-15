@@ -12,7 +12,8 @@ let array,
     width = canvasContainer.offsetWidth,
     height = canvasContainer.offsetHeight,
     navbtn = [...document.getElementsByClassName('nav-btn')],
-    resize = false,
+    resizeEnd,
+    resizing = false,
     generate = false;
 
 window.addEventListener('DOMContentLoaded', ()=>{
@@ -20,15 +21,18 @@ window.addEventListener('DOMContentLoaded', ()=>{
 });
 
 window.addEventListener('resize', ()=>{
-    //Apparently resize event is fired on window load,
-    //this if-statement check if the window has actually changed dimensions
-    if(width !== canvasContainer.offsetWidth || height!==canvasContainer.offsetHeight){
-        resize = true;
-        width = canvasContainer.offsetWidth;
-        height = canvasContainer.offsetHeight;
-        navbtn = [...document.getElementsByClassName('nav-btn')];
-        init();
-    }
+
+    resizing = true;
+    width = canvasContainer.offsetWidth;
+    height = canvasContainer.offsetHeight;
+    navbtn = [...document.getElementsByClassName('nav-btn')];
+    init();
+
+    //Change resizing to false once resize is done firing
+    clearTimeout(resizeEnd);
+    resizeEnd = setTimeout(()=>{
+        resizing = false;
+    }, 500);
 });
 
 
@@ -136,7 +140,6 @@ function setSortAnimations(choice){
 }
 
 function visualize(animations){
-    console.log("fire\n");
     let counter = 0,
         l = array.length,
         sP = (cWidth-l*18+6)/2; 
@@ -149,8 +152,7 @@ function visualize(animations){
         }
 
         //Stop animation on window resize
-        if(resize === true){
-            resize = false;
+        if(resizing === true){
             return;
         }
 
