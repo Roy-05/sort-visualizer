@@ -3,6 +3,7 @@ const canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     canvasContainer = document.getElementById('canvas-container'),
     dropdown = document.getElementsByClassName('dropdown')[0],
+    pickASort = document.getElementById('pick-a-sort');
     dropdownContent = document.getElementById('dropdown-content');
     
 let array,
@@ -51,6 +52,7 @@ navbtn.forEach(button =>{
             toggleDropdownContent();
         }
         else{
+            pickASort.disabled = true;
             toggleDropdownContent();
             setSortAnimations(button.id)
         }
@@ -59,6 +61,7 @@ navbtn.forEach(button =>{
 
        
 function init() {
+    pickASort.disabled = false;
     array = getArray();
     setCanvasSize();
     drawArrayBars();
