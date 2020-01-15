@@ -15,50 +15,38 @@ let array,
     generate = false;
 
 window.addEventListener('DOMContentLoaded', ()=>{
-    init()
-});
-
-window.addEventListener('resize', ()=>{
-    resize = true;
-    width = canvasContainer.offsetWidth;
-    height = canvasContainer.offsetHeight;
-    navbtn = [...document.getElementsByClassName('nav-btn')];
     init();
 });
 
-navbtn.forEach(button => {
+window.addEventListener('resize', ()=>{
+    //Apparently resize event is fired on window load,
+    //this if-statement check if the window has actually changed dimensions
+    if(width !== canvasContainer.offsetWidth || height!==canvasContainer.offsetHeight){
+        resize = true;
+        width = canvasContainer.offsetWidth;
+        height = canvasContainer.offsetHeight;
+        navbtn = [...document.getElementsByClassName('nav-btn')];
+        init();
+    }
+});
+
+navbtn.forEach(button =>{
     button.addEventListener('click', ()=>{
         if(button.id === 'gen-new-arr'){
+            console.log(button.id)
             generate = true;
             init();
         }
-        else if(button.id === 'bubble-sort'){
-            setSortAnimations('bubble');
+        else if(button.id === 'pick-a-sort'){
+            //
         }
-        else if(button.id === 'selection-sort'){
-            setSortAnimations('selection');
-        }
-        else if(button.id === 'insertion-sort'){
-            setSortAnimations('insertion');
-        }
-        else if(button.id === 'quick-sort'){
-            setSortAnimations('quick');
-        }
-        else if(button.id === 'merge-sort'){
-            setSortAnimations('merge');
-        }
-        else if(button.id === 'bead-sort'){
-            setSortAnimations('bead');
-        }
-        else if(button.id === 'heap-sort'){
-            setSortAnimations('heap');
-        }
-        else if(button.id === 'radix-sort'){
-            setSortAnimations('radix');
+        else{
+            console.log(button.id)
+            setSortAnimations(button.id)
         }
     });
 });
-
+       
 
 function init() {
     array = getArray();
@@ -118,28 +106,28 @@ function drawArrayBars(){
 function setSortAnimations(choice){
     let animations;
 
-    if(choice === "bubble") {
+    if(choice === "bubble-sort") {
         animations = bubbleSort(array);
     }
-    else if(choice === "selection") {
+    else if(choice === "selection-sort") {
         animations = selectionSort(array);
     }
-    else if(choice === "insertion") {
+    else if(choice === "insertion-sort") {
         animations = insertionSort(array);
     }
-    else if(choice === "quick") {
+    else if(choice === "quick-sort") {
         animations = animateQuickSort(array);
     }
-    else if(choice === "merge") {
+    else if(choice === "merge-sort") {
         animations = animateMergeSort(array);
     }
-    else if(choice === "bead") {
+    else if(choice === "bead-sort") {
         animations = beadSort(array);
     }
-    else if(choice === "heap") {
+    else if(choice === "heap-sort") {
         animations = heapSort(array);
     }
-    else if(choice === "radix") {
+    else if(choice === "radix-sort") {
         animations = radixSort(array);
     }
 
@@ -147,24 +135,29 @@ function setSortAnimations(choice){
 }
 
 function visualize(animations){
+    console.log("fire\n");
     let counter = 0,
         l = array.length,
         sP = (cWidth-l*18+6)/2; 
 
     const draw = () => {
+        console.log("draw")
         if(counter === animations.length){
             setTimeout(init, 1000);
+            console.log("break here len")
             return;
         }
 
         //Stop animation on window resize
         if(resize === true){
+            console.log("break here resize")
             resize = false;
             return;
         }
 
         //Stop animation on generate new array click
         if(generate === true){
+            console.log("break here gen")
             generate = false;
             init();
             return;
