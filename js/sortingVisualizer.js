@@ -2,6 +2,7 @@
 const canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     canvasContainer = document.getElementById('canvas-container'),
+    dropdown = document.getElementsByClassName('dropdown')[0],
     dropdownContent = document.getElementById('dropdown-content');
     
 let array,
@@ -33,6 +34,10 @@ window.addEventListener('resize', ()=>{
     resizeEnd = setTimeout(()=>{
         resizing = false;
     }, 500);
+});
+
+dropdown.addEventListener('mouseleave', ()=>{
+    dropdownContent.className = 'hidden';
 });
 
 
@@ -96,8 +101,7 @@ function drawArrayBars(){
     let startingPoint = (cWidth-size*18+6)/2; 
 
     ctx.clearRect(0, 0, cWidth, cHeight);
-    ctx.strokeStyle = 'black';
-    ctx.fillStyle = "#2A9074";
+    ctx.fillStyle = "#29a382";
 
     let x = startingPoint;
     for(let i =0; i<size; i++){
@@ -209,6 +213,8 @@ function toggleDropdownContent() {
 function roundRect(ctx, x, y, width, height, radius, fill) {
 
     radius = {tl: radius, tr: radius, br: radius, bl: radius};
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(x + radius.tl, y);
     ctx.lineTo(x + width - radius.tr, y);
@@ -220,10 +226,10 @@ function roundRect(ctx, x, y, width, height, radius, fill) {
     ctx.lineTo(x, y + radius.tl);
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
     ctx.closePath();
-    ctx.stroke();
     if(fill){
         ctx.fill();
     }
+    ctx.stroke();
 }
 
 
