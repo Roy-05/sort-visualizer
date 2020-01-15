@@ -164,7 +164,7 @@ function beadSort(arr){
     
     let beadMatrix = numberToBead(arr);
         
-    for(let i = 0; i<beadMatrix.length;i++){
+    for(let i = Math.min(...arr); i<beadMatrix.length;i++){
         let counter = 0;
         for(let j=0; j<beadMatrix.length; j++){
             if(beadMatrix[i][j]===false){
