@@ -1,7 +1,8 @@
 
 const canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
-    canvasContainer = document.getElementById('canvas-container');
+    canvasContainer = document.getElementById('canvas-container'),
+    dropdownContent = document.getElementById('dropdown-content');
     
 let array,
     cWidth,
@@ -30,18 +31,18 @@ window.addEventListener('resize', ()=>{
     }
 });
 
+
 navbtn.forEach(button =>{
     button.addEventListener('click', ()=>{
         if(button.id === 'gen-new-arr'){
-            console.log(button.id)
             generate = true;
             init();
         }
         else if(button.id === 'pick-a-sort'){
-            //
+            toggleDropdownContent();
         }
         else{
-            console.log(button.id)
+            toggleDropdownContent();
             setSortAnimations(button.id)
         }
     });
@@ -144,20 +145,17 @@ function visualize(animations){
         console.log("draw")
         if(counter === animations.length){
             setTimeout(init, 1000);
-            console.log("break here len")
             return;
         }
 
         //Stop animation on window resize
         if(resize === true){
-            console.log("break here resize")
             resize = false;
             return;
         }
 
         //Stop animation on generate new array click
         if(generate === true){
-            console.log("break here gen")
             generate = false;
             init();
             return;
@@ -183,6 +181,15 @@ function visualize(animations){
 
     draw();
 
+}
+
+function toggleDropdownContent() {
+    if(dropdownContent.className === "hidden"){
+        dropdownContent.className = "show";
+    }
+    else{
+        dropdownContent.className = "hidden";
+    }
 }
 
 
