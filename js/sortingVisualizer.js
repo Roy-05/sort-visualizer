@@ -78,11 +78,11 @@ function getArray() {
     const arr = [];
 
     for(let i = 0; i<getArraySize(); i++){
-        arr.push(this.getRandomInt(1,100))
+        arr.push(this.getRandomInt(5,100))
     }
 
     const MAX = Math.max(...arr),
-        hMult = Number(((height-10)/MAX).toFixed(2))
+        hMult = Number(((height-10)/MAX).toFixed(2));
 
     return arr.map(x => Math.floor(x*hMult));
 }
@@ -101,8 +101,7 @@ function drawArrayBars(){
 
     let x = startingPoint;
     for(let i =0; i<size; i++){
-        ctx.fillRect(x, cHeight-array[i], 12, array[i]);
-        ctx.strokeRect(x, cHeight-array[i], 12, array[i]);
+        roundRect(ctx, x, cHeight-array[i], 12, array[i], 4);
         x += 18;
     }
 
@@ -145,7 +144,6 @@ function visualize(animations){
         sP = (cWidth-l*18+6)/2; 
 
     const draw = () => {
-        console.log("draw")
         if(counter === animations.length){
             setTimeout(init, 1000);
             return;
@@ -172,8 +170,7 @@ function visualize(animations){
             ctx.fillStyle = 'red';
             ctx.strokeStyle = 'black';
             for(let i = 0; i<l; i++){
-                ctx.fillRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
-                ctx.strokeRect(x, cHeight-animations[counter][i], 12, animations[counter][i]);
+                roundRect(ctx, x, cHeight-animations[counter][i], 12, animations[counter][i], 4);
                 x += 18;
             }
             
@@ -194,74 +191,82 @@ function toggleDropdownContent() {
     }
 }
 
+/**
+ * Source: https://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
+ * by Juan Mendes. Edited by Me for the specific use-case.
+ * 
+ * Draws a rounded rectangle using the current state of the canvas.
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {Number} x The top left x coordinate
+ * @param {Number} y The top left y coordinate
+ * @param {Number} width The width of the rectangle
+ * @param {Number} height The height of the rectangle
+ * @param {Number} radius The corner radius
+ * @param {Number} [radius.tl = 0] Top left
+ * @param {Number} [radius.tr = 0] Top right
+ * @param {Number} [radius.br = 0] Bottom right
+ * @param {Number} [radius.bl = 0] Bottom left
+ */ 
+function roundRect(ctx, x, y, width, height, radius) {
+
+    radius = {tl: radius, tr: radius, br: radius, bl: radius};
+    ctx.beginPath();
+    ctx.moveTo(x + radius.tl, y);
+    ctx.lineTo(x + width - radius.tr, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+    ctx.lineTo(x + width, y + height - radius.br);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+    ctx.lineTo(x + radius.bl, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+    ctx.lineTo(x, y + radius.tl);
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+}
+
 
 //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/** 
+
+/**
+ * testAlgorithms(){
+    for(let i= 0; i<100; i++){
+        const arr = [];
+        for(let j=0; j< this.getRandomInt(1,100); j++){
+            arr.push(this.getRandomInt(0,1000));
+        }
+        let jsSortedArr = arr.slice().sort((a,b)=>a-b),
+            //bSortedArray = bubbleSortAlg(arr),
+            //sSortedArray = this.selectionSort(arr),
+            //iSortedArray = this.insertionSort(arr),
+            //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
+            //mSortedArray = this.mergeSort(arr),
+            //bdSortedArray =  this.beadSort(arr),
+            //hSortedArray = this.heapSort(arr),
+            rSortedArray = this.radixSort(arr);
 
 
-    
 
-    
+        console.log(this.arraysAreEqual(jsSortedArr, rSortedArray));
+    }
+}
 
-    hideDropdown(){
-        const dropdown = document.getElementsByClassName("dropdown")[0];
-        
-        dropdown.className = "dropdown clicked";
+arraysAreEqual(arr1, arr2){
+    if(arr1.length !== arr2.length){
+        return false;
     }
 
-    showDropdown(){
-        const dropdown = document.getElementsByClassName("dropdown")[0];
-        
-        dropdown.className = "dropdown";
-    }
-    
-    swap(arr, i, j){
-        let temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    
-
-    
-
-    testAlgorithms(){
-        for(let i= 0; i<100; i++){
-            const arr = [];
-            for(let j=0; j< this.getRandomInt(1,100); j++){
-                arr.push(this.getRandomInt(0,1000));
-            }
-            let jsSortedArr = arr.slice().sort((a,b)=>a-b),
-                //bSortedArray = bubbleSortAlg(arr),
-                //sSortedArray = this.selectionSort(arr),
-                //iSortedArray = this.insertionSort(arr),
-                //qSortedArray = this.quickSortAlg(arr, 0, arr.length - 1),
-                //mSortedArray = this.mergeSort(arr),
-                //bdSortedArray =  this.beadSort(arr),
-                //hSortedArray = this.heapSort(arr),
-                rSortedArray = this.radixSort(arr);
-
-
-
-            console.log(this.arraysAreEqual(jsSortedArr, rSortedArray));
+    for(let i =0; i<arr1.length; i++){
+        if(arr1[i] !== arr2[i]){
+            console.log(arr1[i], arr2[i]);
+            return false
         }
     }
 
-    arraysAreEqual(arr1, arr2){
-        if(arr1.length !== arr2.length){
-            return false;
-        }
-
-        for(let i =0; i<arr1.length; i++){
-            if(arr1[i] !== arr2[i]){
-                console.log(arr1[i], arr2[i]);
-                return false
-            }
-        }
-
-        return true;
-    }
-    */
+    return true;
+}
+ */
