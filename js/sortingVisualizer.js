@@ -183,7 +183,7 @@ function visualize(animations){
                 if(i === animations[counter][2] && counter < animations.length -1){
                     ctx.fillStyle = "#38316a";
                 }
-                else if(i === animations[counter][1] && counter < animations.length -1){
+                else if((i === animations[counter][1] || i === animations[counter][3]) && counter < animations.length -1){
                     ctx.fillStyle = "red";
                 }
                 else {
@@ -195,7 +195,7 @@ function visualize(animations){
             }
             
             counter++
-        }, 6000/animations.length);
+        }, 10000/animations.length);
     }
 
     draw();

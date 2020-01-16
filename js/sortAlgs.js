@@ -86,19 +86,17 @@ function partition(arr, start, end, animations){
         i = start;
 
     for(let j=start; j<end; j++){
+        animations.push([arr.slice(0), j, end, i]);
         if(arr[j] < pivotValue){
-            
+            animations.push([arr.slice(0), j, end, i]);
             swap(arr, j, i);
-            animations.push([arr.slice(0)]);
+            animations.push([arr.slice(0), j, end, i]);
             i++
         }     
     }
     
-    // animations["pos"].push([i,end]);
-    // animations["pivot"].push([i,end]);
-    // animations["counter"].push(animations["pos"].length);
     swap(arr, i, end);
-    animations.push([arr.slice(0)]);
+    animations.push([arr.slice(0), i, null, end]);
     
     return i; 
 }
@@ -154,8 +152,6 @@ function merge(arr, start, mid, end, animations) {
         animations.push([arr.slice(0), start]);
         start++;
     }
-
-    //animations.push([arr.slice(0),arr1Index-1, arr2Index-1]);
 }
 
 
