@@ -6,7 +6,7 @@ const canvas = document.getElementById('canvas'),
     pickASort = document.getElementById('pick-a-sort');
     dropdownContent = document.getElementById('dropdown-content');
     
-let array,
+let array,t,
     cWidth,
     cHeight,
     drawVis,
@@ -53,6 +53,8 @@ navbtn.forEach(button =>{
         }
         else{
             pickASort.disabled = true;
+
+            generate = false;
             toggleDropdownContent();
             setSortAnimations(button.id)
         }
@@ -66,6 +68,7 @@ function init() {
     array = getArray();
     setCanvasSize();
     drawArrayBars();
+    
 }
     
 function setCanvasSize() {
@@ -149,10 +152,14 @@ function setSortAnimations(choice){
 function visualize(animations){
     let counter = 0,
         l = array.length,
-        startingPoint = (cWidth-l*18+6)/2; 
+        startingPoint = (cWidth-l*18+6)/2,
+        t = animations.length;
+
+    console.log(t);
 
     const draw = () => {
         if(counter === animations.length){
+        
             setTimeout(init, 1000);
             return;
         }
@@ -181,7 +188,7 @@ function visualize(animations){
             }
             
             counter++
-        }, 20);
+        }, 10);
     }
 
     draw();
