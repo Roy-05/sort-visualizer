@@ -178,7 +178,7 @@ function beadSort(arr){
             beadMatrix[i][k] = false;
         }
 
-        animations.push(beadToNumber(beadMatrix));
+        animations.push([beadToNumber(beadMatrix)]);
     }
     
     return animations;
@@ -288,7 +288,8 @@ function radixSort(arr){
         // Reconstruct the array by concatinating all sub arrays
         arr = [].concat(...buckets);
         for(let i = 0; i<arr.length; i++){
-            animations.push(arr.slice(0,i+1).concat(...temp.slice(i+1)));
+            temp = arr.slice(0,i+1).concat(...temp.slice(i+1));
+            animations.push([temp]);
         }
         
 
