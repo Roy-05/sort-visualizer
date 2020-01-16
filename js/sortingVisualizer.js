@@ -195,7 +195,7 @@ function visualize(animations){
             }
             
             counter++
-        }, 10);
+        }, 6000/animations.length);
     }
 
     draw();
