@@ -83,7 +83,7 @@ function getArraySize(){
     //18 = 12px(width) + 6px(margin)
     let arraySize = Math.floor(width/18);
 
-    return (arraySize<60) ? arraySize : 60;
+    return (arraySize<50) ? arraySize : 50;
 }
 
 function getArray() {
@@ -180,11 +180,11 @@ function visualize(animations){
 
             ctx.clearRect(0, 0, cWidth, cHeight);
             for(let i = 0; i<l; i++){
-                if(i === animations[counter][1] && counter < animations.length -1){
-                    ctx.fillStyle = "red";
-                }
-                else if(i === animations[counter][2] && counter < animations.length -1){
+                if(i === animations[counter][2] && counter < animations.length -1){
                     ctx.fillStyle = "#38316a";
+                }
+                else if(i === animations[counter][1] && counter < animations.length -1){
+                    ctx.fillStyle = "red";
                 }
                 else {
                     ctx.fillStyle = "#29a382";
@@ -195,7 +195,7 @@ function visualize(animations){
             }
             
             counter++
-        }, 30);
+        }, 10);
     }
 
     draw();

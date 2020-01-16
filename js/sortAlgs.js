@@ -21,14 +21,15 @@ function selectionSort(arr){
     for(let i=0; i<arr.length-1; i++){
         let minimum = i;
         for(let j = i+1, counter=0; j<arr.length; j++, counter++){
+            animations.push([arr.slice(0), j, minimum]);
             if(arr[j] < arr[minimum]){
                 minimum = j; 
-
+                animations.push([arr.slice(0), j, minimum]);
             }
         }
 
         swap(arr, i, minimum);
-        animations.push([arr.slice(0)]);
+        animations.push([arr.slice(0), minimum, i]);
     }
 
     return animations
