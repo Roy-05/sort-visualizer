@@ -6,11 +6,12 @@
 - [x] ~Refactor Code using Canvas element~
 - [x] ~Allow for visualize() to fire when window is done resizing~
 - [x] ~Make rectangles into rounded rectangles~
-- [ ] CSS Improvements
+- [x] CSS Improvements
     * ~Add background color gradient~
     * ~Make buttons transparents~
-    * Darker color for button sorts?
+    * ~Darker color for button sorts?~
 - [ ] Add animation effects on the sorts
+    * ~Animate Insertion Sort~
 - [ ] Add play/pause functionality
 - [ ] Add array access/comparisons counter
 - [ ] Add slider to set sort speed
