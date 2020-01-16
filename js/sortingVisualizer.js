@@ -152,10 +152,7 @@ function setSortAnimations(choice){
 function visualize(animations){
     let counter = 0,
         l = array.length,
-        startingPoint = (cWidth-l*18+6)/2,
-        t = animations.length;
-
-    console.log(t);
+        startingPoint = (cWidth-l*18+6)/2;
 
     const draw = () => {
         if(counter === animations.length){
@@ -183,12 +180,22 @@ function visualize(animations){
 
             ctx.clearRect(0, 0, cWidth, cHeight);
             for(let i = 0; i<l; i++){
-                roundRect(ctx, x, cHeight-animations[counter][i], 12, animations[counter][i], 4, true);
+                if(i === animations[counter][1] && counter < animations.length -1){
+                    ctx.fillStyle = "red";
+                }
+                else if(i === animations[counter][2] && counter < animations.length -1){
+                    ctx.fillStyle = "#38316a";
+                }
+                else {
+                    ctx.fillStyle = "#29a382";
+                }
+                
+                roundRect(ctx, x, cHeight-animations[counter][0][i], 12, animations[counter][0][i], 4, true);
                 x += 18;
             }
             
             counter++
-        }, 10);
+        }, 30);
     }
 
     draw();

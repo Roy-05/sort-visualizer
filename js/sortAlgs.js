@@ -6,7 +6,7 @@ function bubbleSort(arr) {
             if(arr[j] > arr[j+1]){
                 swap(arr, j, j+1);
                 //Returns a coppy of the arrray instead of a reference
-                animations.push(arr.slice(0)); 
+                animations.push([arr.slice(0)]); 
             }
         }
     }        
@@ -28,7 +28,7 @@ function selectionSort(arr){
         }
 
         swap(arr, i, minimum);
-        animations.push(arr.slice(0));
+        animations.push([arr.slice(0)]);
     }
 
     return animations
@@ -46,12 +46,12 @@ function insertionSort(arr){
 
         while(pos>0 && temp<arr[pos-1]){
             arr[pos] = arr[pos-1];
-            animations.push(arr.slice(0));
+            animations.push([arr.slice(0), pos-1, i]);
             pos--;
         }
         
         arr[pos] = temp;
-        animations.push(arr.slice(0));
+        animations.push([arr.slice(0),pos, i]);
     }
 
     return animations;
@@ -88,7 +88,7 @@ function partition(arr, start, end, animations){
         if(arr[j] < pivotValue){
             
             swap(arr, j, i);
-            animations.push(arr.slice(0));
+            animations.push([arr.slice(0)]);
             i++
         }     
     }
@@ -97,7 +97,7 @@ function partition(arr, start, end, animations){
     // animations["pivot"].push([i,end]);
     // animations["counter"].push(animations["pos"].length);
     swap(arr, i, end);
-    animations.push(arr.slice(0));
+    animations.push([arr.slice(0)]);
     
     return i; 
 }
@@ -153,7 +153,7 @@ function merge(arr, start, mid, end, animations) {
         start++;
     }
 
-    animations.push(arr.slice(0));
+    animations.push([arr.slice(0)]);
 }
 
 
@@ -241,7 +241,7 @@ function heapSort(arr){
     //swap root node with last element
     for(let j = n-1; j>=0; j--){
         this.swap(arr, j, 0);
-        animations.push(arr.slice(0));
+        animations.push([arr.slice(0)]);
         this.heapify(arr, j, 0, animations);
     }
 
@@ -263,7 +263,7 @@ function heapify(arr, n, i, animations){
 
     if(largest !== i){
         this.swap(arr, i, largest);
-        animations.push(arr.slice(0));
+        animations.push([arr.slice(0)]);
         this.heapify(arr, n, largest, animations);
     }
 }
