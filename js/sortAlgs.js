@@ -5,8 +5,8 @@ function bubbleSort(arr) {
         for(let j=0; j<arr.length-i-1; j++){
             if(arr[j] > arr[j+1]){
                 swap(arr, j, j+1);
-                //Returns a coppy of the arrray instead of a reference
-                animations.push([arr.slice(0)]); 
+                //Returns a copy of the arrray instead of a reference
+                animations.push([arr.slice(0), j+1]); 
             }
         }
     }        
