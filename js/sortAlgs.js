@@ -151,10 +151,11 @@ function merge(arr, start, mid, end, animations) {
 
     for(let i = 0; i<tempArr.length;i++){
         arr[start] = tempArr[i];
+        animations.push([arr.slice(0), start]);
         start++;
     }
 
-    animations.push([arr.slice(0)]);
+    //animations.push([arr.slice(0),arr1Index-1, arr2Index-1]);
 }
 
 
