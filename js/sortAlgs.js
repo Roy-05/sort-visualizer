@@ -118,9 +118,9 @@ function mergeSort(arr, start, end, animations){
 
     const mid = Math.floor((start+end)/2);
 
-    this.mergeSort(arr, start, mid, animations);
-    this.mergeSort(arr, mid+1, end, animations);
-    this.merge(arr, start, mid, end, animations);
+    mergeSort(arr, start, mid, animations);
+    mergeSort(arr, mid+1, end, animations);
+    merge(arr, start, mid, end, animations);
 }
 
 function merge(arr, start, mid, end, animations) {
@@ -233,14 +233,15 @@ function heapSort(arr){
 
     //Create initial max heap
     for(let i = Math.floor(n/2)-1; i>=0;i--){
-        this.heapify(arr, n, i, animations);
+        heapify(arr, n, i, animations);
     }
 
     //swap root node with last element
     for(let j = n-1; j>=0; j--){
-        this.swap(arr, j, 0);
-        animations.push([arr.slice(0)]);
-        this.heapify(arr, j, 0, animations);
+        animations.push([arr.slice(0), j]);
+        swap(arr, j, 0);
+        animations.push([arr.slice(0), j, 0]);
+        heapify(arr, j, 0, animations);
     }
 
     return animations;
@@ -260,9 +261,10 @@ function heapify(arr, n, i, animations){
     }
 
     if(largest !== i){
-        this.swap(arr, i, largest);
-        animations.push([arr.slice(0)]);
-        this.heapify(arr, n, largest, animations);
+        animations.push([arr.slice(0), i, largest]);
+        swap(arr, i, largest);
+        animations.push([arr.slice(0), i, largest]);
+        heapify(arr, n, largest, animations);
     }
 }
 
