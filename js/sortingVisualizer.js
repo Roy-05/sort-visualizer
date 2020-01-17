@@ -25,15 +25,15 @@ window.addEventListener('DOMContentLoaded', ()=>{
 window.addEventListener('resize', ()=>{
 
     resizing = true;
-    width = canvasContainer.clientWidth;
-    height = canvasContainer.clientHeight;
     navbtn = [...document.getElementsByClassName('nav-btn')];
-    init();
-
+    
     //Change resizing to false once resize is done firing
     clearTimeout(resizeEnd);
     resizeEnd = setTimeout(()=>{
         resizing = false;
+        width = canvasContainer.clientWidth;
+        height = canvasContainer.clientHeight;
+        init();
     }, 500);
 });
 
@@ -41,7 +41,8 @@ dropdown.addEventListener('mouseleave', ()=>{
     dropdownContent.className = 'hidden';
 });
 
-document.getElementsByTagName('body')[0].addEventListener('click', ()=>{
+document.getElementById('canvas-container').addEventListener('click', ()=>{
+    console.log('click');
     dropdownContent.className = 'hidden';
 });
 
