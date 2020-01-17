@@ -10,8 +10,9 @@
     * ~Add background color gradient~
     * ~Make buttons transparents~
     * ~Darker color for button sorts?~
-- [ ] Add animation effects on the sorts
-    * ~Animate Insertion Sort~
+- [x] Add animation effects on the sorts
+    * ~Animate Sorts~
+- [ ] **Bug:** drawArrayBars() seems to occasionally fire before init() sets the canvas dimensions
 - [ ] Add play/pause functionality
 - [ ] Add array access/comparisons counter
 - [ ] Add slider to set sort speed
