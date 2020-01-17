@@ -126,30 +126,35 @@ function mergeSort(arr, start, end, animations){
 function merge(arr, start, mid, end, animations) {
     let arr1Index = start,
         arr2Index = mid +1,
-        tempArr = [];
+        tempArr = [],
+        colors = [];
 
     for(let i = start; i<=end; i++){
         if(arr1Index > mid){
             tempArr.push(arr[arr2Index]);
+            colors.push([arr2Index, mid])
             arr2Index++;
         }
         else if(arr2Index > end){
             tempArr.push(arr[arr1Index]);
+            colors.push([arr1Index, end])
             arr1Index++;
         }
         else if(arr[arr1Index] < arr[arr2Index]){
             tempArr.push(arr[arr1Index]);
+            colors.push([arr1Index, arr2Index])
             arr1Index++;
         }
         else{
             tempArr.push(arr[arr2Index]);
+            colors.push([arr2Index, arr1Index])
             arr2Index++;
         }
     }
 
     for(let i = 0; i<tempArr.length;i++){
         arr[start] = tempArr[i];
-        animations.push([arr.slice(0), start]);
+        animations.push([arr.slice(0), colors[i][0], null, colors[i][1]]);
         start++;
     }
 }
