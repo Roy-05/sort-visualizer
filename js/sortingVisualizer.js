@@ -11,8 +11,8 @@ let array,t,
     cHeight,
     drawVis,
     animations,
-    width = canvasContainer.offsetWidth,
-    height = canvasContainer.offsetHeight,
+    width = canvasContainer.clientWidth,
+    height = canvasContainer.clientHeight,
     navbtn = [...document.getElementsByClassName('nav-btn')],
     resizeEnd,
     resizing = false,
@@ -25,8 +25,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
 window.addEventListener('resize', ()=>{
 
     resizing = true;
-    width = canvasContainer.offsetWidth;
-    height = canvasContainer.offsetHeight;
+    width = canvasContainer.clientWidth;
+    height = canvasContainer.clientHeight;
     navbtn = [...document.getElementsByClassName('nav-btn')];
     init();
 
