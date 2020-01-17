@@ -41,6 +41,9 @@ dropdown.addEventListener('mouseleave', ()=>{
     dropdownContent.className = 'hidden';
 });
 
+document.getElementsByTagName('body')[0].addEventListener('click', ()=>{
+    dropdownContent.className = 'hidden';
+});
 
 navbtn.forEach(button =>{
     button.addEventListener('click', ()=>{
