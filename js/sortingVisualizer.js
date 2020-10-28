@@ -7,9 +7,6 @@ const canvas = document.getElementById("canvas"),
   dropdownContent = document.getElementById("dropdown-content");
 
 let array,
-  t,
-  cWidth,
-  cHeight,
   drawVis,
   animations,
   width = canvasContainer.clientWidth,
@@ -80,6 +77,9 @@ function setCanvasSize() {
   canvas.width = Math.floor(width * DPI);
   canvas.height = Math.floor(height * DPI);
 
+  width = width;
+  height = height;
+
   // Scale the canvas accordingly
   ctx.scale(DPI, DPI);
 }
@@ -109,14 +109,14 @@ function drawArrayBars() {
 
   //18 = 12(width of bar) + 6(margin on right)
   //We add a 6 because the last elem leaves behind a 6px margin that we don't want
-  let startingPoint = (cWidth - size * 18 + 6) / 2;
+  let startingPoint = (width - size * 18 + 6) / 2;
 
-  ctx.clearRect(0, 0, cWidth, cHeight);
+  ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = "#29a382";
 
   let x = startingPoint;
   for (let i = 0; i < size; i++) {
-    roundRect(ctx, x, cHeight - array[i], 12, array[i], 4, true);
+    roundRect(ctx, x, height - array[i], 12, array[i], 4, true);
     x += 18;
   }
 }
@@ -148,7 +148,7 @@ function setSortAnimations(choice) {
 function visualize(animations) {
   let counter = 0,
     l = array.length,
-    startingPoint = (cWidth - l * 18 + 6) / 2;
+    startingPoint = (width - l * 18 + 6) / 2;
 
   const draw = () => {
     if (counter === animations.length) {
@@ -173,7 +173,7 @@ function visualize(animations) {
     setTimeout(() => {
       requestAnimationFrame(draw);
 
-      ctx.clearRect(0, 0, cWidth, cHeight);
+      ctx.clearRect(0, 0, width, height);
       for (let i = 0; i < l; i++) {
         if (i === animations[counter][2] && counter < animations.length - 1) {
           ctx.fillStyle = "#38316a";
@@ -189,7 +189,7 @@ function visualize(animations) {
         roundRect(
           ctx,
           x,
-          cHeight - animations[counter][0][i],
+          height - animations[counter][0][i],
           12,
           animations[counter][0][i],
           4,
